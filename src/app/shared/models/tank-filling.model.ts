@@ -1,4 +1,6 @@
 import {Car} from './car.model';
+import {DiscrepancyType} from '../enums/discrepancy-type.enum';
+import {FuelType} from '../enums/fuel-type.enum';
 
 export interface TankFilling {
   tankFillingId: number;
