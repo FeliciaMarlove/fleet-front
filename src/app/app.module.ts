@@ -22,7 +22,7 @@ import {MatSidenavModule} from '@angular/material';
     NoopAnimationsModule,
     CoreModule,
     SharedModule,
-    MatSidenavModule
+    MatSidenavModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
