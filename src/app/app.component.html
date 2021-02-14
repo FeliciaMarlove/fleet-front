@@ -1,11 +1,20 @@
-app component
-
-
-<app-header></app-header>
-
 <mat-sidenav-container>
-<!--see documentation-->
-  <app-side-nav></app-side-nav>
+  <mat-sidenav
+    #sidenav
+    fixedInViewport
+    mode='side'
+    opened
+    class="side-navbar"
+    >
+  <!--  Side nav inside content:  -->
+    <app-side-nav></app-side-nav>
+  </mat-sidenav>
+  <mat-sidenav-content>
+  <!--  Main content of the page:  -->
+    <app-header></app-header>
+    <button mat-icon-button (click)="sidenav.toggle()">Toggle menu</button>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
 </mat-sidenav-container>
 
-<router-outlet></router-outlet>
+

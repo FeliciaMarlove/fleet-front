@@ -7,8 +7,8 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatOptionModule, MatSelectModule,
-  MatSliderModule, MatSnackBarModule
+  MatOptionModule, MatPaginatorModule, MatSelectModule,
+  MatSliderModule, MatSnackBarModule, MatTableModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
@@ -32,6 +32,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatOptionModule,
     MatInputModule,
     MatSliderModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   exports: [
     RouterModule,
@@ -48,6 +50,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatOptionModule,
     MatInputModule,
     MatSliderModule,
+    MatTableModule,
+    MatPaginatorModule
   ]
 })
 export class SharedModule { }
