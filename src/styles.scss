@@ -1,8 +1,12 @@
 /*
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 DOC
 several themes:
 https://material.angular.io/guide/theming
--> voir si nécessite de changer les couleurs ou juste changer le background?
+->  voir si nécessite de changer les couleurs ou juste changer le background?
+
+
  */
 
 
@@ -19,35 +23,28 @@ https://material.angular.io/guide/theming
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$fleet-front-primary: mat-palette($mat-indigo);
-$fleet-front-accent: mat-palette($mat-yellow, A200, A100, A400);
+$fleet-light-primary: mat-palette($mat-indigo);
+$fleet-light-accent: mat-palette($mat-yellow, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$fleet-front-warn: mat-palette($mat-deep-orange);
+$fleet-light-warn: mat-palette($mat-deep-orange);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$fleet-front-theme: mat-light-theme($fleet-front-primary, $fleet-front-accent, $fleet-front-warn);
+$fleet-light-theme: mat-light-theme($fleet-light-primary, $fleet-light-accent, $fleet-light-warn);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include angular-material-theme($fleet-front-theme);
+@include angular-material-theme($fleet-light-theme);
 
 // Define an alternate dark theme.
-$dark-primary: mat-palette($mat-blue-grey);
-$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
-$dark-warn:    mat-palette($mat-deep-orange);
-$dark-theme:   mat-dark-theme((
-  color: (
-    primary: $dark-primary,
-    accent: $dark-accent,
-    warn: $dark-warn,
-  )
-));
+$fleet-dark-primary: mat-palette($mat-blue-grey);
+$fleet-dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$fleet-dark-warn:    mat-palette($mat-deep-orange);
+$fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fleet-dark-warn);
+
 
 // Include the dark color styles inside of a block with a CSS class. You can make this
 // CSS class whatever you want. In this example, any component inside of an element with
 // `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
-.unicorn-dark-theme {
-  @include angular-material-color($dark-theme);
-}
+//@include angular-material-color($fleet-dark-theme);
