@@ -1,23 +1,50 @@
-<p>staff-list works!</p>
+<h2>{{title}}</h2>
 
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="fname">
     <th mat-header-cell *matHeaderCellDef>First name</th>
-    <td mat-cell *matCellDef="let person" (click)="doOpenStaffDetail(person)">{{person.staffFirstName}}</td>
+    <td mat-cell *matCellDef="let person">{{person.staffFirstName}}</td>
     <td mat-footer-cell *matFooterCellDef>First name</td>
   </ng-container>
 
   <ng-container matColumnDef="lname">
     <th mat-header-cell *matHeaderCellDef>Last name</th>
-    <td mat-cell *matCellDef="let person"
-        (click)="doOpenStaffDetail(person.staffMemberId)">{{person.staffLastName}} </td>
+    <td mat-cell *matCellDef="let person">{{person.staffLastName}} </td>
     <td mat-footer-cell *matFooterCellDef>Last name</td>
+  </ng-container>
+
+  <ng-container matColumnDef="hasCar">
+    <th mat-header-cell *matHeaderCellDef>Car?</th>
+    <td mat-cell *matCellDef="let person">
+      <mat-icon>
+        {{person.hasCar ? 'done_outline' : 'hide_source'}}
+      </mat-icon>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>Car?</td>
   </ng-container>
 
   <ng-container matColumnDef="unlink-action">
     <th mat-header-cell *matHeaderCellDef></th>
-    <td mat-cell *matCellDef="let person" (click)="doOpenUnlinkDialog(person.staffMemberId)">
-      <mat-icon color="primary" style="font-size: 22px">link_off</mat-icon>
+    <td mat-cell *matCellDef="let person" (click)="doOpenUnlinkDialog(person)">
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="doOpenUnlinkDialog(person)">
+        <mat-icon>link_off</mat-icon>
+      </button>
+    </td>
+    <td mat-footer-cell *matFooterCellDef></td>
+  </ng-container>
+
+  <ng-container matColumnDef="view">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let person">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="doOpenStaffDetail(person)">
+        <mat-icon>visibility</mat-icon>
+      </button>
     </td>
     <td mat-footer-cell *matFooterCellDef></td>
   </ng-container>

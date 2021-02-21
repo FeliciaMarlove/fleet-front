@@ -9,21 +9,17 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
   styleUrls: ['./staff-list.component.scss']
 })
 export class StaffListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['fname', 'lname', 'unlink-action'];
+  public displayedColumns: string[] = ['view', 'fname', 'lname', 'hasCar', 'unlink-action'];
   public dataSource = new MatTableDataSource<StaffMember>();
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  public title = 'Staff members';
 
   constructor(
     private staffService: StaffMemberService
   ) { }
 
   ngOnInit() {
-    this.staffService.getAllStaff().subscribe(
-      staffList => {
-        this.dataSource.data = staffList;
-      },
-      error => console.log(error)
-    );
+    this.initStaffList();
   }
 
   ngAfterViewInit() {
@@ -34,7 +30,12 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    * Initiate the staff list with all staff members
    */
   private initStaffList(): void {
-
+    this.staffService.getAllStaff().subscribe(
+      staffList => {
+        this.dataSource.data = staffList;
+      },
+      error => console.log(error)
+    );
   }
 
   public doOpenStaffDetail(staffId: any) {
