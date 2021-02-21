@@ -1,14 +1,11 @@
 /*
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 DOC
-several themes:
 https://material.angular.io/guide/theming
-->  voir si nécessite de changer les couleurs ou juste changer le background?
-
-
  */
 
+*{
+  font-family: Montserrat, Roboto, Verdana, sans-serif;
+}
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming

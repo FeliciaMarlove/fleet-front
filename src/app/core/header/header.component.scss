@@ -1,0 +1,23 @@
+.header-content{
+  background-color: #1A237E;
+  color: beige;
+  height: 120px;
+  width: 100%;
+  display: inline-block;
+}
+
+h1 {
+  font-family: "Roboto Light", Montserrat, Verdana, sans-serif;
+  font-size: 36px;
+  text-align: center;
+  margin: 35px;
+}
+
+.show-sidenav-menu {
+  position: fixed;
+}
+
+.toggle-light-dark-theme {
+  float: right;
+  margin: 0 10px 10px 0;
+}
