@@ -6,10 +6,8 @@ export interface Inspection {
   sentDate?: Date;
   expertisedBy: string;
   damaged: boolean;
-  picture1?: File;
-  picture2?: File;
-  picture3?: File;
-  inspectionReport?: File;
+  picturesFolder: string;
+  inspectionReportFile: string;
   car: Car;
 }
 
