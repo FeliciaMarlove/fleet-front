@@ -45,6 +45,6 @@ export class StaffMemberService {
   }
 
   setCarOfStaffMember(id: number, carId: number): Observable<Car> {
-    return this.http.get<Car>(URI + id + '/car/' + carId);
+    return this.http.put<Car>(URI + id + '/car', carId);
   }
 }
