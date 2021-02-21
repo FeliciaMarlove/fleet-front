@@ -1,19 +1,25 @@
 <section class="header-content">
 
-  <button
-    *ngIf="!sidenavHandle.opened"
-    (click)="sidenavHandle.toggle()"
-    class="show-sidenav-menu">
-    <mat-icon>list</mat-icon>
-  </button>
+  <div class="menu-side-placeholder">
+    <button
+      *ngIf="!sidenavHandle.opened"
+      (click)="sidenavHandle.toggle()"
+      class="show-sidenav-menu">
+      <mat-icon>list</mat-icon>
+    </button>
+  </div>
 
   <h1>{{title}}</h1>
 
-  <mat-slide-toggle
-    #lightDarkToggle
-    class="toggle-light-dark-theme"
-    (click)="doToggleLightDark(lightDarkToggle)">
-    <mat-icon>{{lightDarkToggleIcon}}</mat-icon>
-  </mat-slide-toggle>
+  <div class="light-dark-side-placeholder">
+    <mat-slide-toggle
+      #lightDarkToggle
+      class="toggle-light-dark-theme"
+      (click)="doToggleLightDark(lightDarkToggle)">
+      <mat-icon>{{lightDarkToggleIcon}}</mat-icon>
+    </mat-slide-toggle>
+  </div>
+
+
 
 </section>
