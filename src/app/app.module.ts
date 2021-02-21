@@ -8,7 +8,7 @@ import { HeaderComponent } from './core/header/header.component';
 import { SideNavComponent } from './core/side-nav/side-nav.component';
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
-import {MatSidenavModule} from '@angular/material';
+import {MatSidenavModule, MatSlideToggleModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -16,14 +16,15 @@ import {MatSidenavModule} from '@angular/material';
     HeaderComponent,
     SideNavComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NoopAnimationsModule,
-    CoreModule,
-    SharedModule,
-    MatSidenavModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NoopAnimationsModule,
+        CoreModule,
+        SharedModule,
+        MatSidenavModule,
+        MatSlideToggleModule,
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
