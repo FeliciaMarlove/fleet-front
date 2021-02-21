@@ -9,5 +9,6 @@ export interface StaffMember {
   corporateEmail: string;
   communicationLanguage: Language;
   numberDiscrepancies: number;
-  cars: Car[];
+  cars?: Car[];
+  currentCar?: Car;
 }

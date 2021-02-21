@@ -23,6 +23,22 @@
     <td mat-footer-cell *matFooterCellDef>Car?</td>
   </ng-container>
 
+  <ng-container matColumnDef="car_plate">
+    <th mat-header-cell *matHeaderCellDef>Car plate</th>
+    <td mat-cell *matCellDef="let person">
+      {{person.currentCar?.plateNumber}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef>Car plate</td>
+  </ng-container>
+
+  <ng-container matColumnDef="car">
+    <th mat-header-cell *matHeaderCellDef>Car model</th>
+    <td mat-cell *matCellDef="let person">
+      {{person.currentCar | carShortDisplay}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef>Car model</td>
+  </ng-container>
+
   <ng-container matColumnDef="unlink-action">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let person" (click)="doOpenUnlinkDialog(person)">

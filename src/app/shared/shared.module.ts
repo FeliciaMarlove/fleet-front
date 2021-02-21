@@ -11,11 +11,12 @@ import {
   MatSliderModule, MatSnackBarModule, MatTableModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { CarShortDisplayPipe } from './pipe/car-short-display.pipe';
 
 @NgModule({
   declarations: [
 
-  ],
+  CarShortDisplayPipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -51,7 +52,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     MatInputModule,
     MatSliderModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CarShortDisplayPipe
   ]
 })
 export class SharedModule { }
