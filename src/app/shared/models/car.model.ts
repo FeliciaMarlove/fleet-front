@@ -17,5 +17,6 @@ export interface Car {
   freeText?: string;
   leasingCompany: LeasingCompany;
   staffMember: StaffMember;
+  staffMemberId: number;
   inspection: Inspection;
 }
