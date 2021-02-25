@@ -33,14 +33,18 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   private initStaffList(): void {
     this.staffService.getAllStaff().subscribe(
       staffList => {
-        this.initCars(staffList);
+        this.getStaffCurrentCar(staffList);
         this.dataSource.data = staffList;
       },
       error => console.log(error)
     );
   }
 
-  private initCars(staffList: StaffMember[]) {
+  /**
+   * Assign current car to each staff member in the list
+   * @param staffList The list of staff members
+   */
+  private getStaffCurrentCar(staffList: StaffMember[]) {
     for (const staff of staffList) {
       this.staffService.getCurrentCarOfStaffMember(staff.staffMemberId).subscribe( car => {
         staff.currentCar = car;

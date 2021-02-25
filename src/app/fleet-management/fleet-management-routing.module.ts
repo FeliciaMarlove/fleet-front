@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import {StaffListComponent} from './staff-list/staff-list.component';
 import {FleetListComponent} from './fleet/fleet-list/fleet-list.component';
 import {FillupsListComponent} from './fillups/fillups-list/fillups-list.component';
+import {LeasingCompaniesListComponent} from './leasing-companies/leasing-companies-list/leasing-companies-list.component';
 
 const routes: Routes = [
   {path: '', pathMatch: 'full', component: FleetListComponent},
   {path: 'staff', component: StaffListComponent},
   {path: 'fillups', component: FillupsListComponent},
+  {path: 'leasing', component: LeasingCompaniesListComponent},
   {path: '**', redirectTo: ''}
 ];
 

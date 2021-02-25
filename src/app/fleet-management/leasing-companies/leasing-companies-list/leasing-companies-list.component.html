@@ -1,0 +1,56 @@
+<h2>{{title}}</h2>
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="edit">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[0]}}</th>
+    <td mat-cell *matCellDef="let leasing">
+      <button
+        mat-icon-button
+        color="primary"
+        (click)="doOpenLeasingDetail(leasing)">
+        <mat-icon>create</mat-icon>
+      </button>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[0]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lname">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[1]}}</th>
+    <td mat-cell *matCellDef="let leasing">{{leasing.leasingCompanyName.toUpperCase()}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[1]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lcontact">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[2]}}</th>
+    <td mat-cell *matCellDef="let leasing">{{leasing.leasingCompanyContactPerson}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[2]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lphone">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[3]}}</th>
+    <td mat-cell *matCellDef="let leasing">{{leasing.leasingCompanyPhone}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[3]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lemail">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[4]}}</th>
+    <td mat-cell *matCellDef="let leasing">{{leasing.leasingCompanyEmail}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[4]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="lactive">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[5]}}</th>
+    <td mat-cell *matCellDef="let leasing">
+      <mat-icon>
+        {{leasing.active ? 'done_outline' : 'block'}}
+      </mat-icon>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[5]}}</td>
+  </ng-container>
+
+  <!--  Columns configuration  -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.inactive]="!row.active"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 20, dataSource.data.length]" showFirstLastButtons></mat-paginator>
