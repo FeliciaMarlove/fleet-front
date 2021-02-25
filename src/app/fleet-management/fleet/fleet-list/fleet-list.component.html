@@ -49,4 +49,4 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="[10, 20, 50, 100, dataSource.data.length > 100 ? dataSource.data.length : null]" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSizeOptions]="paginationChoices" showFirstLastButtons></mat-paginator>

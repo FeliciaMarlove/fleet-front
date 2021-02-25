@@ -3,6 +3,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Car} from '../../../shared/models/car.model';
 import {CarService} from '../../../core/http-services/car.service';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
+import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-creator.util';
 
 @Component({
   selector: 'app-fleet-list',
@@ -15,6 +16,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<Car>();
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Fleet';
+  public paginationChoices: number[] = [10];
 
   constructor(
     private carService: CarService,
@@ -34,8 +36,10 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    */
   private initActiveCarsList() {
     this.carService.getAllCarsActive().subscribe( cars => {
+        this.paginationChoices = PaginationListCreatorUtil.setPaginationList(cars);
         this.getCarOwner(cars);
         this.dataSource.data = cars;
+
     },
       error => console.log(error)
     );

@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {StaffMemberService} from '../../core/http-services/staff-member.service';
 import {StaffMember} from '../../shared/models/staff-member.model';
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {PaginationListCreatorUtil} from '../../shared/utils/pagination-list-creator.util';
 
 @Component({
   selector: 'app-staff-list',
@@ -14,6 +15,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<StaffMember>();
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Staff members';
+  public paginationChoices: number[] = [10];
 
   constructor(
     private staffService: StaffMemberService
@@ -33,6 +35,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   private initStaffList(): void {
     this.staffService.getAllStaff().subscribe(
       staffList => {
+        this.paginationChoices = PaginationListCreatorUtil.setPaginationList(staffList);
         this.getStaffCurrentCar(staffList);
         this.dataSource.data = staffList;
       },
