@@ -10,7 +10,7 @@ import {TankFillingService} from '../../../core/http-services/tank-filling.servi
 })
 export class FillupsListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['warning-icon', 'fdate', 'fdisctype', ];
-  public colNames = ['', 'Date', 'Discrepancy'];
+  public colNames: string[] = ['', 'Date', 'Discrepancy'];
   public dataSource = new MatTableDataSource<TankFilling>();
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Fuel usage report';

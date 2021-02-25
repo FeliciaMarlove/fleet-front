@@ -10,7 +10,7 @@ import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 })
 export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['edit', 'lname', 'lcontact', 'lphone', 'lemail', 'lactive'];
-  public colNames = ['', 'Name', 'Contact person', 'Phone', 'Email', 'Active'];
+  public colNames: string[] = ['', 'Name', 'Contact person', 'Phone', 'Email', 'Active'];
   public dataSource = new MatTableDataSource<LeasingCompany>();
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Leasing companies';

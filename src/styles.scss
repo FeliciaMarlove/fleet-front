@@ -8,9 +8,13 @@ table {
   width: 100%;
 }
 
+.mat-mini-fab {
+  box-shadow: none !important;
+}
+
 .mat-table .mat-footer-cell, .mat-table .mat-header-cell {
   font-size: 14px;
-  color: gray;
+  color: #1A237E;
 }
 
 .mat-table td.mat-cell:first-of-type{
@@ -28,13 +32,13 @@ table {
 @import '~@angular/material/theming';
 @include mat-core();
 $fleet-light-primary: mat-palette($mat-indigo);
-$fleet-light-accent: mat-palette($mat-yellow, A200, A100, A400);
+$fleet-light-accent: mat-palette($mat-amber);
 $fleet-light-warn: mat-palette($mat-deep-orange);
 $fleet-light-theme: mat-light-theme($fleet-light-primary, $fleet-light-accent, $fleet-light-warn);
 @include angular-material-theme($fleet-light-theme);
 
 // Define an alternate dark theme.
 $fleet-dark-primary: mat-palette($mat-blue-grey);
-$fleet-dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$fleet-dark-accent:  mat-palette($mat-amber);
 $fleet-dark-warn:    mat-palette($mat-deep-orange);
 $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fleet-dark-warn);
