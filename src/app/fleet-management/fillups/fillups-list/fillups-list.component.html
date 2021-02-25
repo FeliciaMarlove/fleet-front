@@ -30,4 +30,4 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.warn-discrepancy]="!row.correctedById && row.discrepancy" (click)="row.discrepancy ? doOpenWarning(row) : false"></tr>
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="[10, 20, 50, dataSource.data.length > 100 ? dataSource.data.length : 100]" showFirstLastButtons></mat-paginator>
+<mat-paginator [pageSizeOptions]="paginationChoices" showFirstLastButtons></mat-paginator>
