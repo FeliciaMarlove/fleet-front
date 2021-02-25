@@ -7,8 +7,8 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
-  MatOptionModule, MatPaginatorModule, MatSelectModule,
-  MatSliderModule, MatSnackBarModule, MatTableModule
+  MatOptionModule, MatPaginatorModule, MatSelectModule, MatSidenavModule,
+  MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatTableModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CarShortDisplayPipe } from './pipe/car-short-display.pipe';
