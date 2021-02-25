@@ -12,11 +12,14 @@ import {
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CarShortDisplayPipe } from './pipe/car-short-display.pipe';
+import { DiscrepancyToDisplayNamePipe } from './pipe/enum-key-to-value.pipe';
 
 @NgModule({
   declarations: [
 
-  CarShortDisplayPipe],
+  CarShortDisplayPipe,
+
+  DiscrepancyToDisplayNamePipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -53,7 +56,8 @@ import { CarShortDisplayPipe } from './pipe/car-short-display.pipe';
     MatSliderModule,
     MatTableModule,
     MatPaginatorModule,
-    CarShortDisplayPipe
+    CarShortDisplayPipe,
+    DiscrepancyToDisplayNamePipe
   ]
 })
 export class SharedModule { }

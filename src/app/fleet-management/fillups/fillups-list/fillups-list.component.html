@@ -1,0 +1,33 @@
+<h2>{{title}}</h2>
+
+<table mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="fdate">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[0]}}</th>
+    <td  mat-cell *matCellDef="let fillup">{{fillup.dateTimeFilling | date}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[0]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="fdisctype">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[2]}}</th>
+    <td mat-cell *matCellDef="let fillup">{{fillup.discrepancyType | discrepancyToDisplayName}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[2]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="warning-icon">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[3]}}</th>
+    <td mat-cell *matCellDef="let fillup">
+      <button
+        mat-icon-button
+        *ngIf="fillup.discrepancy">
+        <mat-icon>{{fillup.correctedById ? 'warning_amber' : 'report_problem'}}</mat-icon>
+      </button>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[3]}}</td>
+  </ng-container>
+
+  <!--  Columns configuration  -->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [style.background]="!row.correctedById && row.discrepancy ? '#FF5722' : ''" (click)="row.discrepancy ? doOpenWarning(row) : false"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[10, 20, 50, dataSource.data.length > 100 ? dataSource.data.length : 100]" showFirstLastButtons></mat-paginator>

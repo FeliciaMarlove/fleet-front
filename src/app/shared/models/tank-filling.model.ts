@@ -1,6 +1,7 @@
 import {Car} from './car.model';
 import {DiscrepancyType} from '../enums/discrepancy-type.enum';
 import {FuelType} from '../enums/fuel-type.enum';
+import {StaffMember} from './staff-member.model';
 
 export interface TankFilling {
   tankFillingId: number;
@@ -14,5 +15,5 @@ export interface TankFilling {
   consumption: number;
   correctionForId?: number;
   correctedById?: number;
-  car: Car;
+  plateNumber: string;
 }
