@@ -53,7 +53,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  doOpenCarDetail(car: Car) {
+  public doOpenCarDetail(car: Car) {
     console.log(car);
   }
 }

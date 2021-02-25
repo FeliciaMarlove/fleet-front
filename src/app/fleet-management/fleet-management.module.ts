@@ -6,6 +6,7 @@ import { FleetListComponent } from './fleet/fleet-list/fleet-list.component';
 import {FleetManagementRouting} from './fleet-management-routing.module';
 import { FillupsListComponent } from './fillups/fillups-list/fillups-list.component';
 import { LeasingCompaniesListComponent } from './leasing-companies/leasing-companies-list/leasing-companies-list.component';
+import { InspectionsListComponent } from './inspections/inspections-list/inspections-list.component';
 
 
 
@@ -14,7 +15,8 @@ import { LeasingCompaniesListComponent } from './leasing-companies/leasing-compa
     StaffListComponent,
     FleetListComponent,
     FillupsListComponent,
-    LeasingCompaniesListComponent
+    LeasingCompaniesListComponent,
+    InspectionsListComponent
   ],
   imports: [
     CommonModule,
