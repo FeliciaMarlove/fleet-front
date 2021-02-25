@@ -2,9 +2,9 @@
 
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="fdate">
-    <th mat-header-cell *matHeaderCellDef>{{colNames[0]}}</th>
+    <th mat-header-cell *matHeaderCellDef>{{colNames[1]}}</th>
     <td  mat-cell *matCellDef="let fillup">{{fillup.dateTimeFilling | date}}</td>
-    <td mat-footer-cell *matFooterCellDef>{{colNames[0]}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[1]}}</td>
   </ng-container>
 
   <ng-container matColumnDef="fdisctype">

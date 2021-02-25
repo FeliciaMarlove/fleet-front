@@ -12,7 +12,7 @@ import {
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CarShortDisplayPipe } from './pipe/car-short-display.pipe';
-import { DiscrepancyToDisplayNamePipe } from './pipe/enum-key-to-value.pipe';
+import { DiscrepancyToDisplayNamePipe } from './pipe/discrepancy-to-display-name';
 
 @NgModule({
   declarations: [
