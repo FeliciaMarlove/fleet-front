@@ -10,7 +10,7 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 })
 export class StaffListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['view', 'fname', 'lname', 'hasCar', 'car_plate', 'car', 'unlink-action'];
-  public colNames = ['', 'First name', 'Last name', 'Car?', 'Car plate', 'Car model', ''];
+  public colNames: string[] = ['', 'First name', 'Last name', 'Car?', 'Car plate', 'Car model', ''];
   public dataSource = new MatTableDataSource<StaffMember>();
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Staff members';
