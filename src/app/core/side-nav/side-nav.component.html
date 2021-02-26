@@ -1,4 +1,13 @@
-<!-- https://material.angular.io/components/list/overview#navigation-lists -->
+<mat-nav-list>
+  <mat-list-item
+    [routerLink]="link.link"
+    (click)="current === link ? false : onClickAssignCurrent(link)"
+    *ngFor="let link of links"
+    [style.background-color]="current === link ? '#FFB300' : ''">
+    <mat-icon *ngIf="current === link" matListIcon>play_arrow</mat-icon>
+      {{link.title}}
+  </mat-list-item>
+</mat-nav-list>
 
 <button
   (click)="sidenavHandle.toggle()"

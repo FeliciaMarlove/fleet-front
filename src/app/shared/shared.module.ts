@@ -38,6 +38,7 @@ import { DiscrepancyToDisplayNamePipe } from './pipe/discrepancy-to-display-name
     MatSliderModule,
     MatTableModule,
     MatPaginatorModule,
+    MatListModule
   ],
   exports: [
     RouterModule,
@@ -55,9 +56,10 @@ import { DiscrepancyToDisplayNamePipe } from './pipe/discrepancy-to-display-name
     MatInputModule,
     MatSliderModule,
     MatTableModule,
+    MatListModule,
     MatPaginatorModule,
     CarShortDisplayPipe,
-    DiscrepancyToDisplayNamePipe
+    DiscrepancyToDisplayNamePipe,
   ]
 })
 export class SharedModule { }
