@@ -6,7 +6,7 @@ import {DiscrepancyType} from '../enums/discrepancy-type.enum';
 })
 export class DiscrepancyToDisplayNamePipe implements PipeTransform {
 
-  transform(value: any, ...args: any[]): any {
+  transform(value: string, ...args: any[]): any {
     switch (value) {
       case 'BEFORE_BIGGER_THAN_AFTER' : return DiscrepancyType.BEFORE_BIGGER_THAN_AFTER;
       case 'QUANTITY_TOO_HIGH' : return DiscrepancyType.QUANTITY_TOO_HIGH;

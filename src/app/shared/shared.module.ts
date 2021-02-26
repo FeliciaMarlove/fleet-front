@@ -13,13 +13,15 @@ import {
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CarShortDisplayPipe } from './pipe/car-short-display.pipe';
 import { DiscrepancyToDisplayNamePipe } from './pipe/discrepancy-to-display-name.pipe';
-import { BelgianPhoneNumberPipe } from './pipe/belgian-phone-number.pipe.pipe';
+import { BelgianPhoneNumberPipe } from './pipe/belgian-phone-number.pipe';
+import { StaffShortDisplayPipe } from './pipe/staff-short-display.pipe';
 
 @NgModule({
   declarations: [
   CarShortDisplayPipe,
   DiscrepancyToDisplayNamePipe,
-  BelgianPhoneNumberPipe
+  BelgianPhoneNumberPipe,
+  StaffShortDisplayPipe
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { BelgianPhoneNumberPipe } from './pipe/belgian-phone-number.pipe.pipe';
     MatPaginatorModule,
     CarShortDisplayPipe,
     DiscrepancyToDisplayNamePipe,
-    BelgianPhoneNumberPipe
+    BelgianPhoneNumberPipe,
+    StaffShortDisplayPipe
   ]
 })
 export class SharedModule { }

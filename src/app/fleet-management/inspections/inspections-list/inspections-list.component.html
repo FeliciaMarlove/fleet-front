@@ -14,6 +14,54 @@
     <td mat-footer-cell *matFooterCellDef>{{colNames[0]}}</td>
   </ng-container>
 
+  <ng-container matColumnDef="idate">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[1]}}</th>
+    <td mat-cell *matCellDef="let inspection">
+      {{inspection.inspectionDate | date}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[1]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="iby">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[2]}}</th>
+    <td mat-cell *matCellDef="let inspection">
+      {{inspection.expertisedBy}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[2]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="iplate">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[3]}}</th>
+    <td mat-cell *matCellDef="let inspection">
+      {{inspection.plateNumber}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[3]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="icar">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[4]}}</th>
+    <td mat-cell *matCellDef="let inspection">
+      {{inspection.car | carShortDisplay}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[4]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="istaff">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[5]}}</th>
+    <td mat-cell *matCellDef="let inspection">
+      {{inspection.staffMember | staffShortDisplay}}
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[5]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="isent">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[6]}}</th>
+    <td mat-cell *matCellDef="let inspection">
+      <mat-icon>{{inspection.sentDate ? 'check' : ''}}</mat-icon>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[6]}}</td>
+  </ng-container>
+
   <!--  Columns configuration  -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
