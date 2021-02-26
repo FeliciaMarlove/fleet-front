@@ -7,10 +7,10 @@ import {LeasingCompaniesListComponent} from './leasing-companies/leasing-compani
 import {InspectionsListComponent} from './inspections/inspections-list/inspections-list.component';
 
 const routes: Routes = [
-  {path: 'fleet', pathMatch: 'full', component: FleetListComponent, data: {isMenu : true}},
+  {path: 'fleet', pathMatch: 'full', component: FleetListComponent},
   {path: '', redirectTo: 'fleet'},
-  {path: 'staff', component: StaffListComponent, data: {isMenu : true}},
-  {path: 'fillups', component: FillupsListComponent, data: {isMenu : false}},
+  {path: 'staff', component: StaffListComponent},
+  {path: 'fillups', component: FillupsListComponent},
   {path: 'leasing', component: LeasingCompaniesListComponent},
   {path: 'inspection', component: InspectionsListComponent},
   {path: '**', redirectTo: ''}
