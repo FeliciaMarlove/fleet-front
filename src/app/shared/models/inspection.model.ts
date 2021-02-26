@@ -1,3 +1,4 @@
+import {StaffMember} from './staff-member.model';
 import {Car} from './car.model';
 
 export interface Inspection {
@@ -8,6 +9,9 @@ export interface Inspection {
   damaged: boolean;
   picturesFolder: string;
   inspectionReportFile: string;
+  plateNumber: string;
+  staffMemberId: number;
+  staffMember: StaffMember;
   car: Car;
 }
 

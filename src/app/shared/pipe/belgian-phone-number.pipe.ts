@@ -6,10 +6,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class BelgianPhoneNumberPipe implements PipeTransform {
 
   transform(value: string, ...args: any[]): any {
-    return value.substr(0, 3) + ' '
+    return value.length === 9 ?
+      value.substr(0, 3) + ' '
       + value.substr(3, 2) + ' '
       + value.substr(5, 2) + ' '
-      + value.substr(7);
+      + value.substr(7)
+      : value;
   }
 
 }
