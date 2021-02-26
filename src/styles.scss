@@ -12,6 +12,12 @@ table {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+// the "outer" content, not the inner content of the mat drawer (side nav)
+.mat-drawer-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .mat-drawer-inner-container {
   width: 250px !important;
   background-color: #E8EAF6;
