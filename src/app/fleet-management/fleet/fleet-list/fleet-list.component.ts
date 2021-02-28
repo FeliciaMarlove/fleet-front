@@ -17,24 +17,22 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Fleet';
   public paginationChoices: number[] = [10];
-  public currentFilterName: string;
-  public currentFilterParam: string;
-  private readonly availableFilters = [
+  public currentFilterName = 'active';
+  public currentFilterParam = '';
+  private availableFilters = [
     {name: 'all', method: this.carService.getAllCars()},
     {name: 'archived', method: this.carService.getAllCarsArchived()},
-    {name: 'brand', method: this.carService.getAllCarsByBrand(this.currentFilterParam)},
-    {name: 'fuel', method: this.carService.getAllCarsByFuel(this.currentFilterParam)},
     {name: 'active', method: this.carService.getAllCarsActive()}
   ];
 
   constructor(
     private carService: CarService,
     private staffService: StaffMemberService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.initCarsList();
-
   }
 
   ngAfterViewInit(): void {
@@ -42,19 +40,18 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Initiate the list of cars according to filter or defaults to initiate with all active cars if no filter
+   * Initiate the list of cars according to current filter
    */
   private initCarsList() {
-    if (this.currentFilterName) {
+    if (this.currentFilterName === 'brand') {
+      this.carService.getAllCarsByBrand(this.currentFilterParam).subscribe(cars =>
+        this.assignCarList(cars));
+    } else if (this.currentFilterName === 'fuel') {
+      this.carService.getAllCarsByFuel(this.currentFilterParam).subscribe(cars => this.assignCarList(cars));
+    } else {
       this.availableFilters.find(filter => filter.name === this.currentFilterName).method.subscribe(cars => {
         this.assignCarList(cars);
       });
-    } else {
-      this.carService.getAllCarsActive().subscribe( cars => {
-          this.assignCarList(cars);
-        },
-        error => console.log(error)
-      );
     }
   }
 
@@ -75,7 +72,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    */
   private getCarOwner(cars: Car[]) {
     for (const car of cars) {
-      this.staffService.getStaffMember(car.staffMemberId).subscribe( staffMember => {
+      this.staffService.getStaffMember(car.staffMemberId).subscribe(staffMember => {
         car.staffMember = staffMember;
       });
     }
@@ -85,9 +82,11 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     console.log(car);
   }
 
-  filter(filter: string, param: string) {
-    this.currentFilterName = filter;
-    this.currentFilterParam = param;
-    this.initCarsList();
+  private filter(filter: string, param: string) {
+    if (filter !== this.currentFilterName) {
+      this.currentFilterName = filter;
+      this.currentFilterParam = param;
+      this.initCarsList();
+    }
   }
 }
