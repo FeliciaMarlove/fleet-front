@@ -1,5 +1,9 @@
 <h2>{{title}}</h2>
 
+<button (click)="filter('archived', null)">
+  filtrer
+</button>
+
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="view">
     <th mat-header-cell *matHeaderCellDef>{{colNames[0]}}</th>
