@@ -17,6 +17,15 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Fleet';
   public paginationChoices: number[] = [10];
+  public currentFilterName: string;
+  public currentFilterParam: string;
+  private readonly availableFilters = [
+    {name: 'all', method: this.carService.getAllCars()},
+    {name: 'archived', method: this.carService.getAllCarsArchived()},
+    {name: 'brand', method: this.carService.getAllCarsByBrand(this.currentFilterParam)},
+    {name: 'fuel', method: this.carService.getAllCarsByFuel(this.currentFilterParam)},
+    {name: 'active', method: this.carService.getAllCarsActive()}
+  ];
 
   constructor(
     private carService: CarService,
@@ -24,7 +33,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit() {
-    this.initActiveCarsList();
+    this.initCarsList();
+
   }
 
   ngAfterViewInit(): void {
@@ -32,17 +42,31 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Initiate the list of cars with active cars only
+   * Initiate the list of cars according to filter or defaults to initiate with all active cars if no filter
    */
-  private initActiveCarsList() {
-    this.carService.getAllCarsActive().subscribe( cars => {
-        this.paginationChoices = PaginationListCreatorUtil.setPaginationList(cars);
-        this.getCarOwner(cars);
-        this.dataSource.data = cars;
+  private initCarsList() {
+    if (this.currentFilterName) {
+      this.availableFilters.find(filter => filter.name === this.currentFilterName).method.subscribe(cars => {
+        this.assignCarList(cars);
+      });
+    } else {
+      this.carService.getAllCarsActive().subscribe( cars => {
+          this.assignCarList(cars);
+        },
+        error => console.log(error)
+      );
+    }
+  }
 
-    },
-      error => console.log(error)
-    );
+  /**
+   * Assign cars list to the Data source
+   * Create pagination according to list size and add Staff member to each Car in the list
+   * @param cars The list of cars to display
+   */
+  private assignCarList(cars) {
+    this.paginationChoices = PaginationListCreatorUtil.setPaginationList(cars);
+    this.getCarOwner(cars);
+    this.dataSource.data = cars;
   }
 
   /**
@@ -59,5 +83,11 @@ export class FleetListComponent implements OnInit, AfterViewInit {
 
   public doOpenCarDetail(car: Car) {
     console.log(car);
+  }
+
+  filter(filter: string, param: string) {
+    this.currentFilterName = filter;
+    this.currentFilterParam = param;
+    this.initCarsList();
   }
 }
