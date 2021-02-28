@@ -82,7 +82,12 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     console.log(car);
   }
 
-  private filter(filter: string, param: string) {
+  /**
+   * Filter the list of cars according to filter name and optional filter parameter
+   * @param filter The name of the filter to apply to the list
+   * @param param The optional parameter of the filter
+   */
+  private filter(filter: string, param?: string) {
     if (filter !== this.currentFilterName) {
       this.currentFilterName = filter;
       this.currentFilterParam = param;
