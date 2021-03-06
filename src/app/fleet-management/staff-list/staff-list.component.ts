@@ -33,7 +33,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    * Initiate the staff list with all staff members
    */
   private initStaffList(): void {
-    this.staffService.getAllStaff().subscribe(
+    this.staffService.getStaff().subscribe(
       staffList => {
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(staffList);
         this.getStaffCurrentCar(staffList);
