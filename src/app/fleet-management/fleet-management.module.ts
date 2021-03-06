@@ -7,6 +7,7 @@ import {FleetManagementRouting} from './fleet-management-routing.module';
 import { FillupsListComponent } from './fillups/fillups-list/fillups-list.component';
 import { LeasingCompaniesListComponent } from './leasing-companies/leasing-companies-list/leasing-companies-list.component';
 import { InspectionsListComponent } from './inspections/inspections-list/inspections-list.component';
+import { FleetFilterDialogComponent } from './fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
 
 
 
@@ -16,12 +17,14 @@ import { InspectionsListComponent } from './inspections/inspections-list/inspect
     FleetListComponent,
     FillupsListComponent,
     LeasingCompaniesListComponent,
-    InspectionsListComponent
+    InspectionsListComponent,
+    FleetFilterDialogComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     FleetManagementRouting
-  ]
+  ],
+  entryComponents: [FleetFilterDialogComponent]
 })
 export class FleetManagementModule { }
