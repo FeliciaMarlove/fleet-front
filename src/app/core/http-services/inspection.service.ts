@@ -19,16 +19,8 @@ export class InspectionService {
     return this.http.get<Inspection>(URI + id);
   }
 
-  getAllInspections(): Observable<Inspection[]> {
-    return this.http.get<Inspection[]>(URI);
-  }
-
-  getAllInspectionsWhereDamaged(): Observable<Inspection[]> {
-    return this.http.get<Inspection[]>(URI + 'damaged');
-  }
-
-  getAllInspectionsByStaffMember(id: number): Observable<Inspection[]> {
-    return this.http.get<Inspection[]>(URI + 'staff/' + id);
+  getInspections(filter: string, option: string): Observable<Inspection[]> {
+    return this.http.get<Inspection[]>(URI + filter + '/' + option);
   }
 
   createInspection(inspection: Inspection): Observable<Inspection> {

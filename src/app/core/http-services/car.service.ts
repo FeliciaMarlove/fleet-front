@@ -19,16 +19,8 @@ export class CarService {
     return this.http.get<Car>(URI + id);
   }
 
-  getAllCars(): Observable<Car[]> {
-    return this.http.get<Car[]>(URI);
-  }
-
-  getAllCarsActive(): Observable<Car[]> {
-    return this.http.get<Car[]>(URI + 'active');
-  }
-
-  getAllCarsArchived(): Observable<Car[]> {
-    return this.http.get<Car[]>(URI + 'archived');
+  getCars(filter: string, option: string): Observable<Car[]> {
+    return this.http.get<Car[]>(URI + filter + '/' + option);
   }
 
   createCar(car: Car): Observable<Car> {
@@ -37,13 +29,5 @@ export class CarService {
 
   updateCar(car: Car): Observable<Car> {
     return this.http.put<Car>(URI, car, Conf.httpOptions);
-  }
-
-  getAllCarsByBrand(brand: string): Observable<Car[]> {
-    return this.http.get<Car[]>(URI + 'brand/' + brand);
-  }
-
-  getAllCarsByFuel(fuel: string): Observable<Car[]> {
-    return this.http.get<Car[]>(URI + 'fuel/' + fuel);
   }
 }

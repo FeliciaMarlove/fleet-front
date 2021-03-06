@@ -33,7 +33,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
    * Initiate the list with all fuel operations
    */
   private initFillups() {
-    this.tankFillingService.getAllFillUps().subscribe(
+    this.tankFillingService.getFillUps().subscribe(
       fillups => {
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(fillups);
         this.dataSource.data = fillups;

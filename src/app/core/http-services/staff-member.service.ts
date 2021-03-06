@@ -20,16 +20,8 @@ export class StaffMemberService {
     return this.http.get<StaffMember>(URI + id);
   }
 
-  getAllStaff(): Observable<StaffMember[]> {
-    return this.http.get<StaffMember[]>(URI);
-  }
-
-  getAllStaffWithCar(): Observable<StaffMember[]> {
-    return this.http.get<StaffMember[]>(URI + 'withcar');
-  }
-
-  getAllStaffWithoutCar(): Observable<StaffMember[]> {
-    return this.http.get<StaffMember[]>(URI + 'withoutcar');
+  getStaff(filter: string, option: string): Observable<StaffMember[]> {
+    return this.http.get<StaffMember[]>(URI + filter + '/' + option);
   }
 
   updateStaffMember(staffMember: StaffMember): Observable<StaffMember> {

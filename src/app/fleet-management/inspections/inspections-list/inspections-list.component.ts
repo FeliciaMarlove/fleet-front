@@ -37,7 +37,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    * Initiate the inspections list with all inspections
    */
   private initInspectionsList() {
-    this.inspectionService.getAllInspections().subscribe(
+    this.inspectionService.getInspections().subscribe(
       inspections => {
         this.assignCarAndStaffMember(inspections);
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(inspections);

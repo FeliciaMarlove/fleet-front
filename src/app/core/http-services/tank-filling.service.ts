@@ -19,12 +19,8 @@ export class TankFillingService {
     return this.http.get<TankFilling>(URI + id);
   }
 
-  getAllFillUps(): Observable<TankFilling[]> {
-    return this.http.get<TankFilling[]>(URI);
-  }
-
-  getAllFillUpsWithDiscrepancy(): Observable<TankFilling[]> {
-    return this.http.get<TankFilling[]>(URI + 'discrepancies');
+  getFillUps(filter: string, option: string): Observable<TankFilling[]> {
+    return this.http.get<TankFilling[]>(URI + filter + '/' + option);
   }
 
   createFillUp(tankFilling: TankFilling): Observable<TankFilling> {

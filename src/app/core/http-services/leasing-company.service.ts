@@ -19,12 +19,8 @@ export class LeasingCompanyService {
     return this.http.get<LeasingCompany>(URI + id);
   }
 
-  getLeasingCompanies(): Observable<LeasingCompany[]> {
-    return this.http.get<LeasingCompany[]>(URI);
-  }
-
-  getActiveLeasingCompanies(): Observable<LeasingCompany[]> {
-    return this.http.get<LeasingCompany[]>(URI + 'active');
+  getLeasingCompanies(filter: string, option: string): Observable<LeasingCompany[]> {
+    return this.http.get<LeasingCompany[]>(URI + filter + '/' + option);
   }
 
   createLeasingCompany(leasingCompany: LeasingCompany): Observable<LeasingCompany> {

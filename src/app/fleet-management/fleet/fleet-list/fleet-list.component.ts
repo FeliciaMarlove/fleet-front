@@ -10,6 +10,7 @@ import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-c
   templateUrl: './fleet-list.component.html',
   styleUrls: ['./fleet-list.component.scss']
 })
+
 export class FleetListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['view', 'cplate', 'cbrand', 'cmodel', 'cfuel', 'cstaff'];
   public colNames: string[] = ['', 'Plate', 'Brand', 'Model', 'Fuel', 'Owner'];
@@ -17,13 +18,9 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Fleet';
   public paginationChoices: number[] = [10];
-  public currentFilterName = 'active';
-  public currentFilterParam = '';
-  private availableFilters = [
-    {name: 'all', method: this.carService.getAllCars()},
-    {name: 'archived', method: this.carService.getAllCarsArchived()},
-    {name: 'active', method: this.carService.getAllCarsActive()}
-  ];
+  public filter = '';
+  // available filters: 'BRAND' || 'ACTIVE' || 'ARCHIVED' || 'FUEL' || 'ALL';
+  public option = null;
 
   constructor(
     private carService: CarService,
@@ -32,6 +29,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.filter = 'ACTIVE';
     this.initCarsList();
   }
 
@@ -43,16 +41,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * Initiate the list of cars according to current filter
    */
   private initCarsList() {
-    if (this.currentFilterName === 'brand') {
-      this.carService.getAllCarsByBrand(this.currentFilterParam).subscribe(cars =>
-        this.assignCarList(cars));
-    } else if (this.currentFilterName === 'fuel') {
-      this.carService.getAllCarsByFuel(this.currentFilterParam).subscribe(cars => this.assignCarList(cars));
-    } else {
-      this.availableFilters.find(filter => filter.name === this.currentFilterName).method.subscribe(cars => {
-        this.assignCarList(cars);
-      });
-    }
+    this.carService.getCars(this.filter, this.option).subscribe(cars => this.assignCarList(cars));
   }
 
   /**
@@ -80,18 +69,5 @@ export class FleetListComponent implements OnInit, AfterViewInit {
 
   public doOpenCarDetail(car: Car) {
     console.log(car);
-  }
-
-  /**
-   * Filter the list of cars according to filter name and optional filter parameter
-   * @param filter The name of the filter to apply to the list
-   * @param param The optional parameter of the filter
-   */
-  private filter(filter: string, param?: string) {
-    if (filter !== this.currentFilterName) {
-      this.currentFilterName = filter;
-      this.currentFilterParam = param;
-      this.initCarsList();
-    }
   }
 }
