@@ -21,13 +21,15 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { FuelDisplayPipe } from './pipe/fuel-display.pipe';
 
 @NgModule({
   declarations: [
   CarShortDisplayPipe,
   DiscrepancyToDisplayNamePipe,
   BelgianPhoneNumberPipe,
-  StaffShortDisplayPipe
+  StaffShortDisplayPipe,
+  FuelDisplayPipe
   ],
   imports: [
     CommonModule,
@@ -50,29 +52,30 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatListModule,
     MatSlideToggleModule,
   ],
-  exports: [
-    RouterModule,
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    FormsModule,
-    MatButtonToggleModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatInputModule,
-    MatSliderModule,
-    MatTableModule,
-    MatListModule,
-    MatPaginatorModule,
-    MatSlideToggleModule,
-    CarShortDisplayPipe,
-    DiscrepancyToDisplayNamePipe,
-    BelgianPhoneNumberPipe,
-    StaffShortDisplayPipe
-  ]
+    exports: [
+        RouterModule,
+        MatButtonModule,
+        MatIconModule,
+        MatListModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        FormsModule,
+        MatButtonToggleModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatInputModule,
+        MatSliderModule,
+        MatTableModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatSlideToggleModule,
+        CarShortDisplayPipe,
+        DiscrepancyToDisplayNamePipe,
+        BelgianPhoneNumberPipe,
+        StaffShortDisplayPipe,
+        FuelDisplayPipe
+    ]
 })
 export class SharedModule { }
