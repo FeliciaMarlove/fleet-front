@@ -1,1 +1,25 @@
-<p>fleet-filter-dialog works!</p>
+<form [formGroup]="form">
+  <mat-form-field appearance="fill">
+    <mat-select #currentSelection formControlName="filter">
+      <mat-option *ngFor="let filter of filtersList" [value]="filter.value">
+        {{filter.key}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'BRAND'">
+    <mat-select formControlName="filter">
+      <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand">
+        {{brand.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'FUEL'">
+    <mat-select formControlName="filter">
+      <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel">
+        {{fuel.value}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+
