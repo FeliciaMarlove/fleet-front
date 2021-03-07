@@ -8,6 +8,15 @@ table {
   width: 100%;
 }
 
+.list-button {
+  margin-right: 10px !important;
+  margin-bottom: 7px !important;
+}
+
+.filter-button {
+  margin-right: 15px !important;
+}
+
 .mat-drawer {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -21,6 +30,13 @@ table {
 .mat-drawer-inner-container {
   width: 250px !important;
   background-color: #E8EAF6;
+}
+
+.mat-dialog-title {
+  background-color: #3F51B5;
+  padding: 10px;
+  color: white;
+  text-align: center;
 }
 
 .mat-mini-fab {

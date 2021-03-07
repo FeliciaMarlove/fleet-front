@@ -1,6 +1,9 @@
 <h2>{{title}}</h2>
 
-<button (click)="doOpenFilterDialog()">X</button>
+<button class="list-button" mat-raised-button (click)="doOpenFilterDialog()">
+  <mat-icon>filter_alt</mat-icon>
+  Filter
+</button>
 
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="view">

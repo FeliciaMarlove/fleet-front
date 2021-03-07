@@ -1,25 +1,48 @@
-<form [formGroup]="form">
-  <mat-form-field appearance="fill">
-    <mat-select #currentSelection formControlName="filter">
-      <mat-option *ngFor="let filter of filtersList" [value]="filter.value">
-        {{filter.key}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'BRAND'">
-    <mat-select formControlName="filter">
-      <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand">
-        {{brand.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'FUEL'">
-    <mat-select formControlName="filter">
-      <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel">
-        {{fuel.value}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</form>
+<h3 mat-dialog-title>{{title}}</h3>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-select #currentSelection formControlName="filter" (selectionChange)="updateSelection($event)">
+        <mat-option *ngFor="let filter of filtersList" [value]="filter.value">
+          {{filter.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'BRAND'">
+      <mat-select formControlName="option" (selectionChange)="formIsValid = true">
+        <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand.key">
+          {{brand.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'FUEL'">
+      <mat-select formControlName="option" (selectionChange)="formIsValid = true">
+        <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
+          {{fuel.value}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<button
+  class="filter-button"
+  mat-raised-button
+  color="accent"
+  [disabled]="!formIsValid"
+  (click)="doFilter()">
+  Filter
+</button>
+
+<button
+  class="filter-button"
+  mat-raised-button
+  (click)="matDialogRef.close()">
+  Cancel
+</button>
+
 
 
