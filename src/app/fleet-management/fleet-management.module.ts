@@ -18,7 +18,7 @@ import { FleetFilterDialogComponent } from './fleet/fleet-list/fleet-filter-dial
     FillupsListComponent,
     LeasingCompaniesListComponent,
     InspectionsListComponent,
-    FleetFilterDialogComponent
+    FleetFilterDialogComponent,
   ],
   imports: [
     CommonModule,
