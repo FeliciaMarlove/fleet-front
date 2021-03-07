@@ -21,6 +21,15 @@ table {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.mat-select-arrow {
+  color: #FF6F00 !important;
+}
+
+// line under a form field (fill appearance)
+.mat-form-field-ripple {
+  background-color: #FF6F00 !important;
+}
+
 // the "outer" content, not the inner content of the mat drawer (side nav)
 .mat-drawer-content {
   padding-left: 15px;
