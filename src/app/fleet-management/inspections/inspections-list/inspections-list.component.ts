@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {Inspection} from '../../../shared/models/inspection.model';
 import {InspectionService} from '../../../core/http-services/inspection.service';
 import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-creator.util';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {CarService} from '../../../core/http-services/car.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-inspections-list',
@@ -15,7 +16,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['view', 'idate', 'iby', 'iplate', 'icar', 'istaff', 'isent'];
   public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Sent?'];
   public dataSource = new MatTableDataSource<Inspection>();
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public title = 'Car inspections';
   public paginationChoices: number[] = [10];
 
@@ -37,7 +38,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    * Initiate the inspections list with all inspections
    */
   private initInspectionsList() {
-    this.inspectionService.getInspections().subscribe(
+    // TODO
+    this.inspectionService.getInspections(null, null).subscribe(
       inspections => {
         this.assignCarAndStaffMember(inspections);
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(inspections);

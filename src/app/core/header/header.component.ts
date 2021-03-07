@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MatSidenav, MatSlideToggle} from '@angular/material';
+import {MatSidenav} from '@angular/material/sidenav';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-header',

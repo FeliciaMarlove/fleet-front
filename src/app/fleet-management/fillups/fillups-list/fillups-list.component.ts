@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {TankFilling} from '../../../shared/models/tank-filling.model';
 import {TankFillingService} from '../../../core/http-services/tank-filling.service';
 import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-creator.util';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-fillups',
@@ -13,7 +14,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['warning-icon', 'fdate', 'fdisctype', ];
   public colNames: string[] = ['', 'Date', 'Discrepancy'];
   public dataSource = new MatTableDataSource<TankFilling>();
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public title = 'Fuel usage report';
   public paginationChoices: number[] = [10];
 
@@ -33,7 +34,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
    * Initiate the list with all fuel operations
    */
   private initFillups() {
-    this.tankFillingService.getFillUps().subscribe(
+    // TODO
+    this.tankFillingService.getFillUps(null, null).subscribe(
       fillups => {
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(fillups);
         this.dataSource.data = fillups;
@@ -43,6 +45,6 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   }
 
   public doOpenWarning(fillup: TankFilling) {
-    console.log(fillup)
+    console.log(fillup);
   }
 }

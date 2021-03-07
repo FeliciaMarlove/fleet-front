@@ -8,7 +8,7 @@ import { HeaderComponent } from './core/header/header.component';
 import { SideNavComponent } from './core/side-nav/side-nav.component';
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
-import {MatSidenavModule, MatSlideToggleModule} from '@angular/material';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,6 @@ import {MatSidenavModule, MatSlideToggleModule} from '@angular/material';
         CoreModule,
         SharedModule,
         MatSidenavModule,
-        MatSlideToggleModule,
     ],
   providers: [],
   bootstrap: [AppComponent]

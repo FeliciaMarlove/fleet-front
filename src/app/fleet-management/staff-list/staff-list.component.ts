@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {StaffMemberService} from '../../core/http-services/staff-member.service';
 import {StaffMember} from '../../shared/models/staff-member.model';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
 import {PaginationListCreatorUtil} from '../../shared/utils/pagination-list-creator.util';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-staff-list',
@@ -13,7 +14,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['view', 'fname', 'lname', 'hasCar', 'car_plate', 'car', 'unlink-action'];
   public colNames: string[] = ['', 'First name', 'Last name', 'Car?', 'Car plate', 'Car model', ''];
   public dataSource = new MatTableDataSource<StaffMember>();
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public title = 'Staff members';
   public paginationChoices: number[] = [10];
 
@@ -33,7 +34,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    * Initiate the staff list with all staff members
    */
   private initStaffList(): void {
-    this.staffService.getStaff().subscribe(
+    // TODO
+    this.staffService.getStaff(null, null).subscribe(
       staffList => {
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(staffList);
         this.getStaffCurrentCar(staffList);
