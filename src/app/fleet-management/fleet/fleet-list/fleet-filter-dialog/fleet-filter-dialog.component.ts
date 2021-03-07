@@ -25,14 +25,14 @@ export class FleetFilterDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initList();
+    this.initFiltersList();
     this.initForm();
   }
 
   /**
    * Make a list of key:value filters from the plain JSON object
    */
-  private initList() {
+  private initFiltersList() {
     Object.entries(this.data.list).forEach(
       ([key, value]) => {
         this.filtersList.push({key, value});

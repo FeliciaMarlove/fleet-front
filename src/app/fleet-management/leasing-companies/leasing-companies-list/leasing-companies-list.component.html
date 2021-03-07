@@ -1,5 +1,10 @@
 <h2>{{title}}</h2>
 
+<button class="list-button" mat-raised-button (click)="doOpenFilterDialog()">
+  <mat-icon>filter_alt</mat-icon>
+  Filter
+</button>
+
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="edit">
     <th mat-header-cell *matHeaderCellDef>{{colNames[0]}}</th>

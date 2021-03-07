@@ -1,0 +1,29 @@
+<h3 mat-dialog-title>{{title}}</h3>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-select formControlName="filter">
+        <mat-option *ngFor="let filter of filtersList" [value]="filter.value">
+          {{filter.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<button
+  class="filter-button"
+  mat-raised-button
+  color="accent"
+  [disabled]="form.invalid"
+  (click)="doFilter()">
+  Filter
+</button>
+
+<button
+  class="filter-button"
+  mat-raised-button
+  (click)="matDialogRef.close()">
+  Cancel
+</button>
