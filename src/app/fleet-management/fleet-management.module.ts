@@ -8,6 +8,7 @@ import { FillupsListComponent } from './fillups/fillups-list/fillups-list.compon
 import { LeasingCompaniesListComponent } from './leasing-companies/leasing-companies-list/leasing-companies-list.component';
 import { InspectionsListComponent } from './inspections/inspections-list/inspections-list.component';
 import { FleetFilterDialogComponent } from './fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
+import { InspectionFilterDialogComponent } from './inspections/inspections-list/inspection-filter-dialog/inspection-filter-dialog.component';
 
 
 
@@ -19,6 +20,7 @@ import { FleetFilterDialogComponent } from './fleet/fleet-list/fleet-filter-dial
     LeasingCompaniesListComponent,
     InspectionsListComponent,
     FleetFilterDialogComponent,
+    InspectionFilterDialogComponent,
   ],
   imports: [
     CommonModule,

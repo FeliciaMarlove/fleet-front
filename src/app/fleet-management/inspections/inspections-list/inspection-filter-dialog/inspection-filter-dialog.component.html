@@ -10,20 +10,15 @@
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'BRAND'">
-      <mat-select formControlName="option" (selectionChange)="formIsValid = true">
-        <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand.key">
-          {{brand.value}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'FUEL'">
-      <mat-select formControlName="option" (selectionChange)="formIsValid = true">
-        <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
-          {{fuel.value}}
-        </mat-option>
-      </mat-select>
+    <mat-form-field appearance="fill" *ngIf="currentSelection.value === 'DATE_ABOVE'">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [max]="maxDate"  [matDatepicker]="picker" formControlName="option" (dateInput)="formIsValid = true">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker
+          #picker
+          startView="multi-year">
+        <!--     Start view multi years sets view to display list of years first, then month, then date     -->
+        </mat-datepicker>
     </mat-form-field>
   </form>
 </mat-dialog-content>

@@ -9,6 +9,7 @@ import { SideNavComponent } from './core/side-nav/side-nav.component';
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {DatePipe} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
         SharedModule,
         MatSidenavModule,
     ],
-  providers: [],
+  providers: [
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

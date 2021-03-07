@@ -83,7 +83,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * Initiate the list of cars according to current filter
    */
   private initCarsList() {
-    this.carService.getCars(this.filter, this.option).subscribe(cars => this.assignCarList(cars));
+    this.carService.getCars(this.filter, this.option).subscribe(cars => this.assignCarsList(cars));
   }
 
   /**
@@ -91,7 +91,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * Create pagination according to list size and add Staff member to each Car in the list
    * @param cars The list of cars to display
    */
-  private assignCarList(cars) {
+  private assignCarsList(cars) {
     this.paginationChoices = PaginationListCreatorUtil.setPaginationList(cars);
     this.getCarOwner(cars);
     this.dataSource.data = cars;
