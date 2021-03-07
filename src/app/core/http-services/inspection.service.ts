@@ -14,7 +14,7 @@ export class InspectionService {
 
   constructor(
     private http: HttpClient,
-    public datepipe: DatePipe
+    public datePipe: DatePipe
   ) { }
 
   getInspection(id: number): Observable<Inspection> {
@@ -22,7 +22,7 @@ export class InspectionService {
   }
 
   getInspections(filter: string, option: Date): Observable<Inspection[]> {
-    return this.http.get<Inspection[]>(URI + filter + '/' + this.datepipe.transform(option, 'yyyy-MM-dd'));
+    return this.http.get<Inspection[]>(URI + filter + '/' + this.datePipe.transform(option, 'yyyy-MM-dd'));
   }
 
   createInspection(inspection: Inspection): Observable<Inspection> {

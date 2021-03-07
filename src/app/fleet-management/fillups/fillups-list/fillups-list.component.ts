@@ -4,6 +4,9 @@ import {TankFillingService} from '../../../core/http-services/tank-filling.servi
 import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-creator.util';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import {MatDialog} from '@angular/material/dialog';
+import {InspectionFilterDialogComponent} from '../../inspections/inspections-list/inspection-filter-dialog/inspection-filter-dialog.component';
+import {FillupFilterDialogComponent} from './fillup-filter-dialog/fillup-filter-dialog.component';
 
 @Component({
   selector: 'app-fillups',
@@ -17,12 +20,19 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public title = 'Fuel usage report';
   public paginationChoices: number[] = [10];
+  public filter: string = null;
+  public filterList: object;
+  public option: Date = null;
+  private defaultFilter: string;
 
   constructor(
-    private tankFillingService: TankFillingService
+    private tankFillingService: TankFillingService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
+    this.initAvailableFiltersList();
+    this.initDefaultFilter();
     this.initFillups();
   }
 
@@ -31,11 +41,58 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Initialize the list of available filters on a key:value base
+   * First filter of the list will be used as default filter when entering the view
+   */
+  private initAvailableFiltersList() {
+    this.filterList = {'TO DO': 'WITH_DISCREPANCY_NOT_CORRECTED', 'From date': 'DATE_ABOVE', 'With discrepancies': 'WITH_DISCREPANCY', All: 'ALL'};
+  }
+
+  /**
+   * Initialize the default filter with the key of the first filter in the available filters list
+   * Assign default filter value to filter
+   */
+  private initDefaultFilter() {
+    this.option = this.getTodayMinusOneYear();
+    this.defaultFilter = String(Object.entries(this.filterList).slice(0, 1)[0][1]);
+    this.filter = this.defaultFilter;
+  }
+
+  /**
+   * Get today's date one year ago
+   * Return the date
+   */
+  private getTodayMinusOneYear(): Date {
+    const d = new Date();
+    const lastYear = d.getFullYear() - 1;
+    d.setFullYear(lastYear);
+    return d;
+  }
+
+  /**
+   * Open dialog to choose filtering criteria, passing the available filters list and the current filter to the dialog
+   * Get result after closing the dialog and filter accordingly the list
+   */
+  public doOpenFilterDialog() {
+    this.dialog.open(FillupFilterDialogComponent, {
+        width: '320px',
+        height: '350px',
+        data: {list: this.filterList, current: this.filter, option: this.option},
+      }
+    ).afterClosed().subscribe(filter => {
+      if (filter) {
+        this.filter = filter.filter;
+        this.option = filter.option;
+        this.initFillups();
+      }
+    });
+  }
+
+  /**
    * Initiate the list with all fuel operations
    */
   private initFillups() {
-    // TODO
-    this.tankFillingService.getFillUps(null, null).subscribe(
+    this.tankFillingService.getFillUps(this.filter, this.option).subscribe(
       fillups => {
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(fillups);
         this.dataSource.data = fillups;

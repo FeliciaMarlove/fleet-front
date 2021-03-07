@@ -7,7 +7,6 @@ import {CarService} from '../../../core/http-services/car.service';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
-import {FleetFilterDialogComponent} from '../../fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
 import {InspectionFilterDialogComponent} from './inspection-filter-dialog/inspection-filter-dialog.component';
 
 @Component({
