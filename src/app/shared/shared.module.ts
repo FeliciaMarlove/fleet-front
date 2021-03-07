@@ -20,7 +20,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatToolbarModule} from '@angular/material/toolbar';
 import { FuelDisplayPipe } from './pipe/fuel-display.pipe';
 import { NoOptionFilterDialogComponent } from './utils/no-option-filter-dialog/no-option-filter-dialog.component';
 
@@ -31,7 +30,7 @@ import { NoOptionFilterDialogComponent } from './utils/no-option-filter-dialog/n
   BelgianPhoneNumberPipe,
   StaffShortDisplayPipe,
   FuelDisplayPipe,
-  NoOptionFilterDialogComponent
+  NoOptionFilterDialogComponent,
   ],
   imports: [
     CommonModule,
