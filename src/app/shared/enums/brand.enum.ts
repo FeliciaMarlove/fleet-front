@@ -1,10 +1,10 @@
 export enum Brand {
-  Opel,
-  Mini,
-  Audi,
-  Renault,
-  Peugeot,
-  VW,
-  Citroen,
-  Jaguar
+  Opel = 'Opel',
+  Mini = 'Mini',
+  Audi = 'Audi',
+  Renault = 'Renault',
+  Peugeot = 'Peugeot',
+  VW = 'VW',
+  Citroen = 'Citroen',
+  Jaguar = 'Jaguar'
 }

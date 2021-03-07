@@ -19,9 +19,10 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
   public title = 'Fleet';
   public paginationChoices: number[] = [10];
-  public filter = '';
-  public filterList = {brand: 'BRAND', active: 'ACTIVE', archived: 'ARCHIVED', fuel: 'FUEL', all: 'ALL'};
-  public option = null;
+  public filter: string = null;
+  public filterList: object;
+  public option: string = null;
+  private defaultFilter: string;
 
   constructor(
     private carService: CarService,
@@ -31,7 +32,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.filter = this.filterList.archived;
+    this.initAvailableFiltersList();
+    this.initDefaultFilter();
     this.initCarsList();
   }
 
@@ -39,11 +41,33 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  /**
+   * Initialize the list of available filters on a key:value base
+   * First filter of the list will be used as default filter when entering the view
+   */
+  private initAvailableFiltersList() {
+    this.filterList = {Active: 'ACTIVE', Archived: 'ARCHIVED', Brand: 'BRAND', Fuel: 'FUEL', All: 'ALL'};
+  }
+
+  /**
+   * Initialize the default filter with the key of the first filter in the available filters list
+   * Assign default filter value to filter
+   */
+  private initDefaultFilter() {
+    this.defaultFilter = String(Object.entries(this.filterList).slice(0, 1)[0][1]);
+    this.filter = this.defaultFilter;
+  }
+
+  /**
+   * Open dialog to choose filtering criteria, passing the available filters list and the current filter to the dialog
+   */
   public doOpenFilterDialog() {
     this.dialog.open(FleetFilterDialogComponent, {
-      width: '450px',
-      height: '350px',
-    });
+        width: '450px',
+        height: '350px',
+        data: {list: this.filterList, current: this.filter, option: this.option},
+      }
+    );
   }
 
   /**
