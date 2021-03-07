@@ -62,14 +62,21 @@ export class FleetListComponent implements OnInit, AfterViewInit {
 
   /**
    * Open dialog to choose filtering criteria, passing the available filters list and the current filter to the dialog
+   * Get result after closing the dialog and filter accordingly the list
    */
   public doOpenFilterDialog() {
     this.dialog.open(FleetFilterDialogComponent, {
-        width: '450px',
+        width: '320px',
         height: '350px',
         data: {list: this.filterList, current: this.filter, option: this.option},
       }
-    );
+    ).afterClosed().subscribe(filter => {
+      if (filter) {
+        this.filter = filter.filter;
+        this.option = filter.option;
+        this.initCarsList();
+      }
+    });
   }
 
   /**

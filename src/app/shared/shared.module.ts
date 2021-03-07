@@ -20,6 +20,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatTableModule,
     MatPaginatorModule,
     MatListModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   exports: [
     RouterModule,
