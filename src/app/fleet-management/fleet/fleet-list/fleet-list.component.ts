@@ -1,10 +1,12 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from '@angular/material';
 import {Car} from '../../../shared/models/car.model';
 import {CarService} from '../../../core/http-services/car.service';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-creator.util';
 import {FleetFilterDialogComponent} from './fleet-filter-dialog/fleet-filter-dialog.component';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-fleet-list',
@@ -16,7 +18,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['view', 'cplate', 'cbrand', 'cmodel', 'cfuel', 'cstaff'];
   public colNames: string[] = ['', 'Plate', 'Brand', 'Model', 'Fuel', 'Owner'];
   public dataSource = new MatTableDataSource<Car>();
-  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public title = 'Fleet';
   public paginationChoices: number[] = [10];
   public filter: string = null;
