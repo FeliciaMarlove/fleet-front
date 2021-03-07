@@ -39,7 +39,7 @@
 
   <ng-container matColumnDef="cfuel">
     <th mat-header-cell *matHeaderCellDef>{{colNames[4]}}</th>
-    <td mat-cell *matCellDef="let car">{{car.fuelType}}</td>
+    <td mat-cell *matCellDef="let car">{{car.fuelType | fuelDisplay}}</td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[4]}}</td>
   </ng-container>
 
