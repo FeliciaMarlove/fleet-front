@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {FleetFilterDialogComponent} from '../fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
 import {FiltersListsService} from '../../shared/utils/filters-lists.service';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-staff-list',
@@ -14,17 +15,18 @@ import {FiltersListsService} from '../../shared/utils/filters-lists.service';
   styleUrls: ['./staff-list.component.scss']
 })
 export class StaffListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['view', 'fname', 'lname', 'hasCar', 'car_plate', 'car', 'unlink-action'];
+  public displayedColumns: string[] = ['view', 'staffFirstName', 'staffLastName', 'hasCar', 'car_plate', 'car', 'unlink-action'];
   public colNames: string[] = ['', 'First name', 'Last name', 'Car?', 'Car plate', 'Car model', ''];
   public dataSource = new MatTableDataSource<StaffMember>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public title = 'Staff members';
   public paginationChoices: number[] = [10];
   public filter: string = null;
   public filterList: object;
   private defaultFilter: string;
   public option: string = null;
-  private readonly iAm = 'staff';
+  public readonly iAm = 'staff';
 
   constructor(
     private staffService: StaffMemberService,
@@ -40,6 +42,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**

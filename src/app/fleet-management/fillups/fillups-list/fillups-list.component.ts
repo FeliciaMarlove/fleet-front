@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {FillupFilterDialogComponent} from './fillup-filter-dialog/fillup-filter-dialog.component';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-fillups',
@@ -14,10 +15,11 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
   styleUrls: ['./fillups-list.component.scss']
 })
 export class FillupsListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['warning-icon', 'fdate', 'fdisctype', ];
+  public displayedColumns: string[] = ['warning-icon', 'dateTimeFilling', 'discrepancyType', ];
   public colNames: string[] = ['', 'Date', 'Discrepancy'];
   public dataSource = new MatTableDataSource<TankFilling>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public title = 'Fuel usage report';
   public paginationChoices: number[] = [10];
   public filter: string = null;
@@ -40,6 +42,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**

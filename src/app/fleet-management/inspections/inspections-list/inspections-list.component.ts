@@ -9,6 +9,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {InspectionFilterDialogComponent} from './inspection-filter-dialog/inspection-filter-dialog.component';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-inspections-list',
@@ -16,10 +17,11 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
   styleUrls: ['./inspections-list.component.scss']
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['view', 'idate', 'iby', 'iplate', 'icar', 'istaff', 'idamaged', 'isent'];
+  public displayedColumns: string[] = ['view', 'inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged', 'sentDate'];
   public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?', 'Sent?'];
   public dataSource = new MatTableDataSource<Inspection>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public title = 'Car inspections';
   public paginationChoices: number[] = [10];
   public filter: string = null;
@@ -44,6 +46,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**

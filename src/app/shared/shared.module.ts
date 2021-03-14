@@ -25,6 +25,7 @@ import {NoOptionFilterDialogComponent} from './utils/no-option-filter-dialog/no-
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { FilterDisplayPipe } from './pipe/filter-display.pipe';
+import {MatSortModule} from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { FilterDisplayPipe } from './pipe/filter-display.pipe';
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSortModule
   ],
   exports: [
     RouterModule,
@@ -83,6 +85,7 @@ import { FilterDisplayPipe } from './pipe/filter-display.pipe';
     MatSlideToggleModule,
     MatNativeDateModule,
     MatTooltipModule,
+    MatSortModule,
     // ---- PIPES
     CarShortDisplayPipe,
     DiscrepancyToDisplayNamePipe,

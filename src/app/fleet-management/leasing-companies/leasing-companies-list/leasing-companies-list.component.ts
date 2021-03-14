@@ -7,6 +7,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {FleetFilterDialogComponent} from '../../fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-leasing-companies-list',
@@ -14,10 +15,11 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
   styleUrls: ['./leasing-companies-list.component.scss']
 })
 export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['edit', 'lname', 'lcontact', 'lphone', 'lemail', 'lactive'];
+  public displayedColumns: string[] = ['edit', 'leasingCompanyName', 'leasingCompanyContactPerson', 'leasingCompanyPhone', 'leasingCompanyEmail', 'active'];
   public colNames: string[] = ['', 'Name', 'Contact person', 'Phone', 'Email', 'Active'];
   public dataSource = new MatTableDataSource<LeasingCompany>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public title = 'Leasing companies';
   public paginationChoices: number[] = [10];
   public filter: string = null;
@@ -40,6 +42,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**

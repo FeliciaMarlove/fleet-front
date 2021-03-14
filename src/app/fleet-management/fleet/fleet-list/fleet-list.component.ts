@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-fleet-list',
@@ -16,10 +17,11 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 })
 
 export class FleetListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['view', 'cplate', 'cbrand', 'cmodel', 'cfuel', 'cstaff'];
+  public displayedColumns: string[] = ['view', 'plateNumber', 'brand', 'model', 'fuelType', 'staffMember'];
   public colNames: string[] = ['', 'Plate', 'Brand', 'Model', 'Fuel', 'Owner'];
   public dataSource = new MatTableDataSource<Car>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   public title = 'Fleet';
   public paginationChoices: number[] = [10];
   public filter: string = null;
@@ -44,6 +46,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   /**
