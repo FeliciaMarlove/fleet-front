@@ -4,9 +4,7 @@
   font-family: Montserrat, Roboto, Verdana, sans-serif;
 }
 
-table {
-  width: 100%;
-}
+// Custom classes
 
 .list-button {
   margin-right: 10px !important;
@@ -15,6 +13,26 @@ table {
 
 .filter-button {
   margin-right: 15px !important;
+}
+
+.list-actions-buttons-container {
+  display: flex;
+  flex-direction: row;
+}
+
+// CSS and Material classes
+
+table {
+  width: 100%;
+  border: grey 1px dotted;
+}
+
+.mat-tooltip {
+  font-size: 14px !important;
+  background-color: #1A237E !important;
+  max-width: unset !important;
+  // white-space: pre allows line breaks to be interpreted
+  white-space: pre !important;
 }
 
 .mat-drawer {

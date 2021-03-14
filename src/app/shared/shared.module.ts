@@ -23,6 +23,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {FuelDisplayPipe} from './pipe/fuel-display.pipe';
 import {NoOptionFilterDialogComponent} from './utils/no-option-filter-dialog/no-option-filter-dialog.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { FilterDisplayPipe } from './pipe/filter-display.pipe';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     StaffShortDisplayPipe,
     FuelDisplayPipe,
     NoOptionFilterDialogComponent,
+    FilterDisplayPipe,
   ],
   imports: [
     CommonModule,
@@ -54,10 +57,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatListModule,
     MatSlideToggleModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTooltipModule
   ],
   exports: [
     RouterModule,
+    // ---- SHARED MATERIAL MODULES
     MatButtonModule,
     MatIconModule,
     MatListModule,
@@ -77,12 +82,16 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatDatepickerModule,
     MatSlideToggleModule,
     MatNativeDateModule,
+    MatTooltipModule,
+    // ---- PIPES
     CarShortDisplayPipe,
     DiscrepancyToDisplayNamePipe,
     BelgianPhoneNumberPipe,
     StaffShortDisplayPipe,
     FuelDisplayPipe,
-    NoOptionFilterDialogComponent
+    FilterDisplayPipe,
+    // ---- SHARED COMPONENTS
+    NoOptionFilterDialogComponent,
   ]
 })
 export class SharedModule {
