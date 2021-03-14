@@ -22,6 +22,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   public paginationChoices: number[] = [10];
   public filter: string = null;
   public filterList: object;
+  public option: string = null;
   private defaultFilter: string;
   private readonly iAm = 'leasing';
 
