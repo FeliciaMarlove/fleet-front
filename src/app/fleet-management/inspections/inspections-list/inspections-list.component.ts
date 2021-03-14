@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {InspectionFilterDialogComponent} from './inspection-filter-dialog/inspection-filter-dialog.component';
+import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 
 @Component({
   selector: 'app-inspections-list',
@@ -25,12 +26,14 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   public filterList: object;
   public option: Date = null;
   private defaultFilter: string;
+  public readonly iAm = 'inspection';
 
   constructor(
     private inspectionService: InspectionService,
     private staffService: StaffMemberService,
     private carService: CarService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private filtersListsService: FiltersListsService
   ) { }
 
   ngOnInit() {
@@ -48,7 +51,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    * First filter of the list will be used as default filter when entering the view
    */
   private initAvailableFiltersList() {
-    this.filterList = {'From date': 'DATE_ABOVE', Damaged: 'DAMAGED', All: 'ALL'};
+    this.filterList = this.filtersListsService.getFiltersList(this.iAm);
   }
 
   /**

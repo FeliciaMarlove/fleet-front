@@ -7,6 +7,7 @@ import {FleetFilterDialogComponent} from './fleet-filter-dialog/fleet-filter-dia
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
+import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 
 @Component({
   selector: 'app-fleet-list',
@@ -25,11 +26,13 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   public filterList: object;
   public option: string = null;
   private defaultFilter: string;
+  public readonly iAm = 'fleet';
 
   constructor(
     private carService: CarService,
     private staffService: StaffMemberService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private filtersListsService: FiltersListsService
   ) {
   }
 
@@ -48,7 +51,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * First filter of the list will be used as default filter when entering the view
    */
   private initAvailableFiltersList() {
-    this.filterList = {Active: 'ACTIVE', Archived: 'ARCHIVED', Brand: 'BRAND', Fuel: 'FUEL', All: 'ALL'};
+    this.filterList = this.filtersListsService.getFiltersList(this.iAm);
   }
 
   /**
