@@ -6,6 +6,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {FleetFilterDialogComponent} from '../fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
+import {FiltersListsService} from '../../shared/utils/filters-lists.service';
 
 @Component({
   selector: 'app-staff-list',
@@ -22,10 +23,12 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   public filter: string = null;
   public filterList: object;
   private defaultFilter: string;
+  private readonly iAm = 'staff';
 
   constructor(
     private staffService: StaffMemberService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private filtersListsService: FiltersListsService
   ) { }
 
   ngOnInit() {
@@ -43,7 +46,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    * First filter of the list will be used as default filter when entering the view
    */
   private initAvailableFiltersList() {
-    this.filterList = {All: 'ALL', 'Without car': 'WITHOUT', 'With car': 'WITH', };
+    this.filterList = this.filtersListsService.getFiltersList(this.iAm);
   }
 
   /**
