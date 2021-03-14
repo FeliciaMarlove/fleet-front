@@ -27,6 +27,10 @@ export class FilterDisplayPipe implements PipeTransform {
     return output;
   }
 
+  /**
+   * Return clean output for the option
+   * @param option The raw option string
+   */
   private getOptionCleanDisplay(option: any): string {
     if (!(new Date(option).toString() === 'Invalid Date')) {
       return new Date(option).toDateString();
@@ -37,6 +41,11 @@ export class FilterDisplayPipe implements PipeTransform {
     }
   }
 
+  /**
+   * Return clean name for the Filter
+   * @param filterCategory The name of the component as defined in "iAm" constant
+   * @param filterRawName The raw name of the filter
+   */
   private getFilterCleanName(filterCategory: string, filterRawName: string): string {
     const list = this.filtersListsService.getFiltersList(filterCategory);
     /*
