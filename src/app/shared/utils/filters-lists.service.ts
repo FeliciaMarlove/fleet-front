@@ -24,6 +24,7 @@ export class FiltersListsService {
       case 'inspection': return inspection;
       case 'leasing': return leasing;
       case 'staff': return staff;
+      default: return null;
     }
   }
 }
