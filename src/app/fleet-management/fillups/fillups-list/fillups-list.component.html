@@ -16,15 +16,15 @@
   </mat-icon>
 </section>
 
-<table mat-table [dataSource]="dataSource">
-  <ng-container matColumnDef="fdate">
-    <th mat-header-cell *matHeaderCellDef>{{colNames[1]}}</th>
+<table mat-table [dataSource]="dataSource" matSort>
+  <ng-container matColumnDef="dateTimeFilling">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[1]}}</th>
     <td  mat-cell *matCellDef="let fillup">{{fillup.dateTimeFilling | date}}</td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[1]}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="fdisctype">
-    <th mat-header-cell *matHeaderCellDef>{{colNames[2]}}</th>
+  <ng-container matColumnDef="discrepancyType">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[2]}}</th>
     <td mat-cell *matCellDef="let fillup">{{fillup.discrepancyType | discrepancyToDisplayName}}</td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[2]}}</td>
   </ng-container>

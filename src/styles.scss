@@ -4,6 +4,11 @@
   font-family: Montserrat, Roboto, Verdana, sans-serif;
 }
 
+table {
+  width: 100%;
+  border: grey 1px dotted;
+}
+
 // Custom classes
 
 .list-button {
@@ -20,11 +25,16 @@
   flex-direction: row;
 }
 
-// CSS and Material classes
+// Material classes and handles
 
-table {
-  width: 100%;
-  border: grey 1px dotted;
+.mat-sort-header-arrow {
+  color: black !important;
+}
+
+.mat-sort-header-container:not(.mat-sort-header-sorted) .mat-sort-header-arrow {
+  opacity: 0.54 !important;
+  transform: translateY(0px) !important;
+  color: lightgray !important;
 }
 
 .mat-tooltip {
