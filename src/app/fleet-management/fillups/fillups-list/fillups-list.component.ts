@@ -5,8 +5,8 @@ import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-c
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
-import {InspectionFilterDialogComponent} from '../../inspections/inspections-list/inspection-filter-dialog/inspection-filter-dialog.component';
 import {FillupFilterDialogComponent} from './fillup-filter-dialog/fillup-filter-dialog.component';
+import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 
 @Component({
   selector: 'app-fillups',
@@ -22,12 +22,14 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   public paginationChoices: number[] = [10];
   public filter: string = null;
   public filterList: object;
-  public option: Date = null;
+  public option: any = null;
   private defaultFilter: string;
+  public readonly iAm = 'fillup';
 
   constructor(
     private tankFillingService: TankFillingService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private filtersListsService: FiltersListsService
   ) { }
 
   ngOnInit() {
@@ -45,7 +47,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
    * First filter of the list will be used as default filter when entering the view
    */
   private initAvailableFiltersList() {
-    this.filterList = {'TO DO': 'WITH_DISCREPANCY_NOT_CORRECTED', 'From date': 'DATE_ABOVE', 'With discrepancies': 'WITH_DISCREPANCY', All: 'ALL'};
+    this.filterList = this.filtersListsService.getFiltersList(this.iAm);
   }
 
   /**
@@ -53,7 +55,6 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
    * Assign default filter value to filter
    */
   private initDefaultFilter() {
-    this.option = this.getTodayMinusOneYear();
     this.defaultFilter = String(Object.entries(this.filterList).slice(0, 1)[0][1]);
     this.filter = this.defaultFilter;
   }
