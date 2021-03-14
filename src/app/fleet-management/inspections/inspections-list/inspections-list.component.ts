@@ -16,8 +16,8 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
   styleUrls: ['./inspections-list.component.scss']
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['view', 'idate', 'iby', 'iplate', 'icar', 'istaff', 'isent'];
-  public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Sent?'];
+  public displayedColumns: string[] = ['view', 'idate', 'iby', 'iplate', 'icar', 'istaff', 'idamaged', 'isent'];
+  public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?', 'Sent?'];
   public dataSource = new MatTableDataSource<Inspection>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   public title = 'Car inspections';
