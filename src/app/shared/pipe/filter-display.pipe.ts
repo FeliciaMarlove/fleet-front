@@ -23,7 +23,6 @@ export class FilterDisplayPipe implements PipeTransform {
     if (option) {
       output += '\n' + this.getOptionCleanDisplay(option);
     }
-    console.log(output);
     return output;
   }
 
@@ -35,9 +34,9 @@ export class FilterDisplayPipe implements PipeTransform {
     if (!(new Date(option).toString() === 'Invalid Date')) {
       return new Date(option).toDateString();
     } else {
-      const fuelRes = Object.entries(FuelType).find(entry => entry[1] === option)[0];
-      const brandRes = Object.entries(Brand).find(entry => entry[1] === option)[0];
-      return fuelRes ? fuelRes : brandRes ? brandRes : option;
+      const fuelRes = Object.entries(FuelType).find(entry => entry[0] === option);
+      const brandRes = Object.entries(Brand).find(entry => entry[0] === option);
+      return fuelRes ? fuelRes[1] : brandRes ? brandRes[1] : option;
     }
   }
 

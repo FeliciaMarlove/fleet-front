@@ -23,6 +23,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   public filter: string = null;
   public filterList: object;
   private defaultFilter: string;
+  public option: string = null;
   private readonly iAm = 'staff';
 
   constructor(
