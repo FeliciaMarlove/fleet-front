@@ -54,8 +54,10 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
    * Assign default filter value to filter
    */
   private initDefaultFilter() {
-    this.defaultFilter = String(Object.entries(this.filterList).slice(0, 1)[0][1]);
-    this.filter = this.defaultFilter;
+    if (this.filterList) {
+      this.defaultFilter = String(Object.entries(this.filterList).slice(0, 1)[0][1]);
+      this.filter = this.defaultFilter;
+    }
   }
 
   /**
