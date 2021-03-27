@@ -10,6 +10,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {InspectionFilterDialogComponent} from './inspection-filter-dialog/inspection-filter-dialog.component';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
+import {StaffMember} from '../../../shared/models/staff-member.model';
+import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 
 @Component({
   selector: 'app-inspections-list',
@@ -17,6 +19,7 @@ import {MatSort} from '@angular/material/sort';
   styleUrls: ['./inspections-list.component.scss']
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
+  // tslint:disable-next-line:max-line-length
   public displayedColumns: string[] = ['view', 'inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged', 'sentDate'];
   public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?', 'Sent?'];
   public dataSource = new MatTableDataSource<Inspection>();
@@ -42,6 +45,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     this.initAvailableFiltersList();
     this.initDefaultFilter();
     this.initInspectionsList();
+    this.initSearchPredicate();
   }
 
   ngAfterViewInit(): void {
@@ -78,6 +82,33 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     const lastYear = d.getFullYear() - 1;
     d.setFullYear(lastYear);
     return d;
+  }
+
+  /**
+   * Override filter predicate used by filter function of DataSource
+   * Set filtered columns to staff name and first name (independently or together)
+   */
+  private initSearchPredicate() {
+    this.dataSource.filterPredicate = (data: Inspection, filter: string) => {
+      console.log(typeof CarShortDisplayPipe.prototype.transform(data.car));
+      return  data.staffMember.staffLastName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        || data.staffMember.staffFirstName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        // tslint:disable-next-line:max-line-length
+        || data.staffMember.staffLastName.toLocaleLowerCase().concat(' ', data.staffMember.staffFirstName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
+        // tslint:disable-next-line:max-line-length
+        || data.staffMember.staffFirstName.toLocaleLowerCase().concat(' ', data.staffMember.staffLastName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
+      || data.expertisedBy.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      || data.plateNumber.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        || CarShortDisplayPipe.prototype.transform(data.car).toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+    };
+  }
+
+  /**
+   * Assign input to data source filter
+   * @param input from the user in the search field
+   */
+  public searchFilter(input: any) {
+    this.dataSource.filter = input.target.value;
   }
 
   /**
