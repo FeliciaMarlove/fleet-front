@@ -1,19 +1,26 @@
 <h2>{{title}}</h2>
-
-<section class="list-actions-buttons-container">
-  <button
-    class="list-button"
-    mat-raised-button
-    (click)="doOpenFilterDialog()"
-    [disabled]="!filterList">
-    <mat-icon>filter_alt</mat-icon>
-    Filter
-  </button>
-  <mat-icon
-    matTooltip="Current filter is: {{filter | filterDisplay: option : iAm}}"
-    aria-label="Displays the current filter for displaying the list when hovered over">
-    info
-  </mat-icon>
+<section class="list-actions-wrapper-container">
+  <section class="list-actions-buttons-container">
+    <button
+      class="list-button"
+      mat-raised-button
+      (click)="doOpenFilterDialog()"
+      [disabled]="!filterList">
+      <mat-icon>filter_alt</mat-icon>
+      Filter
+    </button>
+    <mat-icon
+      matTooltip="Current filter is: {{filter | filterDisplay: option : iAm}}"
+      aria-label="Displays the current filter for displaying the list when hovered over">
+      info
+    </mat-icon>
+  </section>
+  <form>
+    <mat-form-field appearance="standard" class="search-field">
+      <input matInput type="text" placeholder="Search">
+      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    </mat-form-field>
+  </form>
 </section>
 
 <table mat-table [dataSource]="dataSource" matSort>

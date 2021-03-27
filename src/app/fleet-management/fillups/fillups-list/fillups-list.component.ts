@@ -15,8 +15,8 @@ import {MatSort} from '@angular/material/sort';
   styleUrls: ['./fillups-list.component.scss']
 })
 export class FillupsListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['warning-icon', 'dateTimeFilling', 'discrepancyType', ];
-  public colNames: string[] = ['', 'Date', 'Discrepancy'];
+  public displayedColumns: string[] = ['warning-icon', 'dateTimeFilling', 'discrepancyType'];
+  public colNames = ['', 'Date', 'Discrepancy'];
   public dataSource = new MatTableDataSource<TankFilling>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
