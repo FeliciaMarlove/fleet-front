@@ -11,6 +11,15 @@ table {
 
 // Custom classes
 
+.flex-form-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-update-form-container {
+  padding: 50px !important;
+}
+
 .list-button {
   margin-right: 10px !important;
   height: 40px !important;

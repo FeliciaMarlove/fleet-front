@@ -53,11 +53,7 @@ export class FleetFilterDialogComponent implements OnInit {
   public updateSelection($event: MatSelectChange) {
     // reset selection for brand or fueltype option if main selection is changed
     this.form.controls.option.setValue(null);
-    if ($event.value !== 'BRAND' && $event.value !== 'FUEL') {
-      this.formIsValid = true;
-    } else {
-      this.formIsValid = false;
-    }
+    this.formIsValid = $event.value !== 'BRAND' && $event.value !== 'FUEL';
   }
 
   public doFilter() {

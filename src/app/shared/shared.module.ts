@@ -26,6 +26,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { FilterDisplayPipe } from './pipe/filter-display.pipe';
 import {MatSortModule} from '@angular/material/sort';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import {MatSortModule} from '@angular/material/sort';
     MatNativeDateModule,
     MatTooltipModule,
     MatSortModule,
+    MatCheckboxModule
   ],
   exports: [
     RouterModule,
@@ -86,6 +88,7 @@ import {MatSortModule} from '@angular/material/sort';
     MatNativeDateModule,
     MatTooltipModule,
     MatSortModule,
+    MatCheckboxModule,
     // ---- PIPES
     CarShortDisplayPipe,
     DiscrepancyToDisplayNamePipe,

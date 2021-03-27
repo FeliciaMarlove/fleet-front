@@ -1,1 +1,37 @@
-<p>leasing-companies-detail works!</p>
+<h3 mat-dialog-title>{{title}}</h3>
+
+<mat-dialog-content class="create-update-form-container">
+  <form [formGroup]="form" class="flex-form-column">
+    <mat-form-field>
+      <input type="text" matInput placeholder="Company name" formControlName="leasingCompanyName">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Contact person" formControlName="leasingCompanyContactPerson">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="Phone number" formControlName="leasingCompanyPhone">
+    </mat-form-field>
+    <mat-form-field>
+      <input type="email" matInput placeholder="Email" formControlName="leasingCompanyEmail">
+    </mat-form-field>
+    <mat-checkbox [checked]="leasingCompany?.active || !modifying" formControlName="active">
+      Active
+    </mat-checkbox>
+  </form>
+</mat-dialog-content>
+
+<button
+  class="filter-button"
+  mat-raised-button
+  color="accent"
+  [disabled]="form.invalid"
+  (click)="doClose()">
+  {{title}}
+</button>
+
+<button
+  class="filter-button"
+  mat-raised-button
+  (click)="matDialogRef.close()">
+  Cancel
+</button>
