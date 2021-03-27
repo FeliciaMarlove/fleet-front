@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {FleetFilterDialogComponent} from '../fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
 import {FiltersListsService} from '../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
+import {Normalize} from '../../shared/utils/normalize.util';
 
 @Component({
   selector: 'app-staff-list',
@@ -71,11 +72,12 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    */
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: StaffMember, filter: string) => {
-      return  data.staffFirstName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-        || data.staffLastName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-      || data.staffFirstName.toLocaleLowerCase().concat(' ', data.staffLastName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
+      const normalizedFilter = Normalize.normalize(filter);
+      return  Normalize.normalize(data.staffFirstName).includes(normalizedFilter)
+        || Normalize.normalize(data.staffLastName).includes(normalizedFilter)
+      || Normalize.normalize(data.staffFirstName).concat(' ', Normalize.normalize(data.staffLastName)).includes(normalizedFilter)
         // tslint:disable-next-line:max-line-length
-        || data.staffLastName.toLocaleLowerCase().concat(' ', data.staffFirstName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase());
+        || Normalize.normalize(data.staffLastName).concat(' ', Normalize.normalize(data.staffFirstName)).includes(normalizedFilter);
     };
   }
 

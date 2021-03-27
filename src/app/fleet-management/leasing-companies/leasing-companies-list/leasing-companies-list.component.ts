@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {FleetFilterDialogComponent} from '../../fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
+import {Normalize} from '../../../shared/utils/normalize.util';
 
 @Component({
   selector: 'app-leasing-companies-list',
@@ -107,9 +108,10 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
    */
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: LeasingCompany, filter: string) => {
-      return data.leasingCompanyContactPerson.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-      || data.leasingCompanyEmail.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-      || data.leasingCompanyName.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+      const normalizedFilter = Normalize.normalize(filter);
+      return Normalize.normalize(data.leasingCompanyContactPerson).includes(normalizedFilter)
+      || Normalize.normalize(data.leasingCompanyEmail).includes(normalizedFilter)
+      || Normalize.normalize(data.leasingCompanyName).includes(normalizedFilter);
     };
   }
 
