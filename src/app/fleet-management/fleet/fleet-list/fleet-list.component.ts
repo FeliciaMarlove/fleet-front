@@ -9,6 +9,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
+import {Inspection} from '../../../shared/models/inspection.model';
+import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 
 @Component({
   selector: 'app-fleet-list',
@@ -42,6 +44,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     this.initAvailableFiltersList();
     this.initDefaultFilter();
     this.initCarsList();
+    this.initSearchPredicate();
   }
 
   ngAfterViewInit(): void {
@@ -66,6 +69,31 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       this.defaultFilter = String(Object.entries(this.filterList).slice(0, 1)[0][1]);
       this.filter = this.defaultFilter;
     }
+  }
+
+  /**
+   * Override filter predicate used by filter function of DataSource
+   * Set filtered columns to staff name and first name (independently or together)
+   */
+  private initSearchPredicate() {
+    this.dataSource.filterPredicate = (data: Car, filter: string) => {
+      return  data.staffMember.staffLastName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        || data.staffMember.staffFirstName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        // tslint:disable-next-line:max-line-length
+        || data.staffMember.staffLastName.toLocaleLowerCase().concat(' ', data.staffMember.staffFirstName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
+        // tslint:disable-next-line:max-line-length
+        || data.staffMember.staffFirstName.toLocaleLowerCase().concat(' ', data.staffMember.staffLastName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
+        || data.plateNumber.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        || CarShortDisplayPipe.prototype.transform(data).toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+    };
+  }
+
+  /**
+   * Assign input to data source filter
+   * @param input from the user in the search field
+   */
+  public searchFilter(input: any) {
+    this.dataSource.filter = input.target.value;
   }
 
   /**

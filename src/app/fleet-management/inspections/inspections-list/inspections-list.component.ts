@@ -90,7 +90,6 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    */
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: Inspection, filter: string) => {
-      console.log(typeof CarShortDisplayPipe.prototype.transform(data.car));
       return  data.staffMember.staffLastName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
         || data.staffMember.staffFirstName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
         // tslint:disable-next-line:max-line-length
