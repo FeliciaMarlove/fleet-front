@@ -11,6 +11,7 @@ import { FleetFilterDialogComponent } from './fleet/fleet-list/fleet-filter-dial
 import { InspectionFilterDialogComponent } from './inspections/inspections-list/inspection-filter-dialog/inspection-filter-dialog.component';
 import { FillupFilterDialogComponent } from './fillups/fillups-list/fillup-filter-dialog/fillup-filter-dialog.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { LeasingCompaniesDetailComponent } from './leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
 
 
 
@@ -24,6 +25,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     FleetFilterDialogComponent,
     InspectionFilterDialogComponent,
     FillupFilterDialogComponent,
+    LeasingCompaniesDetailComponent,
   ],
     imports: [
         CommonModule,
