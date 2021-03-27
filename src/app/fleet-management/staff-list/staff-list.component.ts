@@ -75,8 +75,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
         || data.staffLastName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
       || data.staffFirstName.toLocaleLowerCase().concat(' ', data.staffLastName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
         // tslint:disable-next-line:max-line-length
-        || data.staffLastName.toLocaleLowerCase().concat(' ', data.staffFirstName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
-        ;
+        || data.staffLastName.toLocaleLowerCase().concat(' ', data.staffFirstName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase());
     };
   }
 
