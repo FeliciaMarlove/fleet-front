@@ -68,16 +68,24 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   /**
    * Override filter predicate used by filter function of DataSource
    * Set filtered columns to staff name and first name (independently or together)
-   * @private
    */
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: StaffMember, filter: string) => {
-      return  data.staffFirstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())
-        || data.staffLastName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())
-      || data.staffFirstName.toLocaleLowerCase().concat(' ', data.staffLastName.toLocaleLowerCase()).startsWith(filter.toLocaleLowerCase())
-        || data.staffLastName.toLocaleLowerCase().concat(' ', data.staffFirstName.toLocaleLowerCase()).startsWith(filter.toLocaleLowerCase())
+      return  data.staffFirstName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+        || data.staffLastName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      || data.staffFirstName.toLocaleLowerCase().concat(' ', data.staffLastName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
+        // tslint:disable-next-line:max-line-length
+        || data.staffLastName.toLocaleLowerCase().concat(' ', data.staffFirstName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
         ;
     };
+  }
+
+  /**
+   * Assign input to data source filter
+   * @param input from the user in the search field
+   */
+  public searchFilter(input: any) {
+    this.dataSource.filter = input.target.value;
   }
 
   /**
@@ -102,7 +110,6 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    * Initiate the staff list with all staff members
    */
   private initStaffList(): void {
-    // TODO
     this.staffService.getStaff(this.filter, null).subscribe(
       staffList => {
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(staffList);
@@ -131,13 +138,5 @@ export class StaffListComponent implements OnInit, AfterViewInit {
 
   public doOpenUnlinkDialog(staffId: any) {
 
-  }
-
-  /**
-   * Assign input to data source filter
-   * @param input from the user in the search field
-   */
-  public searchFilter(input: any) {
-    this.dataSource.filter = input.target.value;
   }
 }
