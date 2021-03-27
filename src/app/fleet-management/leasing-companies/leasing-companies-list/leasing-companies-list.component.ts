@@ -91,6 +91,10 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
       width: '85%',
       height: '85%',
       data: {leasingCompany}
+    }).afterClosed().subscribe(toUpdate => {
+      if (toUpdate) {
+        this.initLeasingCompanies();
+      }
     });
   }
 
