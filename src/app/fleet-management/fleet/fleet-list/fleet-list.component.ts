@@ -9,8 +9,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
-import {Inspection} from '../../../shared/models/inspection.model';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
+import {Normalize} from '../../../shared/utils/normalize.util';
 
 @Component({
   selector: 'app-fleet-list',
@@ -77,14 +77,15 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    */
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: Car, filter: string) => {
-      return  data.staffMember.staffLastName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-        || data.staffMember.staffFirstName.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      const normalizedFilter = Normalize.normalize(filter);
+      return  Normalize.normalize(data.staffMember.staffLastName).includes(normalizedFilter)
+        || Normalize.normalize(data.staffMember.staffLastName).includes(normalizedFilter)
         // tslint:disable-next-line:max-line-length
-        || data.staffMember.staffLastName.toLocaleLowerCase().concat(' ', data.staffMember.staffFirstName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
+        || Normalize.normalize(data.staffMember.staffLastName).concat(' ', Normalize.normalize(data.staffMember.staffFirstName)).includes(normalizedFilter)
         // tslint:disable-next-line:max-line-length
-        || data.staffMember.staffFirstName.toLocaleLowerCase().concat(' ', data.staffMember.staffLastName.toLocaleLowerCase()).includes(filter.toLocaleLowerCase())
-        || data.plateNumber.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
-        || CarShortDisplayPipe.prototype.transform(data).toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+        || Normalize.normalize(data.staffMember.staffFirstName).concat(' ', Normalize.normalize(data.staffMember.staffLastName)).includes(normalizedFilter)
+        || Normalize.normalize(data.plateNumber).includes(normalizedFilter)
+        || Normalize.normalize(CarShortDisplayPipe.prototype.transform(data)).includes(normalizedFilter);
     };
   }
 
