@@ -65,9 +65,18 @@ export class StaffListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Override filter predicate used by filter function of DataSource
+   * Set filtered columns to staff name and first name (independently or together)
+   * @private
+   */
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: StaffMember, filter: string) => {
-      return  data.staffFirstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase()) || data.staffLastName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase());
+      return  data.staffFirstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())
+        || data.staffLastName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase())
+      || data.staffFirstName.toLocaleLowerCase().concat(' ', data.staffLastName.toLocaleLowerCase()).startsWith(filter.toLocaleLowerCase())
+        || data.staffLastName.toLocaleLowerCase().concat(' ', data.staffFirstName.toLocaleLowerCase()).startsWith(filter.toLocaleLowerCase())
+        ;
     };
   }
 
@@ -124,9 +133,11 @@ export class StaffListComponent implements OnInit, AfterViewInit {
 
   }
 
+  /**
+   * Assign input to data source filter
+   * @param input from the user in the search field
+   */
   public searchFilter(input: any) {
-    console.log(input.target.value)
     this.dataSource.filter = input.target.value;
-    console.log(this.dataSource.filter.toString());
   }
 }

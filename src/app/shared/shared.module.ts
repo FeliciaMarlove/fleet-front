@@ -60,7 +60,7 @@ import {MatSortModule} from '@angular/material/sort';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTooltipModule,
-    MatSortModule
+    MatSortModule,
   ],
   exports: [
     RouterModule,
