@@ -38,6 +38,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
     this.initAvailableFiltersList();
     this.initDefaultFilter();
     this.initStaffList();
+    this.initSearchPredicate();
   }
 
   ngAfterViewInit() {
@@ -62,6 +63,12 @@ export class StaffListComponent implements OnInit, AfterViewInit {
       this.defaultFilter = String(Object.entries(this.filterList).slice(0, 1)[0][1]);
       this.filter = this.defaultFilter;
     }
+  }
+
+  private initSearchPredicate() {
+    this.dataSource.filterPredicate = (data: StaffMember, filter: string) => {
+      return  data.staffFirstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase());
+    };
   }
 
   /**
@@ -115,5 +122,11 @@ export class StaffListComponent implements OnInit, AfterViewInit {
 
   public doOpenUnlinkDialog(staffId: any) {
 
+  }
+
+  public searchFilter(input: any) {
+    console.log(input.target.value)
+    this.dataSource.filter = input.target.value;
+    console.log(this.dataSource.filter.toString());
   }
 }

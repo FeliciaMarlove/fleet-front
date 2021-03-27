@@ -17,8 +17,8 @@
   </section>
   <form>
     <mat-form-field appearance="standard" class="search-field">
-      <input matInput type="text" placeholder="Search">
-      <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+      <input matInput type="text" placeholder="Search name" (input)="searchFilter($event)">
+      <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </form>
 </section>
