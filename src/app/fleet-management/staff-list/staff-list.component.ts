@@ -67,7 +67,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
 
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: StaffMember, filter: string) => {
-      return  data.staffFirstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase());
+      return  data.staffFirstName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase()) || data.staffLastName.toLocaleLowerCase().startsWith(filter.toLocaleLowerCase());
     };
   }
 
