@@ -13,7 +13,7 @@ table {
 
 .list-button {
   margin-right: 10px !important;
-  margin-bottom: 7px !important;
+  height: 40px !important;
 }
 
 .filter-button {
@@ -23,9 +23,30 @@ table {
 .list-actions-buttons-container {
   display: flex;
   flex-direction: row;
+  height: fit-content;
+  align-items: center; // aligns the mat icon
+}
+
+.list-actions-wrapper-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.search-field {
+  margin-left: 35px;
 }
 
 // Material classes and handles
+
+input.mat-input-element {
+
+}
+
+.mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 0;
+  margin: 0;
+}
 
 .mat-sort-header-arrow {
   color: black !important;
