@@ -9,6 +9,7 @@ import {FleetFilterDialogComponent} from '../../fleet/fleet-list/fleet-filter-di
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {Normalize} from '../../../shared/utils/normalize.util';
+import {LeasingCompaniesDetailComponent} from '../leasing-companies-detail/leasing-companies-detail.component';
 
 @Component({
   selector: 'app-leasing-companies-list',
@@ -85,6 +86,14 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  doOpenLeasingDetail(leasingCompany: LeasingCompany) {
+    this.dialog.open(LeasingCompaniesDetailComponent, {
+      width: '85%',
+      height: '85%',
+      data: {leasingCompany}
+    });
+  }
+
   /**
    * Initiate the list of all leasing companies
    */
@@ -96,10 +105,6 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
       },
       error => console.log(error)
     );
-  }
-
-  doOpenLeasingDetail(leasingCompany: LeasingCompany) {
-    console.log(leasingCompany);
   }
 
   /**
