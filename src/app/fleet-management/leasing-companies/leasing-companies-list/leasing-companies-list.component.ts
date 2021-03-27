@@ -15,6 +15,7 @@ import {MatSort} from '@angular/material/sort';
   styleUrls: ['./leasing-companies-list.component.scss']
 })
 export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
+  // tslint:disable-next-line:max-line-length
   public displayedColumns: string[] = ['edit', 'leasingCompanyName', 'leasingCompanyContactPerson', 'leasingCompanyPhone', 'leasingCompanyEmail', 'active'];
   public colNames: string[] = ['', 'Name', 'Contact person', 'Phone', 'Email', 'Active'];
   public dataSource = new MatTableDataSource<LeasingCompany>();
@@ -26,7 +27,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   public filterList: object;
   public option: string = null;
   private defaultFilter: string;
-  private readonly iAm = 'leasing';
+  public readonly iAm = 'leasing';
 
   constructor(
     private leasingService: LeasingCompanyService,
@@ -38,6 +39,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
     this.initAvailableFiltersList();
     this.initDefaultFilter();
     this.initLeasingCompanies();
+    this.initSearchPredicate();
   }
 
   ngAfterViewInit(): void {
@@ -97,5 +99,25 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
 
   doOpenLeasingDetail(leasingCompany: LeasingCompany) {
     console.log(leasingCompany);
+  }
+
+  /**
+   * Override filter predicate used by filter function of DataSource
+   * Set filtered columns to staff name and first name (independently or together)
+   */
+  private initSearchPredicate() {
+    this.dataSource.filterPredicate = (data: LeasingCompany, filter: string) => {
+      return data.leasingCompanyContactPerson.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      || data.leasingCompanyEmail.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+      || data.leasingCompanyName.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+    };
+  }
+
+  /**
+   * Assign input to data source filter
+   * @param input from the user in the search field
+   */
+  public searchFilter(input: any) {
+    this.dataSource.filter = input.target.value;
   }
 }
