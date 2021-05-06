@@ -49,10 +49,13 @@ export class LeasingCompaniesDetailComponent implements OnInit {
   public doClose() {
     if (this.modifying) {
       this.form.addControl('leasingCompanyId', new FormControl(this.leasingCompany.leasingCompanyId));
-      this.leasingService.updateLeasingCompany(this.form.value).subscribe();
+      this.leasingService.updateLeasingCompany(this.form.value).subscribe( () => {
+        this.matDialogRef.close(true);
+      });
     } else {
-      this.leasingService.createLeasingCompany(this.form.value).subscribe();
+      this.leasingService.createLeasingCompany(this.form.value).subscribe(() => {
+        this.matDialogRef.close(true);
+      });
     }
-    this.matDialogRef.close(true);
   }
 }
