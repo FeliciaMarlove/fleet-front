@@ -24,7 +24,7 @@ export class FleetDetailComponent implements OnInit {
 
   private initForm() {
     this.form = this.formBuilder.group({
-      plateNumber: ['', Validators.compose([Validators.required, Validators.pattern('d-www-ddd')])],
+      plateNumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{1}-[a-zA-Z]{3}-[0-9]{3}')])],
       brand: ['', Validators.required],
       model: ['', Validators.required],
       fuelType: ['', Validators.required],
