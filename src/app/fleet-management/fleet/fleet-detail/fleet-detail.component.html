@@ -7,3 +7,19 @@
     </mat-form-field>
   </form>
 </mat-dialog-content>
+
+<button
+  class="dialog-button"
+  mat-raised-button
+  color="accent"
+  [disabled]="form.invalid"
+  (click)="doClose()">
+  {{title}}
+</button>
+
+<button
+  class="dialog-button"
+  mat-raised-button
+  (click)="matDialogRef.close()">
+  Cancel
+</button>

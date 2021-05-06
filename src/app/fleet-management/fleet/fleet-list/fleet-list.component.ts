@@ -11,6 +11,8 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
+import {LeasingCompaniesDetailComponent} from '../../leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
+import {FleetDetailComponent} from '../fleet-detail/fleet-detail.component';
 
 @Component({
   selector: 'app-fleet-list',
@@ -148,5 +150,16 @@ export class FleetListComponent implements OnInit, AfterViewInit {
 
   public doOpenCarDetail(car: Car) {
     console.log(car);
+  }
+
+  public doOpenCarCreate() {
+    this.dialog.open(FleetDetailComponent, {
+      width: '85%',
+      height: '85%'
+    }).afterClosed().subscribe(toUpdate => {
+      if (toUpdate) {
+        this.initCarsList();
+      }
+    });
   }
 }

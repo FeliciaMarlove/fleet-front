@@ -28,6 +28,7 @@ import { FilterDisplayPipe } from './pipe/filter-display.pipe';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { PhoneMaskDirective } from './utils/phone-mask.directive';
+import { PlateNumberDirective } from './utils/plate-number.directive';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { PhoneMaskDirective } from './utils/phone-mask.directive';
     NoOptionFilterDialogComponent,
     FilterDisplayPipe,
     PhoneMaskDirective,
+    PlateNumberDirective,
   ],
   imports: [
     CommonModule,

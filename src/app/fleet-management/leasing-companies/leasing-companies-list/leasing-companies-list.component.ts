@@ -86,7 +86,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  doOpenLeasingDetail(leasingCompany: LeasingCompany) {
+  doOpenLeasingUpdOrCreate(leasingCompany: LeasingCompany) {
     this.dialog.open(LeasingCompaniesDetailComponent, {
       width: '85%',
       height: '85%',
