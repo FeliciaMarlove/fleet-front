@@ -103,6 +103,7 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
     // ---- SHARED COMPONENTS
     NoOptionFilterDialogComponent,
     PhoneMaskDirective,
+    PlateNumberDirective,
   ]
 })
 export class SharedModule {
