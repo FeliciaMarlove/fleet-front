@@ -38,7 +38,7 @@ export class LeasingCompaniesDetailComponent implements OnInit {
       leasingCompanyName: [this.modifying ? this.leasingCompany.leasingCompanyName : '', Validators.required],
       leasingCompanyContactPerson: [this.modifying ? this.leasingCompany.leasingCompanyContactPerson : ''],
       leasingCompanyPhone: [this.modifying ? this.belgianPhonePipe.transform(this.leasingCompany.leasingCompanyPhone) : ''],
-      leasingCompanyEmail: [this.modifying ? this.leasingCompany.leasingCompanyEmail : ''],
+      leasingCompanyEmail: [this.modifying ? this.leasingCompany.leasingCompanyEmail : '', Validators.email],
       active: [this.modifying ? this.leasingCompany.active : true]
     });
   }
