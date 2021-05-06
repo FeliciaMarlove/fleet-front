@@ -27,6 +27,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { FilterDisplayPipe } from './pipe/filter-display.pipe';
 import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { PhoneMaskDirective } from './utils/phone-mask.directive';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FuelDisplayPipe,
     NoOptionFilterDialogComponent,
     FilterDisplayPipe,
+    PhoneMaskDirective,
   ],
   imports: [
     CommonModule,
@@ -98,6 +100,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     FilterDisplayPipe,
     // ---- SHARED COMPONENTS
     NoOptionFilterDialogComponent,
+    PhoneMaskDirective,
   ]
 })
 export class SharedModule {
