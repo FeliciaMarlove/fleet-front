@@ -14,6 +14,11 @@ export class PhoneMaskDirective {
     this.onInputChange(event, false);
   }
 
+  @HostListener('click', ['$event'])
+  click(event) {
+    this.onInputChange(event.target.value, true);
+  }
+
   @HostListener('keydown.backspace', ['$event'])
   keydownBackspace(event) {
     this.onInputChange(event.target.value, true);
@@ -24,7 +29,7 @@ export class PhoneMaskDirective {
     if (backspace) {
       // transformation to the value when backspacing comes here
     }
-    if (newVal.length === 0) {
+    if (newVal.length <= 0) {
       newVal = '0';
     } else if (newVal.length <= 3) {
       newVal = newVal.replace(/^(\w{0,3})/, '$1');
