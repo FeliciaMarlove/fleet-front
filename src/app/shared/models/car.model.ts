@@ -16,6 +16,7 @@ export interface Car {
   ongoing: boolean;
   freeText?: string;
   leasingCompany: LeasingCompany;
+  leasingCompanyId: number;
   staffMember: StaffMember;
   staffMemberId: number;
   inspection: Inspection;
