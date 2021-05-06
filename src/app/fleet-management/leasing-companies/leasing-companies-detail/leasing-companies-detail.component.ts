@@ -1,8 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
-import {CarService} from '../../../core/http-services/car.service';
 import {LeasingCompanyService} from '../../../core/http-services/leasing-company.service';
 import {BelgianPhoneNumberPipe} from '../../../shared/pipe/belgian-phone-number.pipe';
 
@@ -22,7 +21,8 @@ export class LeasingCompaniesDetailComponent implements OnInit {
     public matDialogRef: MatDialogRef<LeasingCompaniesDetailComponent>,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: { leasingCompany },
-    private leasingService: LeasingCompanyService
+    private leasingService: LeasingCompanyService,
+    public belgianPhonePipe: BelgianPhoneNumberPipe
   ) {
   }
 
@@ -37,7 +37,7 @@ export class LeasingCompaniesDetailComponent implements OnInit {
     this.form = this.formBuilder.group({
       leasingCompanyName: [this.modifying ? this.leasingCompany.leasingCompanyName : '', Validators.required],
       leasingCompanyContactPerson: [this.modifying ? this.leasingCompany.leasingCompanyContactPerson : ''],
-      leasingCompanyPhone: [this.modifying ? this.leasingCompany.leasingCompanyPhone : ''],
+      leasingCompanyPhone: [this.modifying ? this.belgianPhonePipe.transform(this.leasingCompany.leasingCompanyPhone) : ''],
       leasingCompanyEmail: [this.modifying ? this.leasingCompany.leasingCompanyEmail : ''],
       active: [this.modifying ? this.leasingCompany.active : true]
     });

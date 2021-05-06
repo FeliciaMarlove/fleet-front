@@ -10,6 +10,7 @@ import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {DatePipe} from '@angular/common';
+import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {DatePipe} from '@angular/common';
         MatSidenavModule,
     ],
   providers: [
-    DatePipe
+    DatePipe,
+    BelgianPhoneNumberPipe
   ],
   bootstrap: [AppComponent]
 })
