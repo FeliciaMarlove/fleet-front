@@ -4,6 +4,7 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {CarService} from '../../../core/http-services/car.service';
 import {LeasingCompanyService} from '../../../core/http-services/leasing-company.service';
+import {BelgianPhoneNumberPipe} from '../../../shared/pipe/belgian-phone-number.pipe';
 
 @Component({
   selector: 'app-leasing-companies-detail',

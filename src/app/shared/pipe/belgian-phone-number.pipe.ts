@@ -11,7 +11,10 @@ export class BelgianPhoneNumberPipe implements PipeTransform {
       + value.substr(3, 2) + ' '
       + value.substr(5, 2) + ' '
       + value.substr(7)
-      : value;
+      : value.substr(0, 4) + ' '
+      + value.substr(4, 2) + ' '
+      + value.substr(6, 2) + ' '
+      + value.substr(8);
   }
 
 }
