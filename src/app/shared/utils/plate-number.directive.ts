@@ -30,7 +30,6 @@ export class PlateNumberDirective {
     } else if (newVal.length === 1) {
       newVal = newVal.replace(/^(\w{0,1})/, '$1-');
     } else if (newVal.length <= 4) {
-      // /^(\w{0,3})(\w{0,2})/, '$1 $2'
       newVal = newVal.replace(/^(\w{0,1})(\w{0,3})/, '$1-$2').toUpperCase();
     } else if (newVal.length <= 7) {
       newVal = newVal.replace(/^(\w{0,1})(\w{0,3})(\w{0,3})/, '$1-$2-$3').toUpperCase();
