@@ -1,0 +1,9 @@
+<h3 mat-dialog-title>{{title}}</h3>
+
+<mat-dialog-content class="create-update-form-container">
+  <form [formGroup]="form" class="flex-form-column">
+    <mat-form-field>
+      <input type="text" matInput placeholder="Plate number" formControlName="plateNumber">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
