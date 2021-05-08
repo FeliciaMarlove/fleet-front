@@ -13,6 +13,7 @@ import {MatSort} from '@angular/material/sort';
 import {StaffMember} from '../../../shared/models/staff-member.model';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
+import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 
 @Component({
   selector: 'app-inspections-list',
@@ -118,8 +119,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    */
   public doOpenFilterDialog() {
     this.dialog.open(InspectionFilterDialogComponent, {
-        width: '320px',
-        height: '350px',
+        width: UiDimensionValues.filterDialogPixelWidth,
+        height: UiDimensionValues.filterDialogPixelHeight,
         data: {list: this.filterList, current: this.filter, option: this.option},
       }
     ).afterClosed().subscribe(filter => {
