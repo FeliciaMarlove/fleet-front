@@ -5,16 +5,18 @@
     <mat-form-field>
       <input type="text" matInput placeholder="Plate number" formControlName="plateNumber" appPlateNumber>
     </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-select formControlName="brand" placeholder="Brand">
-        <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand.key">
-          {{brand.value}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <input type="text" matInput placeholder="Model" formControlName="model">
-    </mat-form-field>
+    <div class="form-2cols-container">
+      <mat-form-field appearance="fill">
+        <mat-select formControlName="brand" placeholder="Brand">
+          <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand.key">
+            {{brand.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Model" formControlName="model">
+      </mat-form-field>
+    </div>
     <mat-form-field appearance="fill">
       <mat-select formControlName="fuelType" placeholder="Fuel">
         <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
@@ -22,18 +24,20 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Contract start date</mat-label>
-      <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
-      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-      <mat-datepicker #pickerStart> </mat-datepicker>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Contract end date</mat-label>
-      <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
-      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-      <mat-datepicker #pickerEnd> </mat-datepicker>
-    </mat-form-field>
+    <div class="form-2cols-container">
+      <mat-form-field>
+        <mat-label>Contract start date</mat-label>
+        <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart> </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Contract end date</mat-label>
+        <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd> </mat-datepicker>
+      </mat-form-field>
+    </div>
     <mat-form-field>
       <input matInput type="text" formControlName="freeText" placeholder="Additional information">
     </mat-form-field>

@@ -11,6 +11,24 @@ table {
 
 // Custom classes
 
+.form-2cols-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+// select all children of
+.form-2cols-container > * {
+  flex-grow: 1;
+}
+
+.form-2cols-container>:first-child {
+  margin-right: 10px;
+}
+
+.form-2cols-container>:last-child {
+  margin-left: 10px;
+}
+
 .flex-form-column {
   display: flex;
   flex-direction: column;

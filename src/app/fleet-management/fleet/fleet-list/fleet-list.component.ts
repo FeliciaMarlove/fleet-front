@@ -13,6 +13,7 @@ import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {LeasingCompaniesDetailComponent} from '../../leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
 import {FleetDetailComponent} from '../fleet-detail/fleet-detail.component';
+import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 
 @Component({
   selector: 'app-fleet-list',
@@ -105,8 +106,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    */
   public doOpenFilterDialog() {
     this.dialog.open(FleetFilterDialogComponent, {
-        width: '320px',
-        height: '350px',
+        width: UiDimensionValues.filterDialogPixelWidth,
+        height: UiDimensionValues.filterDialogPixelHeight,
         data: {list: this.filterList, current: this.filter, option: this.option},
       }
     ).afterClosed().subscribe(filter => {
@@ -154,8 +155,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
 
   public doOpenCarCreate() {
     this.dialog.open(FleetDetailComponent, {
-      width: '85%',
-      height: '85%'
+      width: UiDimensionValues.detailsDialogPercentageWidth,
+      height: UiDimensionValues.detailsDialogPercentageHeight
     }).afterClosed().subscribe(toUpdate => {
       if (toUpdate) {
         this.initCarsList();

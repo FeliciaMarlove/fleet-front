@@ -9,6 +9,7 @@ import {FleetFilterDialogComponent} from '../fleet/fleet-list/fleet-filter-dialo
 import {FiltersListsService} from '../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {Normalize} from '../../shared/utils/normalize.util';
+import {UiDimensionValues} from '../../shared/utils/ui-dimension-values';
 
 @Component({
   selector: 'app-staff-list',
@@ -95,8 +96,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    */
   public doOpenFilterDialog() {
     this.dialog.open(FleetFilterDialogComponent, {
-        width: '320px',
-        height: '350px',
+        width: UiDimensionValues.filterDialogPixelWidth,
+        height: UiDimensionValues.filterDialogPixelHeight,
         data: {list: this.filterList, current: this.filter},
       }
     ).afterClosed().subscribe(filter => {

@@ -10,6 +10,7 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {LeasingCompaniesDetailComponent} from '../leasing-companies-detail/leasing-companies-detail.component';
+import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 
 @Component({
   selector: 'app-leasing-companies-list',
@@ -74,8 +75,8 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
    */
   public doOpenFilterDialog() {
     this.dialog.open(FleetFilterDialogComponent, {
-        width: '320px',
-        height: '350px',
+        width: UiDimensionValues.filterDialogPixelWidth,
+        height: UiDimensionValues.filterDialogPixelHeight,
         data: {list: this.filterList, current: this.filter},
       }
     ).afterClosed().subscribe(filter => {
@@ -88,8 +89,8 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
 
   doOpenLeasingUpdOrCreate(leasingCompany: LeasingCompany) {
     this.dialog.open(LeasingCompaniesDetailComponent, {
-      width: '85%',
-      height: '85%',
+      width: UiDimensionValues.detailsDialogPercentageWidth,
+      height: UiDimensionValues.detailsDialogPercentageHeight,
       data: {leasingCompany}
     }).afterClosed().subscribe(toUpdate => {
       if (toUpdate) {

@@ -102,6 +102,7 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
     FilterDisplayPipe,
     // ---- SHARED COMPONENTS
     NoOptionFilterDialogComponent,
+    // ---- DIRECTIVES
     PhoneMaskDirective,
     PlateNumberDirective,
   ]

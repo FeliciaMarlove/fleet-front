@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 import {FillupFilterDialogComponent} from './fillup-filter-dialog/fillup-filter-dialog.component';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
+import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 
 @Component({
   selector: 'app-fillups',
@@ -81,8 +82,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
    */
   public doOpenFilterDialog() {
     this.dialog.open(FillupFilterDialogComponent, {
-        width: '320px',
-        height: '350px',
+        width: UiDimensionValues.filterDialogPixelWidth,
+        height: UiDimensionValues.filterDialogPixelHeight,
         data: {list: this.filterList, current: this.filter, option: this.option},
       }
     ).afterClosed().subscribe(filter => {
