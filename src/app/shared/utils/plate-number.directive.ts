@@ -25,11 +25,13 @@ export class PlateNumberDirective {
 
   onInputChange(event, backspace) {
     let newVal = event.replace(/\W/g, '');
-    if (backspace && newVal.length === 1) {
+    if (backspace && newVal.length <= 1) {
       newVal = '';
+    } else if (backspace && newVal.length === 4) {
+      newVal = newVal.replace(/^(\w{0,1})(\w{0,3})/, '$1-$2').toUpperCase();
     } else if (newVal.length === 1) {
       newVal = newVal.replace(/^(\w{0,1})/, '$1-');
-    } else if (newVal.length <= 4) {
+    } else if (newVal.length <= 3) {
       newVal = newVal.replace(/^(\w{0,1})(\w{0,3})/, '$1-$2').toUpperCase();
     } else if (newVal.length <= 7) {
       newVal = newVal.replace(/^(\w{0,1})(\w{0,3})(\w{0,3})/, '$1-$2-$3').toUpperCase();
