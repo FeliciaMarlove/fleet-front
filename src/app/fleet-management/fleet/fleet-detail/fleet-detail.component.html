@@ -17,13 +17,20 @@
         <input type="text" matInput placeholder="Model" formControlName="model">
       </mat-form-field>
     </div>
-    <mat-form-field appearance="fill">
-      <mat-select formControlName="fuelType" placeholder="Fuel">
-        <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
-          {{fuel.value}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <mat-divider></mat-divider>
+    <div class="form-2cols-container">
+      <mat-form-field appearance="fill">
+        <mat-select formControlName="fuelType" placeholder="Fuel">
+          <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
+            {{fuel.value}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="number" formControlName="averageConsumption" placeholder="Average consumption - liters / 100 kilometers">
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
     <div class="form-2cols-container">
       <mat-form-field>
         <mat-label>Contract start date</mat-label>

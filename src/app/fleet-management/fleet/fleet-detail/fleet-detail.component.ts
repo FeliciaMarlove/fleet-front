@@ -37,6 +37,7 @@ export class FleetDetailComponent implements OnInit {
       brand: ['', Validators.required],
       model: ['', Validators.required],
       fuelType: ['', Validators.required],
+      averageConsumption: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: [''],
       freeText: [''],
