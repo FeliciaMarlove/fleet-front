@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatDialogRef} from '@angular/material/dialog';
 import {CarService} from '../../../core/http-services/car.service';
 import {Brand} from '../../../shared/enums/brand.enum';
@@ -18,6 +18,7 @@ export class FleetDetailComponent implements OnInit {
   public brandEnum = Brand;
   public fuelEnum = FuelType;
   public leasingCompanies: LeasingCompany[] = [];
+  public endBeforeStart = false;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetDetailComponent>,
@@ -45,6 +46,17 @@ export class FleetDetailComponent implements OnInit {
     });
   }
 
+  public checkEndAfterStart() {
+    if (this.form.controls.endDate.value && this.form.controls.startDate.value) {
+      const end: Date = this.form.controls.endDate.value;
+      const start: Date = this.form.controls.startDate.value;
+      this.endBeforeStart = end <= start;
+    }
+    if (this.form.controls.startDate.value && !this.form.controls.endDate.value) {
+      this.endBeforeStart = false;
+    }
+  }
+
   private initLeasingCompanies() {
     this.leasingCompaniesService.getLeasingCompanies(null, null).subscribe( leasCompanies => {
       this.leasingCompanies = leasCompanies;
@@ -52,8 +64,7 @@ export class FleetDetailComponent implements OnInit {
   }
 
   public doClose() {
-    this.carService.createCar(this.form.value).subscribe( resp => {
-      console.log(resp);
+    this.carService.createCar(this.form.value).subscribe( () => {
       this.matDialogRef.close(true);
     });
   }
