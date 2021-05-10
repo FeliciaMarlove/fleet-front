@@ -7,7 +7,7 @@
     </mat-form-field>
     <div class="form-2cols-container">
       <mat-form-field appearance="fill">
-        <mat-select formControlName="brand" placeholder="Brand">
+        <mat-select formControlName="brand" placeholder="Brand" required>
           <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand.key">
             {{brand.value}}
           </mat-option>
