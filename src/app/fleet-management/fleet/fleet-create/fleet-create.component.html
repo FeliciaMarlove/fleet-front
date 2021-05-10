@@ -3,10 +3,11 @@
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form" class="flex-form-column">
     <mat-form-field>
-      <input type="text" matInput placeholder="Plate number" formControlName="plateNumber" appPlateNumber>
+      <input type="text" matInput placeholder="Plate number" formControlName="plateNumber" appPlateNumber required>
     </mat-form-field>
     <div class="form-2cols-container">
       <mat-form-field appearance="fill">
+        <mat-label>Brand</mat-label>
         <mat-select formControlName="brand" placeholder="Brand" required>
           <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand.key">
             {{brand.value}}
@@ -14,27 +15,28 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input type="text" matInput placeholder="Model" formControlName="model">
+        <input type="text" matInput placeholder="Model" formControlName="model" required>
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
     <div class="form-2cols-container">
       <mat-form-field appearance="fill">
-        <mat-select formControlName="fuelType" placeholder="Fuel">
+        <mat-label>Fuel</mat-label>
+        <mat-select formControlName="fuelType" placeholder="Fuel" required>
           <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
             {{fuel.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [min]="0" type="number" formControlName="averageConsumption" placeholder="Average consumption - liters / 100 kilometers">
+        <input matInput [min]="0" type="number" formControlName="averageConsumption" placeholder="Average consumption - liters / 100 kilometers" required>
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
     <div class="form-2cols-container">
       <mat-form-field>
         <mat-label>Contract start date</mat-label>
-        <input matInput [matDatepicker]="pickerStart" formControlName="startDate" (dateChange)="checkEndAfterStart()">
+        <input matInput [matDatepicker]="pickerStart" formControlName="startDate" (dateChange)="checkEndAfterStart()" required>
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart> </mat-datepicker>
       </mat-form-field>
@@ -45,15 +47,16 @@
         <mat-datepicker #pickerEnd> </mat-datepicker>
       </mat-form-field>
     </div>
-    <mat-form-field>
-      <input matInput type="text" formControlName="freeText" placeholder="Additional information">
-    </mat-form-field>
     <mat-form-field appearance="fill">
-      <mat-select formControlName="leasingCompanyId" placeholder="Leasing company">
+      <mat-label>Leasing company</mat-label>
+      <mat-select formControlName="leasingCompanyId" placeholder="Leasing company" required>
         <mat-option *ngFor="let company of leasingCompanies" [value]="company.leasingCompanyId">
           {{company.leasingCompanyName}}
         </mat-option>
       </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" formControlName="freeText" placeholder="Additional information">
     </mat-form-field>
   </form>
 

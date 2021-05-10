@@ -3,7 +3,7 @@
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form" class="flex-form-column">
     <mat-form-field>
-      <input type="text" matInput placeholder="Company name" formControlName="leasingCompanyName">
+      <input type="text" matInput placeholder="Company name" formControlName="leasingCompanyName" required>
     </mat-form-field>
     <mat-form-field>
       <input type="text" matInput placeholder="Contact person" formControlName="leasingCompanyContactPerson">
@@ -12,7 +12,7 @@
       <input type="text" matInput placeholder="Phone number" formControlName="leasingCompanyPhone" appPhoneMask>
     </mat-form-field>
     <mat-form-field>
-      <input type="email" matInput placeholder="Email" formControlName="leasingCompanyEmail">
+      <input type="email" matInput placeholder="Email" formControlName="leasingCompanyEmail" required>
     </mat-form-field>
     <mat-checkbox [checked]="leasingCompany?.active || !modifying" formControlName="active">
       Active
