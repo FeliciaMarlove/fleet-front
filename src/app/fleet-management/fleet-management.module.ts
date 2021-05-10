@@ -10,7 +10,6 @@ import { InspectionsListComponent } from './inspections/inspections-list/inspect
 import { FleetFilterDialogComponent } from './fleet/fleet-list/fleet-filter-dialog/fleet-filter-dialog.component';
 import { InspectionFilterDialogComponent } from './inspections/inspections-list/inspection-filter-dialog/inspection-filter-dialog.component';
 import { FillupFilterDialogComponent } from './fillups/fillups-list/fillup-filter-dialog/fillup-filter-dialog.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
 import { LeasingCompaniesDetailComponent } from './leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
 import { FleetDetailComponent } from './fleet/fleet-detail/fleet-detail.component';
 
