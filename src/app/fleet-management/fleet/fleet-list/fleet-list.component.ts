@@ -143,9 +143,11 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    */
   private getCarOwner(cars: Car[]) {
     for (const car of cars) {
-      this.staffService.getStaffMember(car.staffMemberId).subscribe(staffMember => {
-        car.staffMember = staffMember;
-      });
+      if (car.staffMemberId) {
+        this.staffService.getStaffMember(car.staffMemberId).subscribe(staffMember => {
+          car.staffMember = staffMember;
+        });
+      }
     }
   }
 
