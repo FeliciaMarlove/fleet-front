@@ -12,7 +12,7 @@ import {MatSort} from '@angular/material/sort';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {LeasingCompaniesDetailComponent} from '../../leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
-import {FleetDetailComponent} from '../fleet-detail/fleet-detail.component';
+import {FleetCreateComponent} from '../fleet-create/fleet-create.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 
 @Component({
@@ -156,7 +156,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   public doOpenCarCreate() {
-    this.dialog.open(FleetDetailComponent, {
+    this.dialog.open(FleetCreateComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,
       height: UiDimensionValues.detailsDialogPercentageHeight
     }).afterClosed().subscribe(toUpdate => {

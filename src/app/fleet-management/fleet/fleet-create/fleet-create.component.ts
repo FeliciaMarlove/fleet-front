@@ -9,10 +9,10 @@ import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 
 @Component({
   selector: 'app-fleet-detail',
-  templateUrl: './fleet-detail.component.html',
-  styleUrls: ['./fleet-detail.component.scss']
+  templateUrl: './fleet-create.component.html',
+  styleUrls: ['./fleet-create.component.scss']
 })
-export class FleetDetailComponent implements OnInit {
+export class FleetCreateComponent implements OnInit {
   public form: FormGroup;
   public title = 'Create';
   public brandEnum = Brand;
@@ -21,7 +21,7 @@ export class FleetDetailComponent implements OnInit {
   public endBeforeStart = false;
 
   constructor(
-    public matDialogRef: MatDialogRef<FleetDetailComponent>,
+    public matDialogRef: MatDialogRef<FleetCreateComponent>,
     private formBuilder: FormBuilder,
     private carService: CarService,
     private leasingCompaniesService: LeasingCompanyService
