@@ -1,0 +1,75 @@
+<h3 mat-dialog-title>{{title}}</h3>
+
+<mat-dialog-content class="create-update-form-container">
+  <form [formGroup]="form" class="flex-form-column">
+    <div class="form-2cols-container">
+      <mat-form-field>
+        <input type="text" matInput formControlName="plateNumber" placeholder="Plate number">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput formControlName="ongoing" placeholder="Contract status">
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input type="text" matInput formControlName="staffMember" placeholder="Staff member">
+      <mat-icon matSuffix *ngIf="!car.staffMember" (click)="doAddStaffMember()">link</mat-icon>
+      <mat-icon matSuffix *ngIf="car.staffMember">info</mat-icon>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <div class="form-2cols-container">
+      <mat-form-field>
+        <input type="text" matInput formControlName="brand" placeholder="Brand">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput formControlName="model" placeholder="Model">
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="form-2cols-container">
+      <mat-form-field>
+        <input type="text" matInput formControlName="fuelType" placeholder="Fuel">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="number" matInput formControlName="averageConsumption" placeholder="Average consumption liter / 100 kilometer">
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input type="text" matInput formControlName="kilometers" placeholder="Kilometers">
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <div class="form-2cols-container">
+      <mat-form-field>
+        <input type="date" matInput formControlName="startDate" placeholder="Start date">
+      </mat-form-field>
+      <mat-form-field>
+        <input [matDatepicker]="pickerEnd" matInput formControlName="endDate" placeholder="End date">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd> </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-form-field>
+      <input type="text" matInput formControlName="leasingCompany" placeholder="Leasing company">
+      <mat-icon matSuffix>info</mat-icon>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+    <mat-form-field>
+      <input type="text" matInput formControlName="freeText" placeholder="Additional information">
+    </mat-form-field>
+  </form>
+
+  <button
+    class="dialog-button"
+    mat-raised-button
+    color="accent"
+    [disabled]="form.untouched || form.pristine || form.invalid"
+    (click)="doUpdate()">
+     Update
+  </button>
+
+  <button
+    class="dialog-button"
+    mat-raised-button
+    (click)="matDialogRef.close(false)">
+    Close
+  </button>
+</mat-dialog-content>

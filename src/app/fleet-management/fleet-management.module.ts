@@ -12,6 +12,7 @@ import { InspectionFilterDialogComponent } from './inspections/inspections-list/
 import { FillupFilterDialogComponent } from './fillups/fillups-list/fillup-filter-dialog/fillup-filter-dialog.component';
 import { LeasingCompaniesDetailComponent } from './leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
 import { FleetCreateComponent } from './fleet/fleet-create/fleet-create.component';
+import { FleetViewComponent } from './fleet/fleet-view/fleet-view.component';
 
 
 
@@ -27,6 +28,7 @@ import { FleetCreateComponent } from './fleet/fleet-create/fleet-create.componen
     FillupFilterDialogComponent,
     LeasingCompaniesDetailComponent,
     FleetCreateComponent,
+    FleetViewComponent,
   ],
     imports: [
         CommonModule,

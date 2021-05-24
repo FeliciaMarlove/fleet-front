@@ -13,6 +13,7 @@ import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {FleetCreateComponent} from '../fleet-create/fleet-create.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
+import {FleetViewComponent} from '../fleet-view/fleet-view.component';
 
 @Component({
   selector: 'app-fleet-list',
@@ -151,7 +152,15 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   public doOpenCarDetail(car: Car) {
-    console.log(car);
+    this.dialog.open(FleetViewComponent, {
+      width: UiDimensionValues.detailsDialogPercentageWidth,
+      height: UiDimensionValues.detailsDialogPercentageHeight,
+      data: {car},
+    }).afterClosed().subscribe(updated => {
+      if (updated) {
+        this.initCarsList();
+      }
+    });
   }
 
   public doOpenCarCreate() {

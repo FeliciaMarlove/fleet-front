@@ -9,7 +9,7 @@ import { SideNavComponent } from './core/side-nav/side-nav.component';
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
-import {DatePipe} from '@angular/common';
+import {DatePipe, DecimalPipe} from '@angular/common';
 import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
 
 @NgModule({
@@ -28,6 +28,7 @@ import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
     ],
   providers: [
     DatePipe,
+    DecimalPipe,
     BelgianPhoneNumberPipe
   ],
   bootstrap: [AppComponent]
