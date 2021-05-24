@@ -90,7 +90,7 @@
   <ng-container matColumnDef="freeText">
     <th mat-header-cell *matHeaderCellDef>{{colNames[8]}}</th>
     <td mat-cell *matCellDef="let car">
-      <mat-icon matTooltip="{{car.freeText}}" [style.color]="car.freeText ? '' : 'grey'">sticky_note_2</mat-icon>
+      <mat-icon matTooltip="{{car.freeText}}">{{car.freeText ? 'sticky_note_2' : ''}}</mat-icon>
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[8]}}</td>
   </ng-container>
