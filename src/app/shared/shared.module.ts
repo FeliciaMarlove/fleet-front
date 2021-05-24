@@ -29,6 +29,9 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { PhoneMaskDirective } from './utils/phone-mask.directive';
 import { PlateNumberDirective } from './utils/plate-number.directive';
+import { StaffTooltipPipe } from './pipe/staffTooltip.pipe';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,8 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
     FilterDisplayPipe,
     PhoneMaskDirective,
     PlateNumberDirective,
+    StaffTooltipPipe,
+    LeasingTooltipPipe,
   ],
   imports: [
     CommonModule,
@@ -66,7 +71,8 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
     MatNativeDateModule,
     MatTooltipModule,
     MatSortModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ClipboardModule
   ],
   exports: [
     RouterModule,
@@ -93,6 +99,7 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
     MatTooltipModule,
     MatSortModule,
     MatCheckboxModule,
+    ClipboardModule,
     // ---- PIPES
     CarShortDisplayPipe,
     DiscrepancyToDisplayNamePipe,
@@ -100,6 +107,8 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
     StaffShortDisplayPipe,
     FuelDisplayPipe,
     FilterDisplayPipe,
+    StaffTooltipPipe,
+    LeasingTooltipPipe,
     // ---- SHARED COMPONENTS
     NoOptionFilterDialogComponent,
     // ---- DIRECTIVES
