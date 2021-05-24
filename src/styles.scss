@@ -76,6 +76,10 @@ table {
 
 // Material classes and handles
 
+.mat-input-element:disabled {
+  color: black !important;
+}
+
 input.mat-input-element {
 
 }
