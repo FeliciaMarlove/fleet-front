@@ -6,11 +6,33 @@ import {Brand} from '../../../shared/enums/brand.enum';
 import {FuelType} from '../../../shared/enums/fuel-type.enum';
 import {LeasingCompanyService} from '../../../core/http-services/leasing-company.service';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+
+export const DateFormat = {
+  parse: {
+    dateInput: 'input',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  }
+};
 
 @Component({
   selector: 'app-fleet-detail',
   templateUrl: './fleet-create.component.html',
-  styleUrls: ['./fleet-create.component.scss']
+  styleUrls: ['./fleet-create.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: DateFormat }
+  ]
 })
 export class FleetCreateComponent implements OnInit {
   public form: FormGroup;
