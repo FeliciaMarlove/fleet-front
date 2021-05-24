@@ -47,6 +47,7 @@
         <mat-datepicker #pickerEnd> </mat-datepicker>
       </mat-form-field>
     </div>
+    <div *ngIf="durationInformation" class="align-mat-icon-with-text-div-container"><mat-icon matPrefix>information</mat-icon><p> {{ durationInformation }}</p></div>
     <mat-form-field appearance="fill">
       <mat-label>Leasing company</mat-label>
       <mat-select formControlName="leasingCompanyId" placeholder="Leasing company" required>

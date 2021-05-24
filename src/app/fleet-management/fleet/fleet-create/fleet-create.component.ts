@@ -37,6 +37,8 @@ export class FleetCreateComponent implements OnInit {
   public fuelEnum = FuelType;
   public leasingCompanies: LeasingCompany[] = [];
   public endBeforeStart = false;
+  public durationOfContract: number;
+  public durationInformation: string;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetCreateComponent>,
@@ -66,13 +68,27 @@ export class FleetCreateComponent implements OnInit {
 
   public checkEndAfterStart() {
     if (this.form.controls.endDate.value && this.form.controls.startDate.value) {
-      const end: Date = this.form.controls.endDate.value;
-      const start: Date = this.form.controls.startDate.value;
+      const end = this.form.controls.endDate.value;
+      const start = this.form.controls.startDate.value;
       this.endBeforeStart = end <= start;
+      if (!this.endBeforeStart) {
+        this.calculateDuration(start, end);
+      } else {
+        this.durationInformation = '';
+      }
     }
     if (this.form.controls.startDate.value && !this.form.controls.endDate.value) {
       this.endBeforeStart = false;
     }
+  }
+
+  private calculateDuration(start, end) {
+    // const days = Math.ceil((end - start) / (1000 * 3600 * 24));
+    const e = new Date(end);
+    const s = new Date(start);
+    const numberCalendarMonths = e.getMonth() - s.getMonth() +
+      (12 * (e.getFullYear() - s.getFullYear()));
+    this.durationInformation = `The leasing contract duration is ${numberCalendarMonths} months.`;
   }
 
   private initLeasingCompanies() {

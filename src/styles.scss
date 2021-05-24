@@ -34,6 +34,11 @@ table {
   flex-direction: column;
 }
 
+.align-mat-icon-with-text-div-container {
+  display: flex;
+  align-items: center;
+}
+
 .create-update-form-container {
   padding: 10px 50px 50px !important;
 }
