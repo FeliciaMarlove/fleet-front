@@ -11,7 +11,6 @@ import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
-import {LeasingCompaniesDetailComponent} from '../../leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
 import {FleetCreateComponent} from '../fleet-create/fleet-create.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 
@@ -22,8 +21,8 @@ import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 })
 
 export class FleetListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['view', 'plateNumber', 'brand', 'model', 'fuelType', 'staffMember'];
-  public colNames: string[] = ['', 'Plate', 'Brand', 'Model', 'Fuel', 'Owner'];
+  public displayedColumns: string[] = ['view', 'plateNumber', 'brand', 'model', 'fuelType', 'staffMember', 'startDate', 'endDate', 'freeText'];
+  public colNames: string[] = ['', 'Plate', 'Brand', 'Model', 'Fuel', 'Owner', 'Start', 'End', 'Note'];
   public dataSource = new MatTableDataSource<Car>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -81,12 +80,12 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: Car, filter: string) => {
       const normalizedFilter = Normalize.normalize(filter);
-      return  Normalize.normalize(data.staffMember.staffLastName).includes(normalizedFilter)
-        || Normalize.normalize(data.staffMember.staffLastName).includes(normalizedFilter)
+      return  Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
+        || Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
         // tslint:disable-next-line:max-line-length
-        || Normalize.normalize(data.staffMember.staffLastName).concat(' ', Normalize.normalize(data.staffMember.staffFirstName)).includes(normalizedFilter)
+        || Normalize.normalize(data.staffMember?.staffLastName)?.concat(' ', Normalize.normalize(data.staffMember?.staffFirstName))?.includes(normalizedFilter)
         // tslint:disable-next-line:max-line-length
-        || Normalize.normalize(data.staffMember.staffFirstName).concat(' ', Normalize.normalize(data.staffMember.staffLastName)).includes(normalizedFilter)
+        || Normalize.normalize(data.staffMember?.staffFirstName)?.concat(' ', Normalize.normalize(data.staffMember?.staffLastName))?.includes(normalizedFilter)
         || Normalize.normalize(data.plateNumber).includes(normalizedFilter)
         || Normalize.normalize(CarShortDisplayPipe.prototype.transform(data)).includes(normalizedFilter);
     };

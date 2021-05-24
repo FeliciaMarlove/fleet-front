@@ -5,6 +5,6 @@ export class Normalize {
    * @return the normalized value
    */
   public static normalize(val: string) {
-    return val.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    return val ? val.toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') : null;
   }
 }
