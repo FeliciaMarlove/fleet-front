@@ -9,6 +9,7 @@ import {DecimalPipe} from '@angular/common';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const DateFormat = {
   parse: {
@@ -36,6 +37,8 @@ export class FleetViewComponent implements OnInit {
   public form: FormGroup;
   public car: Car;
   public leasingCompany: LeasingCompany;
+  public changeableIconStaff = 'info';
+  public changeableIconLeasing = 'info';
 
   constructor(
     public matDialogRef: MatDialogRef<FleetViewComponent>,
@@ -44,7 +47,8 @@ export class FleetViewComponent implements OnInit {
     private formBuilder: FormBuilder,
     private staffService: StaffMemberService,
     private leasingService: LeasingCompanyService,
-    public numberPipe: DecimalPipe
+    public numberPipe: DecimalPipe,
+    private snackBar: MatSnackBar
 ) { }
 
   ngOnInit(): void {
@@ -72,9 +76,17 @@ export class FleetViewComponent implements OnInit {
       staffMember: [{value: this.car.staffMember ? this.car.staffMember.staffFirstName + ' ' + this.car.staffMember.staffLastName : '', disabled: this.car.staffMember}],
       leasingCompany: [{value: this.car.leasingCompany?.leasingCompanyName, disabled: true}],
 
-      inspection: [{value: this.car.inspection, disabled: false}], // TODO permettre de créer une inspection pour la voiture ou consulter si elle existe -> lier à l'écran pour créer l'inspection quand il existera
+      inspection: [{value: this.car.inspection, disabled: false}],
+    });
+  }
 
-      });
+  public doOpenInspection() {
+    console.log('TODO: check if form is dirty and ask for confirmation');
+    if (this.car.inspection) {
+      console.log('open existing inspection');
+    } else {
+      console.log('open screen to create new inspection');
+    }
   }
 
   public doUpdate() {
@@ -90,8 +102,28 @@ export class FleetViewComponent implements OnInit {
     if (!this.car.leasingCompany) {
       this.leasingService.getLeasingCompany(this.car.leasingCompanyId).subscribe(leasComp => {
         this.car.leasingCompany = leasComp;
-        this.form.setControl('leasingCompany', new FormControl(this.car.leasingCompany.leasingCompanyName));
+        this.form.setControl('leasingCompany', new FormControl({value: this.car.leasingCompany.leasingCompanyName, disabled: true}));
       });
+    }
+  }
+
+  public informCopied() {
+    this.snackBar.open('Email address copied');
+  }
+
+  public changeIconStaff() {
+    if (this.changeableIconStaff === 'info') {
+      this.changeableIconStaff = 'content_copy';
+    } else {
+      (this.changeableIconStaff = 'info');
+    }
+  }
+
+  public changeIconLeasing() {
+    if (this.changeableIconLeasing === 'info') {
+      this.changeableIconLeasing = 'content_copy';
+    } else {
+      (this.changeableIconLeasing = 'info');
     }
   }
 }

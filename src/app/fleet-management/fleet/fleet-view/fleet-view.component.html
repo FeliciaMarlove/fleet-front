@@ -13,7 +13,16 @@
     <mat-form-field>
       <input type="text" matInput formControlName="staffMember" placeholder="Staff member">
       <mat-icon matSuffix *ngIf="!car.staffMember" (click)="doAddStaffMember()">link</mat-icon>
-      <mat-icon matSuffix *ngIf="car.staffMember">info</mat-icon>
+      <mat-icon matSuffix
+                *ngIf="car.staffMember"
+                matTooltip="{{car.staffMember | staffTooltip}}"
+                [cdkCopyToClipboard]="car.staffMember.corporateEmail"
+                (mouseenter)="changeIconStaff()"
+                (mouseleave)="changeIconStaff()"
+                (click)="informCopied()"
+      >
+        {{changeableIconStaff}}
+      </mat-icon>
     </mat-form-field>
     <mat-divider></mat-divider>
     <div class="form-2cols-container">
@@ -49,7 +58,16 @@
     </div>
     <mat-form-field>
       <input type="text" matInput formControlName="leasingCompany" placeholder="Leasing company">
-      <mat-icon matSuffix>info</mat-icon>
+      <mat-icon matSuffix
+                *ngIf="car.leasingCompany"
+                matTooltip="{{car.leasingCompany | leasingTooltip}}"
+                [cdkCopyToClipboard]="car.leasingCompany.leasingCompanyEmail"
+                (mouseenter)="changeIconLeasing()"
+                (mouseleave)="changeIconLeasing()"
+                (click)="informCopied()"
+      >
+        {{changeableIconLeasing}}
+      </mat-icon>
     </mat-form-field>
     <mat-divider></mat-divider>
     <mat-form-field>
@@ -71,5 +89,14 @@
     mat-raised-button
     (click)="matDialogRef.close(false)">
     Close
+  </button>
+
+  <button
+    class="dialog-button"
+    mat-raised-button
+    color="primary"
+    (click)="doOpenInspection()"
+  >
+    {{car.inspection ? 'See inspection report' : 'Create inspection report'}}
   </button>
 </mat-dialog-content>
