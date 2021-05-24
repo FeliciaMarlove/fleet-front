@@ -48,14 +48,19 @@
     <mat-divider></mat-divider>
     <div class="form-2cols-container">
       <mat-form-field>
-        <input type="date" matInput formControlName="startDate" placeholder="Start date">
+        <mat-label>Contract start date</mat-label>
+        <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart> </mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <input [matDatepicker]="pickerEnd" matInput formControlName="endDate" placeholder="End date">
+        <mat-label>Contract end date</mat-label>
+        <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd> </mat-datepicker>
       </mat-form-field>
     </div>
+    <div *ngIf="durationInformation" class="align-mat-icon-with-text-div-container"><mat-icon matPrefix>information</mat-icon><p> {{ durationInformation }}</p></div>
     <mat-form-field>
       <input type="text" matInput formControlName="leasingCompany" placeholder="Leasing company">
       <mat-icon matSuffix

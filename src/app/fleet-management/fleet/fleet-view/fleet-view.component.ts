@@ -39,6 +39,9 @@ export class FleetViewComponent implements OnInit {
   public leasingCompany: LeasingCompany;
   public changeableIconStaff = 'info';
   public changeableIconLeasing = 'info';
+  public endBeforeStart = false;
+  public durationOfContract: number;
+  public durationInformation: string;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetViewComponent>,
@@ -75,13 +78,11 @@ export class FleetViewComponent implements OnInit {
       freeText: [{value: this.car.freeText, disabled: false}],
       staffMember: [{value: this.car.staffMember ? this.car.staffMember.staffFirstName + ' ' + this.car.staffMember.staffLastName : '', disabled: this.car.staffMember}],
       leasingCompany: [{value: this.car.leasingCompany?.leasingCompanyName, disabled: true}],
-
-      inspection: [{value: this.car.inspection, disabled: false}],
     });
   }
 
   public doOpenInspection() {
-    console.log('TODO: check if form is dirty and ask for confirmation');
+    console.log('check if form is dirty and ask for confirmation'); // TODO
     if (this.car.inspection) {
       console.log('open existing inspection');
     } else {
@@ -90,8 +91,13 @@ export class FleetViewComponent implements OnInit {
   }
 
   public doUpdate() {
-    // TODO update -> callback close
-    this.matDialogRef.close(true);
+    this.car.endDate = this.form.controls.endDate.value;
+    this.car.freeText = this.form.controls.freeText.value;
+    this.carService.updateCar(this.car).subscribe(() => {
+      this.matDialogRef.close(true);
+    },
+      error => console.log(error) // TODO handle error
+    );
   }
 
   public doAddStaffMember() {
@@ -125,5 +131,30 @@ export class FleetViewComponent implements OnInit {
     } else {
       (this.changeableIconLeasing = 'info');
     }
+  }
+
+  public checkEndAfterStart() {
+    if (this.form.controls.endDate.value) {
+      const end = this.form.controls.endDate.value;
+      const start = new Date(this.form.controls.startDate.value);
+      this.endBeforeStart = end <= start;
+      if (!this.endBeforeStart) {
+        this.calculateDuration(start, end);
+      } else {
+        this.durationInformation = '';
+      }
+    }
+    if (this.form.controls.startDate.value && !this.form.controls.endDate.value) {
+      this.endBeforeStart = false;
+    }
+  }
+
+  private calculateDuration(start, end) {
+    // const days = Math.ceil((end - start) / (1000 * 3600 * 24));
+    const e = new Date(end);
+    const s = new Date(start);
+    const numberCalendarMonths = e.getMonth() - s.getMonth() +
+      (12 * (e.getFullYear() - s.getFullYear()));
+    this.durationInformation = `The leasing contract duration is ${numberCalendarMonths} months.`;
   }
 }
