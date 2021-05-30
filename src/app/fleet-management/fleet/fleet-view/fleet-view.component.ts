@@ -95,7 +95,7 @@ export class FleetViewComponent implements OnInit {
     this.car.freeText = this.form.controls.freeText.value;
     this.carService.updateCar(this.car).subscribe(() => {
       this.matDialogRef.close(true);
-    },
+      },
       error => console.log(error) // TODO handle error
     );
   }
