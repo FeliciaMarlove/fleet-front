@@ -14,6 +14,8 @@ import {FuelDisplayPipe} from '../../../shared/pipe/fuel-display.pipe';
 import {DirtyFormOnleaveDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/dirty-form-onleave-dialog.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionService} from '../../../core/http-services/inspection.service';
+import {LinkCarStaffDialogComponent} from '../../../shared/utils/link-car-staff-dialog/link-car-staff-dialog.component';
+import {StaffShortDisplayPipe} from '../../../shared/pipe/staff-short-display.pipe';
 
 export const DateFormat = {
   parse: {
@@ -46,19 +48,21 @@ export class FleetViewComponent implements OnInit {
   public endBeforeStart = false;
   public durationOfContract: number;
   public durationInformation: string;
+  public hasModifications = false;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetViewComponent>,
-    private carService: CarService,
     @Inject(MAT_DIALOG_DATA) public data: {car: Car},
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
     private formBuilder: FormBuilder,
+    private carService: CarService,
     private staffService: StaffMemberService,
     private leasingService: LeasingCompanyService,
+    private inspectionService: InspectionService,
     public numberPipe: DecimalPipe,
-    private snackBar: MatSnackBar,
     public fuelTypePipe: FuelDisplayPipe,
-    private dialog: MatDialog,
-    private inspectionService: InspectionService
+    public staffMemberPipe: StaffShortDisplayPipe
 ) { }
 
   ngOnInit(): void {
@@ -119,7 +123,18 @@ export class FleetViewComponent implements OnInit {
   }
 
   public doAddStaffMember() {
-    // TODO link staff member to car then refresh -> conditional button in form (same-ish as create inspect)
+    this.dialog.open(LinkCarStaffDialogComponent, {
+      width: UiDimensionValues.linkStaffCarDialogPixelWidth,
+      height: UiDimensionValues.linkStaffCarDialogPixelHeight,
+      data: {car: this.car, staffMember: this.car.staffMember}
+    })
+      .afterClosed().subscribe(staffMember => {
+        if (staffMember) {
+          this.form.get('staffMember').setValue(this.staffMemberPipe.transform(staffMember));
+          this.hasModifications = true;
+        }
+      },
+      error => console.log(error)); // TODO handle error
   }
 
   private getLeasingCompany() {

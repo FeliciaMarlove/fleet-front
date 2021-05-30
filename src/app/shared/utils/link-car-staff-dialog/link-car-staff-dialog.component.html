@@ -1,1 +1,42 @@
-<p>link-car-staff-dialog works!</p>
+<h3>{{title}}</h3>
+
+<mat-dialog-content class="create-update-form-container">
+  <form [formGroup]="form">
+
+    <mat-form-field appearance="fill">
+      <mat-label>{{car ? car.plateNumber : 'Car'}}</mat-label>
+      <mat-select formControlName="car">
+        <mat-option *ngFor="let car of cars" [value]="car.plateNumber">
+          {{car.plateNumber}} {{car | carShortDisplay}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+
+    <mat-form-field>
+      <mat-label>Staff member</mat-label>
+      <mat-select formControlName="staffMember">
+        <mat-option *ngFor="let staffMember of staff" [value]="staffMember">
+          {{staffMember.staffLastName.toUpperCase()}} {{staffMember.staffFirstName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<button
+  class="dialog-button"
+  mat-raised-button
+  color="accent"
+  [disabled]="form.untouched || form.pristine || form.invalid"
+  (click)="doLink()">
+  Link car-employee
+</button>
+
+<button
+  class="dialog-button"
+  mat-raised-button
+  (click)="matDialogRef.close(false)">
+  Cancel
+</button>

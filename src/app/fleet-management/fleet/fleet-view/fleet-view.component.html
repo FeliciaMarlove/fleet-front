@@ -92,16 +92,25 @@
   <button
     class="dialog-button"
     mat-raised-button
-    (click)="matDialogRef.close(false)">
-    Close
+    color="primary"
+    (click)="doOpenInspection()"
+  >
+    {{car.inspection ? 'See inspection report' : 'Create inspection report'}}
   </button>
 
   <button
     class="dialog-button"
     mat-raised-button
     color="primary"
-    (click)="doOpenInspection()"
+    (click)="doAddStaffMember()"
   >
-    {{car.inspection ? 'See inspection report' : 'Create inspection report'}}
+    {{car.staffMember ? 'Change staff member' : 'Link staff member'}}
+  </button>
+
+  <button
+    class="dialog-button"
+    mat-raised-button
+    (click)="matDialogRef.close(hasModifications)">
+    Close
   </button>
 </mat-dialog-content>
