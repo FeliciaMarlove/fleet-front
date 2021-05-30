@@ -8,6 +8,7 @@ import {LeasingCompanyService} from '../../../core/http-services/leasing-company
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MatSelectChange} from '@angular/material/select';
 
 export const DateFormat = {
   parse: {
@@ -39,6 +40,7 @@ export class FleetCreateComponent implements OnInit {
   public endBeforeStart = false;
   public durationOfContract: number;
   public durationInformation: string;
+  public isElectric = false;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetCreateComponent>,
@@ -64,6 +66,19 @@ export class FleetCreateComponent implements OnInit {
       freeText: [''],
       leasingCompanyId: ['', Validators.required]
     });
+  }
+
+  public checkFuelChange($event: MatSelectChange) {
+    if ($event.value !== 'FULL_ELECTRIC') {
+      this.isElectric = false;
+      this.form.get('averageConsumption').setValidators(Validators.required);
+      this.form.get('averageConsumption').enable();
+    } else {
+      this.isElectric = true;
+      this.form.get('averageConsumption').clearValidators();
+      this.form.get('averageConsumption').disable();
+    }
+    this.form.get('averageConsumption').updateValueAndValidity();
   }
 
   public checkEndAfterStart() {
