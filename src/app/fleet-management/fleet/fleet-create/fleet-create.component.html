@@ -22,14 +22,14 @@
     <div class="form-2cols-container">
       <mat-form-field appearance="fill">
         <mat-label>Fuel</mat-label>
-        <mat-select formControlName="fuelType" placeholder="Fuel" required>
+        <mat-select formControlName="fuelType" placeholder="Fuel" required (selectionChange)="checkFuelChange($event)">
           <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
             {{fuel.value}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [min]="0" type="number" formControlName="averageConsumption" placeholder="Average consumption - liters / 100 kilometers" required>
+        <input matInput [min]="0" type="number" formControlName="averageConsumption" [placeholder]="isElectric ? 'N/A' : 'Av. consumption l/100'" [required]="!isElectric">
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
