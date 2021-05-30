@@ -26,10 +26,23 @@ export class InspectionService {
   }
 
   createInspection(inspection: Inspection): Observable<Inspection> {
+    const dateStart = new Date(inspection.inspectionDate);
+    dateStart.setUTCDate(dateStart.getDate());
+    inspection.inspectionDate = dateStart;
+    if (inspection.sentDate) {
+      const dateEnd = new Date(inspection.sentDate);
+      dateEnd.setUTCDate(dateEnd.getDate());
+      inspection.sentDate = dateEnd;
+    }
     return this.http.post<Inspection>(URI, inspection, Conf.httpOptions);
   }
 
   updateInspection(inspection: Inspection): Observable<Inspection> {
+    if (inspection.sentDate) {
+      const dateEnd = new Date(inspection.sentDate);
+      dateEnd.setUTCDate(dateEnd.getDate());
+      inspection.sentDate = dateEnd;
+    }
     return this.http.put<Inspection>(URI, inspection, Conf.httpOptions);
   }
 }
