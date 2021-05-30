@@ -69,16 +69,17 @@ export class FleetCreateComponent implements OnInit {
   }
 
   public checkFuelChange($event: MatSelectChange) {
+    const consumpField = this.form.get('averageConsumption');
     if ($event.value !== 'FULL_ELECTRIC') {
       this.isElectric = false;
-      this.form.get('averageConsumption').setValidators(Validators.required);
-      this.form.get('averageConsumption').enable();
+      consumpField.setValidators(Validators.required);
+      consumpField.enable();
     } else {
       this.isElectric = true;
-      this.form.get('averageConsumption').clearValidators();
-      this.form.get('averageConsumption').disable();
+      consumpField.clearValidators();
+      consumpField.disable();
     }
-    this.form.get('averageConsumption').updateValueAndValidity();
+    consumpField.updateValueAndValidity();
   }
 
   public checkEndAfterStart() {
