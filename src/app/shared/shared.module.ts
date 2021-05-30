@@ -32,6 +32,7 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
 import { StaffTooltipPipe } from './pipe/staffTooltip.pipe';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
+import { DirtyFormOnleaveDialogComponent } from './utils/dirty-form-onleave-dialog/dirty-form-onleave-dialog.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
     PlateNumberDirective,
     StaffTooltipPipe,
     LeasingTooltipPipe,
+    DirtyFormOnleaveDialogComponent,
   ],
   imports: [
     CommonModule,

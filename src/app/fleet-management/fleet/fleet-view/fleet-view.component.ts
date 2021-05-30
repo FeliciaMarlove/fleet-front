@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {CarService} from '../../../core/http-services/car.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Car} from '../../../shared/models/car.model';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
@@ -11,6 +11,8 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FuelDisplayPipe} from '../../../shared/pipe/fuel-display.pipe';
+import {DirtyFormOnleaveDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/dirty-form-onleave-dialog.component';
+import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 
 export const DateFormat = {
   parse: {
@@ -53,7 +55,8 @@ export class FleetViewComponent implements OnInit {
     private leasingService: LeasingCompanyService,
     public numberPipe: DecimalPipe,
     private snackBar: MatSnackBar,
-    public fuelTypePipe: FuelDisplayPipe
+    public fuelTypePipe: FuelDisplayPipe,
+    private dialog: MatDialog
 ) { }
 
   ngOnInit(): void {
@@ -85,9 +88,16 @@ export class FleetViewComponent implements OnInit {
 
   public doOpenInspection() {
     if (this.form.dirty) {
-      console.log('fjdkf');
+      this.dialog.open(DirtyFormOnleaveDialogComponent, {
+        width: UiDimensionValues.filterDialogPixelWidth,
+        height: UiDimensionValues.filterDialogPixelHeight,
+      })
+        .afterClosed().subscribe(toSave => {
+          if (toSave) {
+            this.doUpdate();
+          }
+      });
     }
-    console.log('check if form is dirty and ask for confirmation'); // TODO
     if (this.car.inspection) {
       console.log('open existing inspection');
     } else {
@@ -106,7 +116,7 @@ export class FleetViewComponent implements OnInit {
   }
 
   public doAddStaffMember() {
-    // TODO link staff member to car then refresh
+    // TODO link staff member to car then refresh -> conditional button in form (same-ish as create inspect)
   }
 
   private getLeasingCompany() {

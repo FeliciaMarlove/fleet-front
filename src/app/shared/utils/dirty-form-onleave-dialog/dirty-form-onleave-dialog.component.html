@@ -1,0 +1,20 @@
+<h3 matDialogTitle>{{helperText}}</h3>
+
+
+<mat-dialog-content class="dirty-form-onleave-dialog-container">
+  <button
+    class="dialog-button"
+    mat-raised-button
+    color="accent"
+    (click)="matDialogRef.close(true)">
+    YES
+  </button>
+
+  <button
+    class="dialog-button"
+    mat-raised-button
+    (click)="matDialogRef.close(false)">
+    NO
+  </button>
+</mat-dialog-content>
+
