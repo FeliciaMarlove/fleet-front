@@ -26,10 +26,16 @@ export class TankFillingService {
   }
 
   createFillUp(tankFilling: TankFilling): Observable<TankFilling> {
+    const dateStart = new Date(tankFilling.dateTimeFilling);
+    dateStart.setUTCDate(dateStart.getDate());
+    tankFilling.dateTimeFilling = dateStart;
     return this.http.post<TankFilling>(URI, tankFilling, Conf.httpOptions);
   }
 
   updateFillUp(tankFilling: TankFilling): Observable<TankFilling> {
+    const dateStart = new Date(tankFilling.dateTimeFilling);
+    dateStart.setUTCDate(dateStart.getDate());
+    tankFilling.dateTimeFilling = dateStart;
     return this.http.put<TankFilling>(URI + 'correction', tankFilling, Conf.httpOptions);
   }
 }
