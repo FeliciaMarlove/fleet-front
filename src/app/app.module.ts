@@ -11,6 +11,7 @@ import {SharedModule} from './shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
+import {FuelDisplayPipe} from './shared/pipe/fuel-display.pipe';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
   providers: [
     DatePipe,
     DecimalPipe,
-    BelgianPhoneNumberPipe
+    BelgianPhoneNumberPipe,
+    FuelDisplayPipe
   ],
   bootstrap: [AppComponent]
 })

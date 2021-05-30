@@ -10,6 +10,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {FuelDisplayPipe} from '../../../shared/pipe/fuel-display.pipe';
 
 export const DateFormat = {
   parse: {
@@ -51,7 +52,8 @@ export class FleetViewComponent implements OnInit {
     private staffService: StaffMemberService,
     private leasingService: LeasingCompanyService,
     public numberPipe: DecimalPipe,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public fuelTypePipe: FuelDisplayPipe
 ) { }
 
   ngOnInit(): void {
@@ -69,7 +71,7 @@ export class FleetViewComponent implements OnInit {
       plateNumber: [{value: this.car.plateNumber, disabled: true}],
       brand: [{value: this.car.brand, disabled: true}],
       model: [{value: this.car.model, disabled: true}],
-      fuelType: [{value: this.car.fuelType, disabled: true}],
+      fuelType: [{value: this.fuelTypePipe.transform(this.car.fuelType), disabled: true}],
       averageConsumption: [{value: this.car.averageConsumption, disabled: true}],
       kilometers: [{value: this.numberPipe.transform(this.car.kilometers), disabled: true}],
       startDate: [{value: this.car.startDate, disabled: true}],
@@ -82,6 +84,9 @@ export class FleetViewComponent implements OnInit {
   }
 
   public doOpenInspection() {
+    if (this.form.dirty) {
+      console.log('fjdkf');
+    }
     console.log('check if form is dirty and ask for confirmation'); // TODO
     if (this.car.inspection) {
       console.log('open existing inspection');
