@@ -107,7 +107,7 @@ export class FleetCreateComponent implements OnInit {
   }
 
   private initLeasingCompanies() {
-    this.leasingCompaniesService.getLeasingCompanies(null, null).subscribe( leasCompanies => {
+    this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe( leasCompanies => {
       this.leasingCompanies = leasCompanies;
     });
   }
