@@ -13,6 +13,9 @@ import { FillupFilterDialogComponent } from './fillups/fillups-list/fillup-filte
 import { LeasingCompaniesDetailComponent } from './leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
 import { FleetCreateComponent } from './fleet/fleet-create/fleet-create.component';
 import { FleetViewComponent } from './fleet/fleet-view/fleet-view.component';
+import {FuelDisplayPipe} from '../shared/pipe/fuel-display.pipe';
+import {CarShortDisplayPipe} from '../shared/pipe/car-short-display.pipe';
+import {StaffShortDisplayPipe} from '../shared/pipe/staff-short-display.pipe';
 
 
 
@@ -35,6 +38,11 @@ import { FleetViewComponent } from './fleet/fleet-view/fleet-view.component';
         SharedModule,
         FleetManagementRouting,
     ],
+  providers: [
+    FuelDisplayPipe,
+    CarShortDisplayPipe,
+    StaffShortDisplayPipe
+  ],
   entryComponents: [FleetFilterDialogComponent]
 })
 export class FleetManagementModule { }
