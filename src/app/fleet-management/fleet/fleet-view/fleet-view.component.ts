@@ -13,6 +13,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {FuelDisplayPipe} from '../../../shared/pipe/fuel-display.pipe';
 import {DirtyFormOnleaveDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/dirty-form-onleave-dialog.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
+import {InspectionService} from '../../../core/http-services/inspection.service';
 
 export const DateFormat = {
   parse: {
@@ -56,7 +57,8 @@ export class FleetViewComponent implements OnInit {
     public numberPipe: DecimalPipe,
     private snackBar: MatSnackBar,
     public fuelTypePipe: FuelDisplayPipe,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private inspectionService: InspectionService
 ) { }
 
   ngOnInit(): void {
@@ -89,8 +91,8 @@ export class FleetViewComponent implements OnInit {
   public doOpenInspection() {
     if (this.form.dirty) {
       this.dialog.open(DirtyFormOnleaveDialogComponent, {
-        width: UiDimensionValues.filterDialogPixelWidth,
-        height: UiDimensionValues.filterDialogPixelHeight,
+        width: UiDimensionValues.yesNoDialogPixelWidth,
+        height: UiDimensionValues.yesNoDialogPixelHeight,
       })
         .afterClosed().subscribe(toSave => {
           if (toSave) {
@@ -98,6 +100,7 @@ export class FleetViewComponent implements OnInit {
           }
       });
     }
+    // TODO both when the dialog exists in inspection package
     if (this.car.inspection) {
       console.log('open existing inspection');
     } else {
