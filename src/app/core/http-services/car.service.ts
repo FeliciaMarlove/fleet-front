@@ -7,7 +7,7 @@ import {Car} from '../../shared/models/car.model';
 const URI = Conf.SERVER_URL + '/api/car/';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CarService {
 
@@ -24,10 +24,23 @@ export class CarService {
   }
 
   createCar(car: Car): Observable<Car> {
+    const dateStart = new Date(car.startDate);
+    dateStart.setUTCDate(dateStart.getDate());
+    car.startDate = dateStart;
+    if (car.endDate) {
+      const dateEnd = new Date(car.endDate);
+      dateEnd.setUTCDate(dateEnd.getDate());
+      car.endDate = dateEnd;
+    }
     return this.http.post<Car>(URI, car, Conf.httpOptions);
   }
 
   updateCar(car: Car): Observable<Car> {
+    if (car.endDate) {
+      const dateEnd = new Date(car.endDate);
+      dateEnd.setUTCDate(dateEnd.getDate());
+      car.endDate = dateEnd;
+    }
     return this.http.put<Car>(URI, car, Conf.httpOptions);
   }
 }
