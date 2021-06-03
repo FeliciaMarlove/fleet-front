@@ -80,6 +80,14 @@ table {
   margin-left: 35px;
 }
 
+// Presque toutes les tables commencent avec une icône
+// Le style par défaut a été redéfini pour les cellules de première colonne
+// Ce style premet de forcer le style par défaut pour les colonnes textuelles
+.mat-cell-first-of-type-default {
+  text-align: left !important;
+  padding-left: 24px !important;
+}
+
 // Material classes and handles
 
 .mat-input-element:disabled {
@@ -158,7 +166,7 @@ input.mat-input-element {
 }
 
 .mat-table td.mat-cell:first-of-type{
-  padding-left: 0 !important;
+  padding-left: 0 ;
   text-align: center;
 }
 

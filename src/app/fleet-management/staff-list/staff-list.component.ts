@@ -17,8 +17,8 @@ import {UiDimensionValues} from '../../shared/utils/ui-dimension-values';
   styleUrls: ['./staff-list.component.scss']
 })
 export class StaffListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['view', 'staffFirstName', 'staffLastName', 'hasCar', 'car_plate', 'car', 'unlink-action'];
-  public colNames: string[] = ['', 'First name', 'Last name', 'Car?', 'Car plate', 'Car model', ''];
+  public displayedColumns: string[] = ['staffFirstName', 'staffLastName', 'corporateEmail', 'communicationLanguage', 'hasCar', 'car_plate', 'car'];
+  public colNames: string[] = ['unused', 'First name', 'Last name', 'Email', 'Language', 'Car?', 'Car plate', 'Car model'];
   public dataSource = new MatTableDataSource<StaffMember>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -134,11 +134,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public doOpenStaffDetail(staffId: any) {
-
-  }
-
-  public doOpenUnlinkDialog(staffId: any) {
+  public doOpenStaffDetail(staffMember: StaffMember) {
 
   }
 }
