@@ -58,7 +58,6 @@ export class LinkCarStaffDialogComponent implements OnInit {
     this.staffService.setCarOfStaffMember(staffMemId, carId).subscribe(() => {
       this.matDialogRef.close(staffMember);
     });
-    // TODO DIALOG SI ECRASE REL EXISTANTE & verif tt en ordre
   }
 
 }
