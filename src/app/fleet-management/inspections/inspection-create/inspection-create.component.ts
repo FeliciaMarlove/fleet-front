@@ -55,7 +55,7 @@ export class InspectionCreateComponent implements OnInit {
   }
 
   private initCars() {
-    this.carService.getCars('ALL', null).subscribe(cars => {
+    this.carService.getCars('INSPECTABLE', null).subscribe(cars => {
       this.cars = cars;
     });
   }
