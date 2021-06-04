@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 const fillup = {'TO DO': 'WITH_DISCREPANCY_NOT_CORRECTED', 'From date': 'DATE_ABOVE', 'With discrepancies': 'WITH_DISCREPANCY', All: 'ALL'};
-const fleet = {Active: 'ACTIVE', Archived: 'ARCHIVED', Brand: 'BRAND', Fuel: 'FUEL', All: 'ALL'};
+const fleet = {Active: 'ACTIVE', Archived: 'ARCHIVED', Brand: 'BRAND', Fuel: 'FUEL', 'To inspect': 'INSPECTABLE', All: 'ALL'};
 const inspection = {'From date': 'DATE_ABOVE', Damaged: 'DAMAGED', All: 'ALL'};
 const leasing = {Active: 'ACTIVE', All: 'ALL'};
 const staff = {All: 'ALL', 'Without car': 'WITHOUT', 'With car': 'WITH', };
