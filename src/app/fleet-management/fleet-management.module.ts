@@ -16,6 +16,7 @@ import { FleetViewComponent } from './fleet/fleet-view/fleet-view.component';
 import {FuelDisplayPipe} from '../shared/pipe/fuel-display.pipe';
 import {CarShortDisplayPipe} from '../shared/pipe/car-short-display.pipe';
 import {StaffShortDisplayPipe} from '../shared/pipe/staff-short-display.pipe';
+import { InspectionCreateComponent } from './inspections/inspection-create/inspection-create.component';
 
 
 
@@ -32,6 +33,7 @@ import {StaffShortDisplayPipe} from '../shared/pipe/staff-short-display.pipe';
     LeasingCompaniesDetailComponent,
     FleetCreateComponent,
     FleetViewComponent,
+    InspectionCreateComponent,
   ],
     imports: [
         CommonModule,

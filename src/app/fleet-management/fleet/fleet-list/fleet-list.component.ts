@@ -23,7 +23,7 @@ import {FleetViewComponent} from '../fleet-view/fleet-view.component';
 
 export class FleetListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['view', 'plateNumber', 'brand', 'model', 'fuelType', 'staffMember', 'startDate', 'endDate', 'freeText'];
-  public colNames: string[] = ['', 'Plate', 'Brand', 'Model', 'Fuel', 'Owner', 'Start', 'End', ''];
+  public colNames: string[] = ['', 'Plate', 'Brand', 'Model', 'Fuel', 'Owner', 'Start', 'End', 'Note'];
   public dataSource = new MatTableDataSource<Car>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

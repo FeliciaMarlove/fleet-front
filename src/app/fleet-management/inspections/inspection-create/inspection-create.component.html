@@ -1,1 +1,23 @@
-<p>inspection-create works!</p>
+<h3 mat-dialog-title>{{title}}</h3>
+
+<mat-dialog-content class="create-update-form-container">
+  <form [formGroup]="form" class="flex-form-column">
+
+    <div class="form-2cols-container">
+      <mat-form-field>
+        <mat-label>Inspection date</mat-label>
+        <input matInput [max]="maxDate" [min]="minDate" [matDatepicker]="pickerIns" formControlName="inspectionDate"
+               required>
+        <mat-datepicker-toggle matSuffix [for]="pickerIns"></mat-datepicker-toggle>
+        <mat-datepicker #pickerIns></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Expertised by</mat-label>
+        <input matInput type="text" formControlName="expertisedBy">
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
+
+
+  </form>
+</mat-dialog-content>

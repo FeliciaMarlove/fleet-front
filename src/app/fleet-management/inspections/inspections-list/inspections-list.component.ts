@@ -10,10 +10,10 @@ import {MatDialog} from '@angular/material/dialog';
 import {InspectionFilterDialogComponent} from './inspection-filter-dialog/inspection-filter-dialog.component';
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
-import {StaffMember} from '../../../shared/models/staff-member.model';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
+import {InspectionCreateComponent} from '../inspection-create/inspection-create.component';
 
 @Component({
   selector: 'app-inspections-list',
@@ -169,5 +169,17 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
         insp.car = car;
       });
     }
+  }
+
+  public doOpenInspectionCreate() {
+    this.dialog.open(InspectionCreateComponent, {
+      width: UiDimensionValues.detailsDialogPercentageWidth,
+      height: UiDimensionValues.detailsDialogPercentageHeight,
+      data: null
+    }).afterClosed().subscribe(toUpdate => {
+      if (toUpdate) {
+        this.initInspectionsList();
+      }
+    });
   }
 }
