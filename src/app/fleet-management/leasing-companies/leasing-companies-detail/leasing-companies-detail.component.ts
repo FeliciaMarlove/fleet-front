@@ -14,7 +14,7 @@ export class LeasingCompaniesDetailComponent implements OnInit {
   public form: FormGroup;
   public leasingCompany: LeasingCompany = this.data.leasingCompany;
   public title = this.leasingCompany ? 'Modify' : 'Create';
-  // !! negates non-existence => states if it exists
+  // !! negates non-existence => states if it exists (else would assign the object itself if exists)
   public readonly modifying = !!this.leasingCompany;
 
   constructor(
