@@ -80,9 +80,6 @@ export class InspectionCreateComponent implements OnInit {
       inspectionReportFile: [''],
       plateNumber: [!!this.plateNumber ? this.plateNumber : '']
     });
-
-    //TODO if plate number field disabled ; if no plate show all where !inspection && endDate entre now et now - 6 mois (créer filtre back)
-    // TODO show short car name à côté du field plaque
   }
 
 
