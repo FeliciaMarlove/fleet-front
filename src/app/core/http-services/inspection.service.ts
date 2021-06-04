@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Conf} from '../../shared/utils/conf';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -15,7 +15,8 @@ export class InspectionService {
   constructor(
     private http: HttpClient,
     public datePipe: DatePipe
-  ) { }
+  ) {
+  }
 
   getInspection(id: number): Observable<Inspection> {
     return this.http.get<Inspection>(URI + id);
@@ -29,20 +30,9 @@ export class InspectionService {
     const dateStart = new Date(inspection.inspectionDate);
     dateStart.setUTCDate(dateStart.getDate());
     inspection.inspectionDate = dateStart;
-    if (inspection.sentDate) {
-      const dateEnd = new Date(inspection.sentDate);
-      dateEnd.setUTCDate(dateEnd.getDate());
-      inspection.sentDate = dateEnd;
-    }
+    const dateEnd = new Date(inspection.sentDate);
+    dateEnd.setUTCDate(dateEnd.getDate());
+    inspection.sentDate = dateEnd;
     return this.http.post<Inspection>(URI, inspection, Conf.httpOptions);
-  }
-
-  updateInspection(inspection: Inspection): Observable<Inspection> {
-    if (inspection.sentDate) {
-      const dateEnd = new Date(inspection.sentDate);
-      dateEnd.setUTCDate(dateEnd.getDate());
-      inspection.sentDate = dateEnd;
-    }
-    return this.http.put<Inspection>(URI, inspection, Conf.httpOptions);
   }
 }
