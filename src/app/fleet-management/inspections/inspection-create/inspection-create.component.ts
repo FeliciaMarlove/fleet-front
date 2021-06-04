@@ -6,6 +6,7 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {Car} from '../../../shared/models/car.model';
 import {CarService} from '../../../core/http-services/car.service';
+import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 
 export const DateFormat = {
   parse: {
@@ -36,12 +37,14 @@ export class InspectionCreateComponent implements OnInit {
   public minDate = new Date(new Date().setMonth(new Date().getMonth() - 6));
   public cars: Car[] = [];
   public car: Car;
+  public carLabel;
 
   constructor(
     public matDialogRef: MatDialogRef<InspectionCreateComponent>,
     private formBuilder: FormBuilder,
     private inspectionService: InspectionService,
     private carService: CarService,
+    private carPipe: CarShortDisplayPipe,
     @Inject(MAT_DIALOG_DATA) public data: { plateNumber }
   ) { }
 
@@ -63,6 +66,8 @@ export class InspectionCreateComponent implements OnInit {
   private initCar() {
     this.carService.getCar(this.plateNumber).subscribe(car => {
       this.car = car;
+      this.form.get('plateNumber').setValue(this.car.plateNumber);
+      this.carLabel = this.plateNumber + ' - ' + this.carPipe.transform(this.car);
     });
   }
 
@@ -73,7 +78,7 @@ export class InspectionCreateComponent implements OnInit {
       damaged: [''],
       picturesFolder: [''],
       inspectionReportFile: [''],
-      plateNumber: [!!this.plateNumber ? this.plateNumber : '', Validators.required]
+      plateNumber: [!!this.plateNumber ? this.plateNumber : '']
     });
 
     //TODO if plate number field disabled ; if no plate show all where !inspection && endDate entre now et now - 6 mois (créer filtre back)
