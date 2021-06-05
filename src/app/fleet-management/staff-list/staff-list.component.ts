@@ -133,8 +133,4 @@ export class StaffListComponent implements OnInit, AfterViewInit {
       });
     }
   }
-
-  public doOpenStaffDetail(staffMember: StaffMember) {
-
-  }
 }
