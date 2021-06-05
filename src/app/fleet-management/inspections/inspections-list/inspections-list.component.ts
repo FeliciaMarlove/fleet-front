@@ -21,7 +21,6 @@ import {InspectionCreateComponent} from '../inspection-create/inspection-create.
   styleUrls: ['./inspections-list.component.scss']
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
-  // tslint:disable-next-line:max-line-length
   public displayedColumns: string[] = ['view', 'inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged', 'sentDate'];
   public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?', 'Sent?'];
   public dataSource = new MatTableDataSource<Inspection>();
