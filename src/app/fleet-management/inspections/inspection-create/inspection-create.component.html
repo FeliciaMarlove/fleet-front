@@ -5,7 +5,8 @@
     <mat-form-field>
       <mat-label [style.color]="plateNumber ? 'black' : ''">{{plateNumber ? carLabel : 'Car'}}</mat-label>
       <mat-select formControlName="plateNumber" required [disabled]="plateNumber">
-        <mat-option *ngFor="let car of cars" [value]="car.plateNumber">{{car.plateNumber}} - {{car |carShortDisplay}}</mat-option>
+        <mat-option *ngFor="let car of cars" [value]="car.plateNumber">{{car.plateNumber}}
+          - {{car |carShortDisplay}}</mat-option>
       </mat-select>
     </mat-form-field>
     <div class="form-2cols-container">
@@ -26,6 +27,10 @@
       DAMAGED
     </mat-checkbox>
 
+    <!--    if not damaged don't let upload images (or show upload only if damaged? then mandatory)-->
+    <!--    nice to have: dynamically show additional picture upload field when previous is used, up to (5?)-->
+
+    <input type="file" formControlName="picture" (change)="uploadFiles($event)">
 
   </form>
 </mat-dialog-content>
