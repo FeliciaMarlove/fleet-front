@@ -20,6 +20,8 @@ export const DateFormat = {
   }
 };
 
+const fileReader = new FileReader();
+
 @Component({
   selector: 'app-inspection-create',
   templateUrl: './inspection-create.component.html',
@@ -76,14 +78,24 @@ export class InspectionCreateComponent implements OnInit {
       inspectionDate: ['', Validators.required],
       expertisedBy: ['', Validators.required],
       damaged: [''],
-      picturesFolder: [''],
-      inspectionReportFile: [''],
-      plateNumber: [!!this.plateNumber ? this.plateNumber : '']
+      plateNumber: [!!this.plateNumber ? this.plateNumber : ''],
+
+
+      picture: ['']
     });
   }
 
 
   public send() {
     // TODO ajouter formcontrol sentDate avec la date du jour
+    // TODO traiter les fichiers avant envoi ajouter formcontrol
+  }
+
+  public uploadFiles(event) {
+    // TODO -> créer un service pour gérer l'envoi de fichiers vers Azure Blob
+    if (event.target.files && event.target.files.length) {
+      const file = event.target.files;
+      fileReader.readAsDataURL(file);
+    }
   }
 }
