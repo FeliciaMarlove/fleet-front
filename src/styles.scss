@@ -200,6 +200,7 @@ $fleet-dark-primary: mat-palette($mat-blue-grey);
 $fleet-dark-accent:  mat-palette($mat-amber);
 $fleet-dark-warn:    mat-palette($mat-deep-orange);
 $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fleet-dark-warn);
+@include angular-material-theme($fleet-light-theme);
 
 .dark-theme {
   @include angular-material-theme($fleet-dark-theme);
@@ -209,8 +210,4 @@ $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fl
   .mat-table .mat-footer-cell, .mat-table .mat-header-cell {
     color: lightgray !important;
   }
-}
-
-.light-theme {
-  @include angular-material-theme($fleet-light-theme);
 }
