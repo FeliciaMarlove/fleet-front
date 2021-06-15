@@ -1,4 +1,5 @@
 import {Component, HostBinding, Renderer2} from '@angular/core';
+import {OverlayContainer} from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,19 @@ export class AppComponent {
   public title = 'Fleet Management';
   public darkModeUI = false;
 
-  constructor(private renderer: Renderer2) {
+  constructor(
+    private renderer: Renderer2,
+    private overlayContainer: OverlayContainer
+    ) {
     this.renderPageBodyColor();
+    this.applyThemeToOverlyContainers();
   }
 
   /**
    * Switch dark/light theme as defined in themes in the styles.scss file and according to value of darkModeUI
    */
   @HostBinding('class')
-  get themeMode() {
+  public get themeMode() {
     return this.darkModeUI ? 'dark-theme' : 'light-theme';
   }
 
@@ -30,6 +35,7 @@ export class AppComponent {
   public getDarkThemeOn($event) {
     this.darkModeUI = $event;
     this.renderPageBodyColor();
+    this.applyThemeToOverlyContainers();
   }
 
   /**
@@ -43,5 +49,16 @@ export class AppComponent {
     this.renderer.removeClass(document.body, 'dark');
     this.renderer.removeClass(document.body, 'light');
     this.renderer.addClass(document.body, this.darkModeUI ? 'dark' : 'light');
+  }
+
+  /**
+   * Propagate dynamic theme change to overly containers (dialogs eg)
+   * @private
+   */
+  private applyThemeToOverlyContainers() {
+    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
+    const classesToRemove = Array.from(overlayContainerClasses).filter(item => item.includes('app-theme-'));
+    overlayContainerClasses.remove(...classesToRemove);
+    this.overlayContainer.getContainerElement().classList.add(this.darkModeUI ? 'dark-theme' : 'light-theme');
   }
 }
