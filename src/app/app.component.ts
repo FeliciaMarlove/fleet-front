@@ -42,7 +42,7 @@ export class AppComponent {
    * Change the page body background color to match the content background
    * The name of the class is a reference to a CSS class in the styles.scss file
    * For example, 'dark' activates the 'body.dark' CSS class
-   * Classes must be explicitly removed before rendering another one
+   * Current theme classes must be explicitly removed before assigning another one
    * @private
    */
   private renderPageBodyColor() {
@@ -53,6 +53,9 @@ export class AppComponent {
 
   /**
    * Propagate dynamic theme change to overly containers (dialogs eg)
+   * The name of the class is a reference to a CSS class in the styles.scss file
+   * For example, 'dark' activates the 'body.dark' CSS class
+   * Current theme classes must be explicitly removed before assigning another one
    * @private
    */
   private applyThemeToOverlyContainers() {
