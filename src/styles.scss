@@ -80,9 +80,8 @@ table {
   margin-left: 35px;
 }
 
-// Presque toutes les tables commencent avec une icône
-// Le style par défaut a été redéfini pour les cellules de première colonne
-// Ce style premet de forcer le style par défaut pour les colonnes textuelles
+// Adopting default style for text columns
+// as default behavior was rewritten to adapt to mat icons
 .mat-cell-first-of-type-default {
   text-align: left !important;
   padding-left: 24px !important;
@@ -125,10 +124,6 @@ table {
   white-space: pre !important;
 }
 
-.mat-drawer {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
 .mat-select-arrow {
   color: #FF6F00 !important;
 }
@@ -138,12 +133,19 @@ table {
   background-color: #FF6F00 !important;
 }
 
+.mat-drawer {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 // the "outer" content, not the inner content of the mat drawer (side nav)
 .mat-drawer-content {
   padding-left: 15px;
   padding-right: 15px;
+  display: flex !important;
+  flex-direction: column;
 }
 
+// content of the side nav itself
 .mat-drawer-inner-container {
   width: 250px !important;
   background-color: #E8EAF6;
@@ -162,7 +164,7 @@ table {
 
 .mat-table .mat-footer-cell, .mat-table .mat-header-cell {
   font-size: 14px;
-  color: #1A237E;
+  color: #1A237E !important;
 }
 
 .mat-table td.mat-cell:first-of-type{
@@ -183,10 +185,24 @@ $fleet-light-primary: mat-palette($mat-indigo);
 $fleet-light-accent: mat-palette($mat-amber);
 $fleet-light-warn: mat-palette($mat-deep-orange);
 $fleet-light-theme: mat-light-theme($fleet-light-primary, $fleet-light-accent, $fleet-light-warn);
-@include angular-material-theme($fleet-light-theme);
+
 
 // Define an alternate dark theme.
 $fleet-dark-primary: mat-palette($mat-blue-grey);
 $fleet-dark-accent:  mat-palette($mat-amber);
 $fleet-dark-warn:    mat-palette($mat-deep-orange);
 $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fleet-dark-warn);
+
+.dark-theme {
+  @include angular-material-theme($fleet-dark-theme);
+  .mat-drawer-inner-container {
+    background-color: #000033;
+  }
+  .mat-table .mat-footer-cell, .mat-table .mat-header-cell {
+    color: lightgray !important;
+  }
+}
+
+.light-theme {
+  @include angular-material-theme($fleet-light-theme);
+}
