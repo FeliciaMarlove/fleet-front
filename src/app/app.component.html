@@ -11,7 +11,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
   <!--  Main content of the page:  -->
-    <app-header [sidenavHandle]=sidenav></app-header>
+    <app-header [sidenavHandle]=sidenav (darkThemeOn)="getDarkThemeOn($event)"></app-header>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
