@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit {
    * @param toggle The position of the toggle
    */
   public doToggleLightDark(toggle: MatSlideToggle) {
-    console.log('toggle is on position', toggle.checked);
     this.lightDarkToggleIcon = toggle.checked ?  this.darkThemeIcon : this.lightThemeIcon;
     this.darkThemeOn.emit(!toggle.checked);
   }
