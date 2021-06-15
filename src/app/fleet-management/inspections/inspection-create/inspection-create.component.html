@@ -33,4 +33,20 @@
     <input type="file" formControlName="picture" (change)="uploadFiles($event)">
 
   </form>
+
+  <button
+    class="dialog-button"
+    mat-raised-button
+    color="accent"
+    [disabled]="form.invalid"
+    (click)="doSend()">
+    Send
+  </button>
+
+  <button
+    class="dialog-button"
+    mat-raised-button
+    (click)="matDialogRef.close()">
+    Cancel
+  </button>
 </mat-dialog-content>

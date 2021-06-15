@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public title = 'Fleet Management';
+  public darkModeUI = true;
 
+  @HostBinding('class')
+  get themeMode() {
+    return this.darkModeUI ? 'dark-theme' : 'light-theme';
+  }
 }

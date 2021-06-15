@@ -11,15 +11,12 @@ import {SharedModule} from './shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
-import {FuelDisplayPipe} from './shared/pipe/fuel-display.pipe';
-import {CarShortDisplayPipe} from './shared/pipe/car-short-display.pipe';
-import {StaffShortDisplayPipe} from './shared/pipe/staff-short-display.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    SideNavComponent
+    SideNavComponent,
   ],
     imports: [
         BrowserModule,

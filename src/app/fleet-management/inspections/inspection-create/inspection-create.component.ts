@@ -86,7 +86,7 @@ export class InspectionCreateComponent implements OnInit {
   }
 
 
-  public send() {
+  public doSend() {
     // TODO ajouter formcontrol sentDate avec la date du jour
     // TODO traiter les fichiers avant envoi ajouter formcontrol
   }
