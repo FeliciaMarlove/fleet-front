@@ -4,6 +4,14 @@
   font-family: Montserrat, Roboto, Verdana, sans-serif;
 }
 
+body.dark {
+  background-color: #303030;
+}
+
+body.light {
+  background-color: #fafafa;
+}
+
 table {
   width: 100%;
   border: grey 1px dotted;
