@@ -25,9 +25,10 @@ export class HeaderComponent implements OnInit {
    * Emit value to parent component to adapt theme and styling
    * Default position of toggle is "checked" (true) which corresponds to displaying the light theme
    * When toggle position is false, the dark theme must be displayed
-   * @param toggle The position of the toggle
+   * @param toggle The toggle object from the template
    */
   public doToggleLightDark(toggle: MatSlideToggle) {
+    console.log(toggle.checked);
     this.lightDarkToggleIcon = toggle.checked ?  this.darkThemeIcon : this.lightThemeIcon;
     this.darkThemeOn.emit(!toggle.checked);
   }
