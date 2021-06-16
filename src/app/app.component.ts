@@ -37,7 +37,11 @@ export class AppComponent {
    */
   public getDarkThemeOn($event) {
     this.darkModeUI = $event;
-    localStorage.setItem('theme', 'dark');
+    if (this.darkModeUI) {
+      localStorage.setItem('theme', 'dark');
+    } else {
+      localStorage.removeItem('theme');
+    }
     this.renderPageBodyColor();
     this.applyThemeToOverlyContainers();
   }
