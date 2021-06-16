@@ -201,7 +201,7 @@ $fleet-light-warn: mat-palette($mat-deep-orange);
 $fleet-light-theme: mat-light-theme($fleet-light-primary, $fleet-light-accent, $fleet-light-warn);
 
 
-// Define a dark theme.
+// Define a dark theme
 $fleet-dark-primary: mat-palette($mat-blue-grey);
 $fleet-dark-accent:  mat-palette($mat-amber, 900);
 $fleet-dark-warn:    mat-palette($mat-deep-orange);

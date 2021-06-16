@@ -12,8 +12,11 @@ export class AppComponent {
 
   constructor(
     private renderer: Renderer2,
-    private overlayContainer: OverlayContainer
+    private overlayContainer: OverlayContainer,
     ) {
+    if (localStorage.getItem('theme') === 'dark') {
+      this.darkModeUI = true;
+    }
     this.renderPageBodyColor();
     this.applyThemeToOverlyContainers();
   }
@@ -34,6 +37,7 @@ export class AppComponent {
    */
   public getDarkThemeOn($event) {
     this.darkModeUI = $event;
+    localStorage.setItem('theme', 'dark');
     this.renderPageBodyColor();
     this.applyThemeToOverlyContainers();
   }
