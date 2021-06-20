@@ -44,3 +44,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+#docker and run 
+Dockerfile
+src\app\shared\utils\conf.ts
