@@ -10,7 +10,7 @@ WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 
 # Install all the dependencies
-RUN npm install -g npm@7.18.1
+RUN npm install
 
 # Generate the build of the application
 # RUN npm run ng build -- --configuration=production
