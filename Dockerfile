@@ -14,7 +14,7 @@ RUN npm install
 
 # Generate the build of the application
 # RUN npm run ng build -- --configuration=production
-RUN npm run ng build
+RUN npm run ng build --prod
 
 # Stage 2: Serve app with nginx server
 
