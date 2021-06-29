@@ -7,6 +7,7 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {Car} from '../../../shared/models/car.model';
 import {CarService} from '../../../core/http-services/car.service';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
+import { BlobServiceClient, newPipeline } from '@azure/storage-blob';
 
 export const DateFormat = {
   parse: {
@@ -19,8 +20,6 @@ export const DateFormat = {
     monthYearA11yLabel: 'MMMM YYYY',
   }
 };
-
-const fileReader = new FileReader();
 
 @Component({
   selector: 'app-inspection-create',
@@ -75,12 +74,10 @@ export class InspectionCreateComponent implements OnInit {
 
   private initForm() {
     this.form = this.formBuilder.group({
-      inspectionDate: ['', Validators.required],
-      expertisedBy: ['', Validators.required],
+      inspectionDate: [''],
+      expertisedBy: [''],
       damaged: [''],
       plateNumber: [!!this.plateNumber ? this.plateNumber : ''],
-
-
       picture: ['']
     });
   }
@@ -91,11 +88,36 @@ export class InspectionCreateComponent implements OnInit {
     // TODO traiter les fichiers avant envoi ajouter formcontrol
   }
 
-  public uploadFiles(event) {
-    // TODO -> créer un service pour gérer l'envoi de fichiers vers Azure Blob
+  public async uploadFiles(event) {
+    //TODO logique de l'upload à trigger seulement au send pour éviter écritures inutiles
+// security checkdata type file.type.match('image.*')
     if (event.target.files && event.target.files.length) {
-      const file = event.target.files;
-      fileReader.readAsDataURL(file);
+      console.log(event.target.files[0]);
+      const file = event.target.files[0];
+      if (file) {
+        console.log(typeof file);
+
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+        console.log(typeof file);
+
+
+        // // TODO -> créer un service pour gérer l'envoi de fichiers vers Azure Blob
+        // tout mettre dans un try catch
+        const account = '***REMOVED***';
+        const sas = '***REMOVED***';
+        const containerName = 'inspection';
+
+        const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net/${containerName}?${sas}`);
+
+        const containerClient = blobServiceClient.getContainerClient(containerName);
+        const blobName = 'go_fuck_yourself'; // ! unique names if N ups
+        const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+        console.log(file);
+        const uploadResponse = await blockBlobClient.upload(file, file.size);
+        // recup url https://***REMOVED***.blob.core.windows.net/inspection/inspection/go_fuck_yourself
+      }
+
     }
   }
 }
