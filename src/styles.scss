@@ -62,11 +62,6 @@ table {
   height: 40px !important;
 }
 
-.warn-discrepancy {
-  font-weight: bold;
-  background: #FF8F00 !important;
-}
-
 .new-button {
   position: absolute !important;
   right: 10px !important;
@@ -215,8 +210,5 @@ $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fl
   }
   .mat-table .mat-footer-cell, .mat-table .mat-header-cell {
     color: lightgray !important;
-  }
-  .warn-discrepancy {
-    background: #BF360C !important;
   }
 }
