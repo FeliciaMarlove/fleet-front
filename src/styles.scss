@@ -19,6 +19,20 @@ table {
 
 // Custom classes
 
+.header-content{
+  background-color: #1A237E;
+  color: lightgoldenrodyellow;
+  height: 120px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.highlight-selected-menu {
+  background-color: #FFB300 !important;
+}
+
 .form-2cols-container {
   display: flex;
   justify-content: space-between;
@@ -60,11 +74,6 @@ table {
 .list-button {
   margin-right: 10px !important;
   height: 40px !important;
-}
-
-.warn-discrepancy {
-  font-weight: bold;
-  background: #FF8F00 !important;
 }
 
 .new-button {
@@ -202,8 +211,8 @@ $fleet-light-theme: mat-light-theme($fleet-light-primary, $fleet-light-accent, $
 
 
 // Define a dark theme
-$fleet-dark-primary: mat-palette($mat-blue-grey);
-$fleet-dark-accent:  mat-palette($mat-amber, 900);
+$fleet-dark-primary: mat-palette($mat-blue-gray, 700);
+$fleet-dark-accent:  mat-palette($mat-amber, 800);
 $fleet-dark-warn:    mat-palette($mat-deep-orange);
 $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fleet-dark-warn);
 @include angular-material-theme($fleet-light-theme);
@@ -216,7 +225,19 @@ $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fl
   .mat-table .mat-footer-cell, .mat-table .mat-header-cell {
     color: lightgray !important;
   }
-  .warn-discrepancy {
-    background: #BF360C !important;
+  .header-content {
+    background-color: #063970;
+  }
+  .mat-input-element:disabled {
+    color: lightgoldenrodyellow !important;
+  }
+  .mat-sort-header-arrow {
+    color: lightgoldenrodyellow !important;
+  }
+  .mat-form-field.mat-focused .mat-form-field-label {
+    color: lightgoldenrodyellow;
+  }
+  .highlight-selected-menu {
+    background-color: #F57F17 !important;
   }
 }

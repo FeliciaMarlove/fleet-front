@@ -25,6 +25,20 @@
 </section>
 
 <table mat-table [dataSource]="dataSource" matSort>
+
+  <ng-container matColumnDef="warning-icon">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[0]}}</th>
+    <td mat-cell *matCellDef="let fillup">
+      <button
+        mat-mini-fab
+        [color]="fillup.correctedById ? 'accent' : 'warn'"
+        *ngIf="fillup.discrepancy">
+        <mat-icon style="color: black !important;">{{fillup.correctedById ? 'warning_amber' : 'report_problem'}}</mat-icon>
+      </button>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[0]}}</td>
+  </ng-container>
+
   <ng-container matColumnDef="dateTimeFilling">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[1]}}</th>
     <td  mat-cell *matCellDef="let fillup">{{fillup.dateTimeFilling | date}}</td>
@@ -37,21 +51,30 @@
     <td mat-footer-cell *matFooterCellDef>{{colNames[2]}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="warning-icon">
-    <th mat-header-cell *matHeaderCellDef>{{colNames[3]}}</th>
-    <td mat-cell *matCellDef="let fillup">
-      <button
-        mat-icon-button
-        *ngIf="fillup.discrepancy">
-        <mat-icon>{{fillup.correctedById ? 'warning_amber' : 'report_problem'}}</mat-icon>
-      </button>
-    </td>
+  <ng-container matColumnDef="plateNumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[3]}}</th>
+    <td mat-cell *matCellDef="let fillup">{{fillup.plateNumber}}</td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[3]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="staffMember">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[4]}}</th>
+    <td mat-cell *matCellDef="let fillup">{{fillup.staffMember | staffShortDisplay}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[4]}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="numberDiscrepancies">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[5]}}</th>
+    <td mat-cell *matCellDef="let fillup">
+      {{fillup.staffMember?.numberDiscrepancies}}
+      <mat-icon *ngIf="fillup.staffMember?.numberDiscrepancies > 1">priority_high</mat-icon>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[5]}}</td>
   </ng-container>
 
   <!--  Columns configuration  -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [class.warn-discrepancy]="!row.correctedById && row.discrepancy" (click)="row.discrepancy ? doOpenWarning(row) : false"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="row.discrepancy ? doOpenWarning(row) : false"></tr>
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="paginationChoices" showFirstLastButtons></mat-paginator>
