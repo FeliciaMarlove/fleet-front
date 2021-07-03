@@ -9,6 +9,8 @@ import {FillupFilterDialogComponent} from './fillup-filter-dialog/fillup-filter-
 import {FiltersListsService} from '../../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
+import {StaffMemberService} from '../../../core/http-services/staff-member.service';
+import {CarService} from '../../../core/http-services/car.service';
 
 @Component({
   selector: 'app-fillups',
@@ -16,8 +18,8 @@ import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
   styleUrls: ['./fillups-list.component.scss']
 })
 export class FillupsListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['warning-icon', 'dateTimeFilling', 'discrepancyType'];
-  public colNames = ['', 'Date', 'Discrepancy'];
+  public displayedColumns: string[] = ['warning-icon', 'dateTimeFilling', 'discrepancyType', 'plateNumber', 'staffMember', 'numberDiscrepancies'];
+  public colNames = ['', 'Date', 'Discrepancy', 'Plate number', 'Staff member', 'Total'];
   public dataSource = new MatTableDataSource<TankFilling>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,7 +34,9 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   constructor(
     private tankFillingService: TankFillingService,
     private dialog: MatDialog,
-    private filtersListsService: FiltersListsService
+    private filtersListsService: FiltersListsService,
+    private staffMemberService: StaffMemberService,
+    private carService: CarService
   ) { }
 
   ngOnInit() {
@@ -96,19 +100,27 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   * Initiate the list with all fuel operations
+   * Initialize the list with all fuel operations
    */
   private initFillups() {
     this.tankFillingService.getFillUps(this.filter, this.option).subscribe(
       fillups => {
         this.paginationChoices = PaginationListCreatorUtil.setPaginationList(fillups);
         this.dataSource.data = fillups;
+        fillups.forEach(fillup => {
+          this.carService.getCar(fillup.plateNumber).subscribe(car => {
+            this.staffMemberService.getStaffMember(car.staffMemberId).subscribe(
+              sm => fillup.staffMember = sm
+            );
+          });
+        });
       },
       error => console.log(error)
     );
   }
 
   public doOpenWarning(fillup: TankFilling) {
+    // TODO
     console.log(fillup);
   }
 }
