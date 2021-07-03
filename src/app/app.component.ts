@@ -1,4 +1,4 @@
-import {Component, HostBinding, Renderer2} from '@angular/core';
+import {Component, HostBinding, HostListener, Renderer2} from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
 
 @Component({
@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(
     private renderer: Renderer2,
     private overlayContainer: OverlayContainer,
-    ) {
+  ) {
     if (localStorage.getItem('theme') === 'dark') {
       this.darkModeUI = true;
     }
@@ -68,7 +68,7 @@ export class AppComponent {
    */
   private applyThemeToOverlyContainers() {
     const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
-    const classesToRemove = Array.from(overlayContainerClasses).filter(item => item.includes('app-theme-'));
+    const classesToRemove = Array.from(overlayContainerClasses).filter(item => item.includes('-theme'));
     overlayContainerClasses.remove(...classesToRemove);
     this.overlayContainer.getContainerElement().classList.add(this.darkModeUI ? 'dark-theme' : 'light-theme');
   }
