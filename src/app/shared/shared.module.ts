@@ -29,7 +29,7 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { PhoneMaskDirective } from './utils/phone-mask.directive';
 import { PlateNumberDirective } from './utils/plate-number.directive';
-import { StaffTooltipPipe } from './pipe/staffTooltip.pipe';
+import { StaffTooltipPipe } from './pipe/staff-tooltip.pipe';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
 import { DirtyFormOnleaveDialogComponent } from './utils/dirty-form-onleave-dialog/dirty-form-onleave-dialog.component';
