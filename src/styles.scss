@@ -212,7 +212,7 @@ $fleet-light-theme: mat-light-theme($fleet-light-primary, $fleet-light-accent, $
 
 // Define a dark theme
 $fleet-dark-primary: mat-palette($mat-blue-gray, 700);
-$fleet-dark-accent:  mat-palette($mat-amber, 900);
+$fleet-dark-accent:  mat-palette($mat-amber, 800);
 $fleet-dark-warn:    mat-palette($mat-deep-orange);
 $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fleet-dark-warn);
 @include angular-material-theme($fleet-light-theme);
