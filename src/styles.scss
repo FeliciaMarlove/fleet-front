@@ -29,6 +29,10 @@ table {
   justify-content: space-between;
 }
 
+.highlight-selected-menu {
+  background-color: #FFB300 !important;
+}
+
 .form-2cols-container {
   display: flex;
   justify-content: space-between;
@@ -232,5 +236,8 @@ $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fl
   }
   .mat-form-field.mat-focused .mat-form-field-label {
     color: lightgoldenrodyellow;
+  }
+  .highlight-selected-menu {
+    background-color: #F57F17 !important;
   }
 }
