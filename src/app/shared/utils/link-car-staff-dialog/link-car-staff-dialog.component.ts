@@ -1,10 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {CarService} from '../../../core/http-services/car.service';
 import {StaffMember} from '../../models/staff-member.model';
 import {Car} from '../../models/car.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {YesNoDialogComponent} from '../dirty-form-onleave-dialog/yes-no-dialog.component';
+import {UiDimensionValues} from '../ui-dimension-values';
 
 @Component({
   selector: 'app-link-car-staff-dialog',
@@ -13,7 +15,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class LinkCarStaffDialogComponent implements OnInit {
   public form: FormGroup;
-  public car: Car;
   public staffMember: StaffMember;
   public title = 'Link car and staff member';
   public cars: Car [] = [];
@@ -23,41 +24,51 @@ export class LinkCarStaffDialogComponent implements OnInit {
     public matDialogRef: MatDialogRef<LinkCarStaffDialogComponent>,
     private staffService: StaffMemberService,
     private carService: CarService,
-    @Inject(MAT_DIALOG_DATA) public data: {car: Car, staffMember: StaffMember},
+    @Inject(MAT_DIALOG_DATA) public data: { car: Car, staffMember: StaffMember },
     private formBuilder: FormBuilder,
-  ) { }
+    private matDialog: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
-    this.initDialog();
+    this.initStaffList();
     this.initForm();
   }
 
-  private initDialog() {
-    this.car = this.data.car;
-    this.staffMember = this.data.staffMember;
-    if (this.car) {
-      this.staffService.getStaff('ALL', null).subscribe(staff => this.staff = staff.sort((s1, s2) => s1.staffLastName.localeCompare(s2.staffLastName)));
-    } else if (this.staffMember) {
-      this.carService.getCars('ALL', null).subscribe(cars => this.cars = cars);
-    } else {
-      console.log('Something went wrong'); // TODO error handling
-    }
+  private initStaffList() {
+    this.staffService.getStaff('ALL', null).subscribe(staff => this.staff = staff.sort((s1, s2) => s1.staffLastName.localeCompare(s2.staffLastName)));
   }
 
   private initForm() {
     this.form = this.formBuilder.group({
-      car: [{value: this.car, disabled: this.car}, Validators.required],
-      staffMember: [{value: this.staffMember, disabled: !this.car}, Validators.required]
+      car: [{value: this.data.car.plateNumber, disabled: true}],
+      staffMember: ['', Validators.required]
     });
   }
 
   public doLink() {
-    const carId = this.car ? this.car.plateNumber : this.form.get('car').value;
-    const staffMember = !this.car ? this.staffMember : this.form.get('staffMember').value;
+    const carId = this.data.car.plateNumber;
+    const staffMember = this.form.get('staffMember').value;
     const staffMemId = staffMember.staffMemberId;
-    this.staffService.setCarOfStaffMember(staffMemId, carId).subscribe(() => {
-      this.matDialogRef.close(staffMember);
+    this.staffService.getCurrentCarOfStaffMember(staffMemId).subscribe(currCar => {
+      if (currCar) {
+        this.matDialog.open(YesNoDialogComponent, {
+          width: UiDimensionValues.yesNoDialogPixelWidth,
+          height: UiDimensionValues.yesNoDialogPixelHeight,
+          data: {helperText: 'This staff member already has a car, stop current ownership and change car?'}
+        })
+          .afterClosed().subscribe(doProceed => {
+            if (doProceed) {
+              this.staffService.setCarOfStaffMember(staffMemId, carId).subscribe(() => {
+                this.matDialogRef.close(staffMember);
+              });
+            }
+        });
+      } else {
+        this.staffService.setCarOfStaffMember(staffMemId, carId).subscribe(() => {
+          this.matDialogRef.close(staffMember);
+        });
+      }
     });
   }
-
 }
