@@ -9,6 +9,8 @@ import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatSelectChange} from '@angular/material/select';
+import {StaffMemberService} from '../../../core/http-services/staff-member.service';
+import {StaffMember} from '../../../shared/models/staff-member.model';
 
 export const DateFormat = {
   parse: {
@@ -41,16 +43,19 @@ export class FleetCreateComponent implements OnInit {
   public durationOfContract: number;
   public durationInformation: string;
   public isElectric = false;
+  public staff: StaffMember[] = [];
 
   constructor(
     public matDialogRef: MatDialogRef<FleetCreateComponent>,
     private formBuilder: FormBuilder,
     private carService: CarService,
-    private leasingCompaniesService: LeasingCompanyService
+    private leasingCompaniesService: LeasingCompanyService,
+    private staffMemberService: StaffMemberService
   ) { }
 
   ngOnInit(): void {
     this.initLeasingCompanies();
+    this.initStaff();
     this.initForm();
   }
 
@@ -64,7 +69,8 @@ export class FleetCreateComponent implements OnInit {
       startDate: ['', Validators.required],
       endDate: [''],
       freeText: [''],
-      leasingCompanyId: ['', Validators.required]
+      leasingCompanyId: ['', Validators.required],
+      staffMemberId: ['', Validators.required]
     });
   }
 
@@ -110,6 +116,12 @@ export class FleetCreateComponent implements OnInit {
   private initLeasingCompanies() {
     this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe( leasCompanies => {
       this.leasingCompanies = leasCompanies;
+    });
+  }
+
+  private initStaff() {
+    this.staffMemberService.getStaff('ALL', null).subscribe(staff => {
+      this.staff = staff;
     });
   }
 
