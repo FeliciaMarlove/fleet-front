@@ -1,15 +1,13 @@
 <h3>{{title}}</h3>
 
+<div style="color: orangered"><mat-icon matPrefix>warning</mat-icon> Modifying this information will crush previous entry </div>
+<br>
+
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form">
 
     <mat-form-field appearance="fill">
-      <mat-label>{{car ? car.plateNumber : 'Car'}}</mat-label>
-      <mat-select formControlName="car">
-        <mat-option *ngFor="let car of cars" [value]="car.plateNumber">
-          {{car.plateNumber}} {{car | carShortDisplay}}
-        </mat-option>
-      </mat-select>
+      <input type="text" matInput formControlName="car" value="{{data.car.plateNumber}}" disabled>
     </mat-form-field>
 
 

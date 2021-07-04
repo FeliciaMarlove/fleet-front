@@ -32,7 +32,7 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
 import { StaffTooltipPipe } from './pipe/staff-tooltip.pipe';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
-import { DirtyFormOnleaveDialogComponent } from './utils/dirty-form-onleave-dialog/dirty-form-onleave-dialog.component';
+import { YesNoDialogComponent } from './utils/dirty-form-onleave-dialog/yes-no-dialog.component';
 import { LinkCarStaffDialogComponent } from './utils/link-car-staff-dialog/link-car-staff-dialog.component';
 
 @NgModule({
@@ -48,7 +48,7 @@ import { LinkCarStaffDialogComponent } from './utils/link-car-staff-dialog/link-
     PlateNumberDirective,
     StaffTooltipPipe,
     LeasingTooltipPipe,
-    DirtyFormOnleaveDialogComponent,
+    YesNoDialogComponent,
     LinkCarStaffDialogComponent,
   ],
   imports: [
