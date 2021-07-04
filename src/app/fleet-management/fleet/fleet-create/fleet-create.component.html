@@ -2,9 +2,20 @@
 
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form" class="flex-form-column">
-    <mat-form-field>
-      <input type="text" matInput placeholder="Plate number" formControlName="plateNumber" appPlateNumber required>
-    </mat-form-field>
+    <div class="form-2cols-container">
+      <mat-form-field>
+        <input type="text" matInput placeholder="Plate number" formControlName="plateNumber" appPlateNumber required>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Staff member</mat-label>
+        <mat-select formControlName="staffMemberId" placeholder="Staff member" required>
+          <mat-option *ngFor="let staffMember of staff" [value]="staffMember.staffMemberId">
+            {{staffMember | staffShortDisplay}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-divider></mat-divider>
     <div class="form-2cols-container">
       <mat-form-field appearance="fill">
         <mat-label>Brand</mat-label>
