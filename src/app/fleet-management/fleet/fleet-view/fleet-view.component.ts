@@ -11,7 +11,7 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FuelDisplayPipe} from '../../../shared/pipe/fuel-display.pipe';
-import {DirtyFormOnleaveDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/dirty-form-onleave-dialog.component';
+import {YesNoDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/yes-no-dialog.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionService} from '../../../core/http-services/inspection.service';
 import {LinkCarStaffDialogComponent} from '../../../shared/utils/link-car-staff-dialog/link-car-staff-dialog.component';
@@ -94,9 +94,10 @@ export class FleetViewComponent implements OnInit {
 
   public doOpenInspection() {
     if (this.form.dirty) {
-      this.dialog.open(DirtyFormOnleaveDialogComponent, {
+      this.dialog.open(YesNoDialogComponent, {
         width: UiDimensionValues.yesNoDialogPixelWidth,
         height: UiDimensionValues.yesNoDialogPixelHeight,
+        data: {helperText: 'Do you want to save modifications before leaving this screen? Unsaved modifications will be lost.'}
       })
         .afterClosed().subscribe(toSave => {
           if (toSave) {
