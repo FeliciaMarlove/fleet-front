@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatDialogRef} from '@angular/material/dialog';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {CarService} from '../../../core/http-services/car.service';
 import {Brand} from '../../../shared/enums/brand.enum';
 import {FuelType} from '../../../shared/enums/fuel-type.enum';
@@ -9,6 +9,10 @@ import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MatSelectChange} from '@angular/material/select';
+import {StaffMemberService} from '../../../core/http-services/staff-member.service';
+import {StaffMember} from '../../../shared/models/staff-member.model';
+import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
+import {YesNoDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/yes-no-dialog.component';
 
 export const DateFormat = {
   parse: {
@@ -41,16 +45,20 @@ export class FleetCreateComponent implements OnInit {
   public durationOfContract: number;
   public durationInformation: string;
   public isElectric = false;
+  public staff: StaffMember[] = [];
 
   constructor(
     public matDialogRef: MatDialogRef<FleetCreateComponent>,
     private formBuilder: FormBuilder,
     private carService: CarService,
-    private leasingCompaniesService: LeasingCompanyService
+    private leasingCompaniesService: LeasingCompanyService,
+    private staffMemberService: StaffMemberService,
+    private matDialog: MatDialog
   ) { }
 
   ngOnInit(): void {
     this.initLeasingCompanies();
+    this.initStaff();
     this.initForm();
   }
 
@@ -64,7 +72,8 @@ export class FleetCreateComponent implements OnInit {
       startDate: ['', Validators.required],
       endDate: [''],
       freeText: [''],
-      leasingCompanyId: ['', Validators.required]
+      leasingCompanyId: ['', Validators.required],
+      staffMemberId: ['', Validators.required]
     });
   }
 
@@ -80,6 +89,23 @@ export class FleetCreateComponent implements OnInit {
       consumpField.disable();
     }
     consumpField.updateValueAndValidity();
+  }
+
+  public checkStaffLinked($event: MatSelectChange) {
+    this.staffMemberService.getCurrentCarOfStaffMember($event.value).subscribe(res => {
+      if (res) {
+        this.matDialog.open(YesNoDialogComponent, {
+          width: UiDimensionValues.yesNoDialogPixelWidth,
+          height: UiDimensionValues.yesNoDialogPixelHeight,
+          data: {helperText: 'This staff member already has a car, stop current ownership and change car?'}
+        })
+          .afterClosed().subscribe(doProceed => {
+            if (!doProceed) {
+              this.form.controls.staffMemberId.reset();
+            }
+        });
+      }
+    });
   }
 
   public checkEndAfterStart() {
@@ -110,6 +136,12 @@ export class FleetCreateComponent implements OnInit {
   private initLeasingCompanies() {
     this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe( leasCompanies => {
       this.leasingCompanies = leasCompanies;
+    });
+  }
+
+  private initStaff() {
+    this.staffMemberService.getStaff('ALL', null).subscribe(staff => {
+      this.staff = staff;
     });
   }
 

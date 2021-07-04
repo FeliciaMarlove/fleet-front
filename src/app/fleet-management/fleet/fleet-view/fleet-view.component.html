@@ -12,7 +12,6 @@
     </div>
     <mat-form-field>
       <input type="text" matInput formControlName="staffMember" placeholder="Staff member">
-      <mat-icon matSuffix *ngIf="!car.staffMember" (click)="doAddStaffMember()">link</mat-icon>
       <mat-icon matSuffix
                 *ngIf="car.staffMember"
                 matTooltip="{{car.staffMember | staffTooltip}}"
@@ -101,10 +100,10 @@
   <button
     class="dialog-button"
     mat-raised-button
-    color="primary"
+    color="warn"
     (click)="doAddStaffMember()"
   >
-    {{car.staffMember ? 'Change staff member' : 'Link staff member'}}
+    {{'Change staff member'}}
   </button>
 
   <button
