@@ -16,6 +16,7 @@ import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionService} from '../../../core/http-services/inspection.service';
 import {LinkCarStaffDialogComponent} from '../../../shared/utils/link-car-staff-dialog/link-car-staff-dialog.component';
 import {StaffShortDisplayPipe} from '../../../shared/pipe/staff-short-display.pipe';
+import {BlobStorageService} from '../../../core/azure-services/blob-storage.service';
 
 export const DateFormat = {
   parse: {
@@ -62,7 +63,8 @@ export class FleetViewComponent implements OnInit {
     private inspectionService: InspectionService,
     public numberPipe: DecimalPipe,
     public fuelTypePipe: FuelDisplayPipe,
-    public staffMemberPipe: StaffShortDisplayPipe
+    public staffMemberPipe: StaffShortDisplayPipe,
+    private blobStorageService: BlobStorageService
 ) { }
 
   ngOnInit(): void {
