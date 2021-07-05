@@ -63,8 +63,7 @@ export class FleetViewComponent implements OnInit {
     private inspectionService: InspectionService,
     public numberPipe: DecimalPipe,
     public fuelTypePipe: FuelDisplayPipe,
-    public staffMemberPipe: StaffShortDisplayPipe,
-    private blobStorageService: BlobStorageService
+    public staffMemberPipe: StaffShortDisplayPipe
 ) { }
 
   ngOnInit(): void {
