@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  APIEndpoint: 'http://20.76.186.10:8080'
+  APIEndpoint: 'http://fleetapi.8f6e75564cde45eeb707.westeurope.aksapp.io/'
 };
