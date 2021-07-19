@@ -27,7 +27,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public title = 'Car inspections';
-  public paginationChoices: number[] = [10];
+  public paginationChoices: number[] = [];
   public filter: string = null;
   public filterList: object;
   public option: Date = null;
@@ -39,7 +39,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     private staffService: StaffMemberService,
     private carService: CarService,
     private dialog: MatDialog,
-    private filtersListsService: FiltersListsService
+    private filtersListsService: FiltersListsService,
+    private paginationUtil: PaginationListCreatorUtil
   ) { }
 
   ngOnInit() {
@@ -147,7 +148,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    */
   private assignInspectionsList(inspections) {
     this.assignCarAndStaffMember(inspections);
-    this.paginationChoices = PaginationListCreatorUtil.setPaginationList(inspections);
+    this.paginationChoices = this.paginationUtil.setPaginationList(inspections.length);
     this.dataSource.data = inspections;
   }
 

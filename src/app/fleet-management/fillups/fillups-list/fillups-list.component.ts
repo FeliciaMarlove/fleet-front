@@ -24,7 +24,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public title = 'Fuel usage report';
-  public paginationChoices: number[] = [10];
+  public paginationChoices: number[] = [];
   public filter: string = null;
   public filterList: object;
   public option: any = null;
@@ -36,7 +36,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
     private staffMemberService: StaffMemberService,
-    private carService: CarService
+    private carService: CarService,
+    private paginationUtil: PaginationListCreatorUtil
   ) { }
 
   ngOnInit() {
@@ -105,7 +106,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   private initFillups() {
     this.tankFillingService.getFillUps(this.filter, this.option).subscribe(
       fillups => {
-        this.paginationChoices = PaginationListCreatorUtil.setPaginationList(fillups);
+        this.paginationChoices = this.paginationUtil.setPaginationList(fillups.length);
         this.dataSource.data = fillups;
         fillups.forEach(fillup => {
           this.carService.getCar(fillup.plateNumber).subscribe(car => {

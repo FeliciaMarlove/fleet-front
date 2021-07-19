@@ -3,6 +3,9 @@
 <section class="list-actions-wrapper-container">
   <section class="list-actions-buttons-container">
     <button
+      role="button"
+      aria-label="Open filter dialog"
+      [attr.aria-disabled]="!filterList"
       class="list-button"
       mat-raised-button
       (click)="doOpenFilterDialog()"
