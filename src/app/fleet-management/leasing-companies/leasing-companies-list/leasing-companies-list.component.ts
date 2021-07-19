@@ -25,7 +25,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public title = 'Leasing companies';
-  public paginationChoices: number[] = [10];
+  public paginationChoices: number[] = [];
   public filter: string = null;
   public filterList: object;
   public option: string = null;
@@ -35,7 +35,8 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   constructor(
     private leasingService: LeasingCompanyService,
     private dialog: MatDialog,
-    private filtersListsService: FiltersListsService
+    private filtersListsService: FiltersListsService,
+    private paginationListUtil: PaginationListCreatorUtil
   ) { }
 
   ngOnInit() {
@@ -105,7 +106,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   private initLeasingCompanies() {
     this.leasingService.getLeasingCompanies(this.filter, null).subscribe(
       leasingCompanies => {
-        this.paginationChoices = PaginationListCreatorUtil.setPaginationList(leasingCompanies);
+        this.paginationChoices = this.paginationListUtil.setPaginationList(leasingCompanies.length);
         this.dataSource.data = leasingCompanies;
       },
       error => console.log(error)

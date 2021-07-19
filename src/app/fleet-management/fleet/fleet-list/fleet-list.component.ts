@@ -28,7 +28,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public title = 'Fleet';
-  public paginationChoices: number[] = [10];
+  public paginationChoices: number[] = [];
   public filter: string = null;
   public filterList: object;
   public option: string = null;
@@ -39,7 +39,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     private carService: CarService,
     private staffService: StaffMemberService,
     private dialog: MatDialog,
-    private filtersListsService: FiltersListsService
+    private filtersListsService: FiltersListsService,
+    private paginationUtil: PaginationListCreatorUtil
   ) {
   }
 
@@ -75,6 +76,14 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * Assign input to data source filter
+   * @param input from the user in the search field
+   */
+  public searchFilter(input: any) {
+    this.dataSource.filter = input.target.value;
+  }
+
+  /**
    * Override filter predicate used by filter function of DataSource
    * Set filtered columns to staff name and first name (independently or together)
    */
@@ -83,21 +92,11 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       const normalizedFilter = Normalize.normalize(filter);
       return  Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
-        // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffMember?.staffLastName)?.concat(' ', Normalize.normalize(data.staffMember?.staffFirstName))?.includes(normalizedFilter)
-        // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffMember?.staffFirstName)?.concat(' ', Normalize.normalize(data.staffMember?.staffLastName))?.includes(normalizedFilter)
         || Normalize.normalize(data.plateNumber).includes(normalizedFilter)
         || Normalize.normalize(CarShortDisplayPipe.prototype.transform(data)).includes(normalizedFilter);
     };
-  }
-
-  /**
-   * Assign input to data source filter
-   * @param input from the user in the search field
-   */
-  public searchFilter(input: any) {
-    this.dataSource.filter = input.target.value;
   }
 
   /**
@@ -132,7 +131,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * @param cars The list of cars to display
    */
   private assignCarsList(cars) {
-    this.paginationChoices = PaginationListCreatorUtil.setPaginationList(cars);
+    this.paginationChoices = this.paginationUtil.setPaginationList(cars.length);
     this.getCarOwner(cars);
     this.dataSource.data = cars;
   }

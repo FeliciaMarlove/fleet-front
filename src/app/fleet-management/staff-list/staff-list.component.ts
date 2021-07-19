@@ -23,7 +23,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public title = 'Staff members';
-  public paginationChoices: number[] = [10];
+  public paginationChoices: number[] = [];
   public filter: string = null;
   public filterList: object;
   private defaultFilter: string;
@@ -33,7 +33,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   constructor(
     private staffService: StaffMemberService,
     private dialog: MatDialog,
-    private filtersListsService: FiltersListsService
+    private filtersListsService: FiltersListsService,
+    private paginationUtil: PaginationListCreatorUtil
   ) { }
 
   ngOnInit() {
@@ -114,7 +115,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   private initStaffList(): void {
     this.staffService.getStaff(this.filter, null).subscribe(
       staffList => {
-        this.paginationChoices = PaginationListCreatorUtil.setPaginationList(staffList);
+        this.paginationChoices = this.paginationUtil.setPaginationList(staffList.length);
         this.getStaffCurrentCar(staffList);
         this.dataSource.data = staffList;
       },

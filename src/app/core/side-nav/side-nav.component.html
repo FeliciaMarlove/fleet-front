@@ -1,8 +1,11 @@
-<mat-nav-list>
+<mat-nav-list role="menu" aria-label="Side navigation">
   <mat-list-item
+    role="menuitem"
+    [attr.aria-label]="link.title"
+    [attr.aria-current]="current === link"
+    *ngFor="let link of links"
     [routerLink]="link.link"
     (click)="current === link ? false : onClickAssignCurrent(link)"
-    *ngFor="let link of links"
     [class.highlight-selected-menu]="current === link">
     <mat-icon *ngIf="current === link" matListIcon>play_arrow</mat-icon>
       {{link.title}}
@@ -10,10 +13,11 @@
 </mat-nav-list>
 
 <button
+  role="button"
+  aria-label="Close side navigation"
   mat-raised-button
   (click)="sidenavHandle.toggle()"
   class="collapse-menu-button">
   close
   <mat-icon>keyboard_arrow_left</mat-icon>
 </button>
-
