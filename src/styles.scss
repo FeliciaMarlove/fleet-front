@@ -240,4 +240,8 @@ $fleet-dark-theme:   mat-dark-theme($fleet-dark-primary, $fleet-dark-accent, $fl
   .highlight-selected-menu {
     background-color: #F57F17 !important;
   }
+  // color of selected value in select box (else = primary)
+  .mat-selected {
+    color: #F57F17 !important;
+  }
 }

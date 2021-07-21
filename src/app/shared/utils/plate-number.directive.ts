@@ -23,6 +23,15 @@ export class PlateNumberDirective {
     this.onInputChange(event.target.value, true);
   }
 
+  /**
+   * Example
+   * else if (backspace && newVal.length === 4) {
+   *   newVal = newVal.replace(/^(\w{0,1})(\w{0,3})/, '$1-$2').toUpperCase();
+   * means "If the length of the input is 4, and user is going backward
+   * replace the first 1 letter and the following 3 letters by the first letter, dash, the following 3 letters
+   * @param event
+   * @param backspace
+   */
   onInputChange(event, backspace) {
     let newVal = event.replace(/\W/g, '');
     if (backspace && newVal.length <= 1) {
