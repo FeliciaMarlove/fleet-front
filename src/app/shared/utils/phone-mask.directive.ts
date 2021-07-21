@@ -5,18 +5,17 @@ import {NgControl} from '@angular/forms';
   selector: '[appPhoneMask]'
 })
 export class PhoneMaskDirective {
-
   constructor(public ngControl: NgControl) {
   }
 
   @HostListener('ngModelChange', ['$event'])
   onModelChange(event) {
-    this.onInputChange(event, false);
+    this.onInputChange(event, true);
   }
 
   @HostListener('click', ['$event'])
   click(event) {
-    this.onInputChange(event.target.value, true);
+    this.onInputChange(event.target.value, false);
   }
 
   @HostListener('keydown.backspace', ['$event'])
@@ -26,8 +25,12 @@ export class PhoneMaskDirective {
 
   onInputChange(event, backspace) {
     let newVal = event.replace(/\D/g, '');
-    if (newVal.length <= 0) {
-      newVal = '0';
+    if (newVal.length === 0) {
+      if (backspace) {
+        newVal = '';
+      } else {
+        newVal = '0';
+      }
     } else if (newVal.length <= 3) {
       newVal = newVal.replace(/^(\w{0,3})/, '$1');
     } else if (newVal.length <= 6) {

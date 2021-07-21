@@ -16,7 +16,6 @@ import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionService} from '../../../core/http-services/inspection.service';
 import {LinkCarStaffDialogComponent} from '../../../shared/utils/link-car-staff-dialog/link-car-staff-dialog.component';
 import {StaffShortDisplayPipe} from '../../../shared/pipe/staff-short-display.pipe';
-import {BlobStorageService} from '../../../core/azure-services/blob-storage.service';
 
 export const DateFormat = {
   parse: {

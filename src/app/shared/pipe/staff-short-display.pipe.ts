@@ -11,5 +11,4 @@ export class StaffShortDisplayPipe implements PipeTransform {
       value.staffFirstName + ' ' + value.staffLastName.toUpperCase()
       : null;
   }
-
 }
