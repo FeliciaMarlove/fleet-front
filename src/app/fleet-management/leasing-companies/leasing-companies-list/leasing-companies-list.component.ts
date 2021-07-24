@@ -11,6 +11,7 @@ import {MatSort} from '@angular/material/sort';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {LeasingCompaniesDetailComponent} from '../leasing-companies-detail/leasing-companies-detail.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 
 @Component({
   selector: 'app-leasing-companies-list',
@@ -36,7 +37,8 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
     private leasingService: LeasingCompanyService,
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
-    private paginationListUtil: PaginationListCreatorUtil
+    private paginationListUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService
   ) { }
 
   ngOnInit() {
@@ -109,7 +111,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
         this.paginationChoices = this.paginationListUtil.setPaginationList(leasingCompanies.length);
         this.dataSource.data = leasingCompanies;
       },
-      error => console.log(error)
+      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve leasing companies list.')
     );
   }
 

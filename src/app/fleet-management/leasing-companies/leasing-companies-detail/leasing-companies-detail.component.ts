@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {LeasingCompanyService} from '../../../core/http-services/leasing-company.service';
 import {BelgianPhoneNumberPipe} from '../../../shared/pipe/belgian-phone-number.pipe';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 
 @Component({
   selector: 'app-leasing-companies-detail',
@@ -22,7 +23,8 @@ export class LeasingCompaniesDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: { leasingCompany },
     private leasingService: LeasingCompanyService,
-    public belgianPhonePipe: BelgianPhoneNumberPipe
+    public belgianPhonePipe: BelgianPhoneNumberPipe,
+    private errorOutputService: ErrorOutputService
   ) {
   }
 
@@ -51,11 +53,15 @@ export class LeasingCompaniesDetailComponent implements OnInit {
       this.form.addControl('leasingCompanyId', new FormControl(this.leasingCompany.leasingCompanyId));
       this.leasingService.updateLeasingCompany(this.form.value).subscribe( () => {
         this.matDialogRef.close(true);
-      });
+      },
+        () => this.errorOutputService.outputFatalErrorInSnackBar('leasing_detail', 'Updating leasing company failed')
+      );
     } else {
       this.leasingService.createLeasingCompany(this.form.value).subscribe(() => {
         this.matDialogRef.close(true);
-      });
+      },
+        () => this.errorOutputService.outputFatalErrorInSnackBar('leasing_detail', 'Creating leasing company failed')
+      );
     }
   }
 }

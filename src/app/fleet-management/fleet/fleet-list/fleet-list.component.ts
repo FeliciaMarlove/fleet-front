@@ -14,6 +14,7 @@ import {Normalize} from '../../../shared/utils/normalize.util';
 import {FleetCreateComponent} from '../fleet-create/fleet-create.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {FleetViewComponent} from '../fleet-view/fleet-view.component';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 
 @Component({
   selector: 'app-fleet-list',
@@ -40,7 +41,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     private staffService: StaffMemberService,
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
-    private paginationUtil: PaginationListCreatorUtil
+    private paginationUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService
   ) {
   }
 
@@ -122,7 +124,9 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * Initiate the list of cars according to current filter
    */
   private initCarsList() {
-    this.carService.getCars(this.filter, this.option).subscribe(cars => this.assignCarsList(cars));
+    this.carService.getCars(this.filter, this.option).subscribe(cars => this.assignCarsList(cars),
+      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car lists.')
+      );
   }
 
   /**
@@ -145,7 +149,9 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       if (car.staffMemberId) {
         this.staffService.getStaffMember(car.staffMemberId).subscribe(staffMember => {
           car.staffMember = staffMember;
-        });
+        },
+          () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members information.')
+        );
       }
     }
   }

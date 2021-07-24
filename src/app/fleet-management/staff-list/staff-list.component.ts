@@ -10,6 +10,7 @@ import {FiltersListsService} from '../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {Normalize} from '../../shared/utils/normalize.util';
 import {UiDimensionValues} from '../../shared/utils/ui-dimension-values';
+import {ErrorOutputService} from '../../shared/utils/error-output.service';
 
 @Component({
   selector: 'app-staff-list',
@@ -34,7 +35,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
     private staffService: StaffMemberService,
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
-    private paginationUtil: PaginationListCreatorUtil
+    private paginationUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService
   ) { }
 
   ngOnInit() {
@@ -119,7 +121,7 @@ export class StaffListComponent implements OnInit, AfterViewInit {
         this.getStaffCurrentCar(staffList);
         this.dataSource.data = staffList;
       },
-      error => console.log(error)
+      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve staff member list.')
     );
   }
 
@@ -131,7 +133,9 @@ export class StaffListComponent implements OnInit, AfterViewInit {
     for (const staff of staffList) {
       this.staffService.getCurrentCarOfStaffMember(staff.staffMemberId).subscribe( car => {
         staff.currentCar = car;
-      });
+      },
+        () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars information.')
+      );
     }
   }
 }

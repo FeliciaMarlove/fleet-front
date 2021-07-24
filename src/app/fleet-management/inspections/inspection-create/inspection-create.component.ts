@@ -108,4 +108,6 @@ export class InspectionCreateComponent implements OnInit {
       }
     }
   }
+
+  // TODO error handling w/ error output service
 }

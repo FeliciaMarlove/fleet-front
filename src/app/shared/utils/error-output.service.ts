@@ -10,7 +10,7 @@ export class ErrorOutputService {
 
   constructor(
     private matSnackBar: MatSnackBar,
-    private azureBlobService: BlobStorageService,
+    private azureBlobService: BlobStorageService
   ) { }
 
   /**
@@ -20,7 +20,9 @@ export class ErrorOutputService {
    * @param message error message to output
    */
   public outputWarningInSnackbar(componentName: string, message: string) {
-    this.snackBarRef = this.matSnackBar.open(message, 'OK');
+    this.snackBarRef = this.matSnackBar.open(message, 'OK', {
+      panelClass: 'warning-snackbar'
+    });
     this.snackBarRef.onAction().subscribe(() => {
       this.azureBlobService.writeAzureLogBlob('WARNING ' + componentName + ' ' + message);
     });
@@ -33,7 +35,9 @@ export class ErrorOutputService {
    * @param message error message to output
    */
   public outputFatalErrorInSnackBar(componentName: string, message: string) {
-    this.snackBarRef = this.matSnackBar.open(message, 'OK');
+    this.snackBarRef = this.matSnackBar.open('FATAL ERROR! ' + message, 'OK', {
+      panelClass: 'fatal-snackbar'
+    });
     this.snackBarRef.onAction().subscribe(() => {
       this.azureBlobService.writeAzureLogBlob('FATAL ' + componentName + ' ' + message);
     });
