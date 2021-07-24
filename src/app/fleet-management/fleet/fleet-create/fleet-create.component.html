@@ -4,7 +4,8 @@
   <form [formGroup]="form" class="flex-form-column">
     <div class="form-2cols-container">
       <mat-form-field>
-        <input type="text" matInput placeholder="Plate number" formControlName="plateNumber" appPlateNumber required>
+        <input type="text" matInput placeholder="Plate number" #plate formControlName="plateNumber" appPlateNumber required (input)="checkPlate(plate)">
+        <mat-hint class="warning-hint" *ngIf="plateInvalid">Enter a plate number in the format 1-AAA-000</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Staff member</mat-label>

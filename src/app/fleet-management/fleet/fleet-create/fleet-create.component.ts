@@ -13,8 +13,8 @@ import {StaffMemberService} from '../../../core/http-services/staff-member.servi
 import {StaffMember} from '../../../shared/models/staff-member.model';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {YesNoDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/yes-no-dialog.component';
-import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-creator.util';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const DateFormat = {
   parse: {
@@ -48,6 +48,8 @@ export class FleetCreateComponent implements OnInit {
   public durationInformation: string;
   public isElectric = false;
   public staff: StaffMember[] = [];
+  public plateInvalid = false;
+  private readonly platePattern = '[0-9]{1}-[a-zA-Z]{3}-[0-9]{3}';
 
   constructor(
     public matDialogRef: MatDialogRef<FleetCreateComponent>,
@@ -56,7 +58,8 @@ export class FleetCreateComponent implements OnInit {
     private leasingCompaniesService: LeasingCompanyService,
     private staffMemberService: StaffMemberService,
     private matDialog: MatDialog,
-    private errorOutputService: ErrorOutputService
+    private errorOutputService: ErrorOutputService,
+    private matSnackBar: MatSnackBar
   ) {
   }
 
@@ -68,7 +71,7 @@ export class FleetCreateComponent implements OnInit {
 
   private initForm() {
     this.form = this.formBuilder.group({
-      plateNumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{1}-[a-zA-Z]{3}-[0-9]{3}')])],
+      plateNumber: ['', Validators.compose([Validators.required, Validators.pattern(this.platePattern)])],
       brand: ['', Validators.required],
       model: ['', Validators.required],
       fuelType: ['', Validators.required],
@@ -162,7 +165,19 @@ export class FleetCreateComponent implements OnInit {
   public doClose() {
     this.carService.createCar(this.form.value).subscribe(() => {
       this.matDialogRef.close(true);
-    });
+      this.matSnackBar.open('Car was created', 'OK', {
+        panelClass: 'info-snackbar'
+      });
+    },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Creating car failed')
+    );
   }
 
+  public checkPlate(plate: HTMLInputElement) {
+    if (!plate.value.match(this.platePattern)) {
+      this.plateInvalid = true;
+    } else {
+      this.plateInvalid = false;
+    }
+  }
 }

@@ -76,9 +76,18 @@ table {
   height: 40px !important;
 }
 
+.warning-hint {
+  color: #FF6F00 !important;
+}
+
 .new-button {
   position: absolute !important;
   right: 10px !important;
+}
+
+.info-snackbar {
+  background-color: #1A237E !important;
+  color: antiquewhite !important;
 }
 
 .warning-snackbar {
@@ -93,7 +102,7 @@ table {
 
 // color of the action (clickable word)
 .mat-simple-snackbar-action {
-  color: black !important;
+  color: white !important;
 }
 
 .dialog-button {
