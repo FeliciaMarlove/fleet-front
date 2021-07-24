@@ -13,6 +13,8 @@ import {StaffMemberService} from '../../../core/http-services/staff-member.servi
 import {StaffMember} from '../../../shared/models/staff-member.model';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {YesNoDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/yes-no-dialog.component';
+import {PaginationListCreatorUtil} from '../../../shared/utils/pagination-list-creator.util';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 
 export const DateFormat = {
   parse: {
@@ -31,8 +33,8 @@ export const DateFormat = {
   templateUrl: './fleet-create.component.html',
   styleUrls: ['./fleet-create.component.scss'],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: DateFormat }
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: DateFormat}
   ]
 })
 export class FleetCreateComponent implements OnInit {
@@ -53,8 +55,10 @@ export class FleetCreateComponent implements OnInit {
     private carService: CarService,
     private leasingCompaniesService: LeasingCompanyService,
     private staffMemberService: StaffMemberService,
-    private matDialog: MatDialog
-  ) { }
+    private matDialog: MatDialog,
+    private errorOutputService: ErrorOutputService
+  ) {
+  }
 
   ngOnInit(): void {
     this.initLeasingCompanies();
@@ -91,21 +95,27 @@ export class FleetCreateComponent implements OnInit {
     consumpField.updateValueAndValidity();
   }
 
+  /**
+   * Check if staff member already has an ongoing car ownership
+   * @param $event method is called when the event of type "selection change" is done in the vue
+   */
   public checkStaffLinked($event: MatSelectChange) {
     this.staffMemberService.getCurrentCarOfStaffMember($event.value).subscribe(res => {
-      if (res) {
-        this.matDialog.open(YesNoDialogComponent, {
-          width: UiDimensionValues.yesNoDialogPixelWidth,
-          height: UiDimensionValues.yesNoDialogPixelHeight,
-          data: {helperText: 'This staff member already has a car, stop current ownership and change car?'}
-        })
-          .afterClosed().subscribe(doProceed => {
+        if (res) {
+          this.matDialog.open(YesNoDialogComponent, {
+            width: UiDimensionValues.yesNoDialogPixelWidth,
+            height: UiDimensionValues.yesNoDialogPixelHeight,
+            data: {helperText: 'This staff member already has a car, stop current ownership and change car?'}
+          })
+            .afterClosed().subscribe(doProceed => {
             if (!doProceed) {
               this.form.controls.staffMemberId.reset();
             }
-        });
-      }
-    });
+          });
+        }
+      },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Could not check if car already has an owner. This action could overwrite existing data! Please do not proceed.')
+    );
   }
 
   public checkEndAfterStart() {
@@ -134,19 +144,23 @@ export class FleetCreateComponent implements OnInit {
   }
 
   private initLeasingCompanies() {
-    this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe( leasCompanies => {
-      this.leasingCompanies = leasCompanies;
-    });
+    this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe(leasCompanies => {
+        this.leasingCompanies = leasCompanies;
+      },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Leasing companies could not be loaded.')
+    );
   }
 
   private initStaff() {
     this.staffMemberService.getStaff('ALL', null).subscribe(staff => {
-      this.staff = staff;
-    });
+        this.staff = staff;
+      },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Staff members could not be loaded.')
+    );
   }
 
   public doClose() {
-    this.carService.createCar(this.form.value).subscribe( () => {
+    this.carService.createCar(this.form.value).subscribe(() => {
       this.matDialogRef.close(true);
     });
   }

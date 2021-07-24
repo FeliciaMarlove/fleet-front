@@ -81,6 +81,21 @@ table {
   right: 10px !important;
 }
 
+.warning-snackbar {
+  background-color: #FFB300 !important;
+  color: black !important;
+}
+
+.fatal-snackbar {
+  background-color: #FF6F00 !important;
+  color: black !important;
+}
+
+// color of the action (clickable word)
+.mat-simple-snackbar-action {
+  color: black !important;
+}
+
 .dialog-button {
   margin-right: 15px !important;
 }

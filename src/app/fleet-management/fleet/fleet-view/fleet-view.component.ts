@@ -16,6 +16,7 @@ import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionService} from '../../../core/http-services/inspection.service';
 import {LinkCarStaffDialogComponent} from '../../../shared/utils/link-car-staff-dialog/link-car-staff-dialog.component';
 import {StaffShortDisplayPipe} from '../../../shared/pipe/staff-short-display.pipe';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 
 export const DateFormat = {
   parse: {
@@ -62,8 +63,9 @@ export class FleetViewComponent implements OnInit {
     private inspectionService: InspectionService,
     public numberPipe: DecimalPipe,
     public fuelTypePipe: FuelDisplayPipe,
-    public staffMemberPipe: StaffShortDisplayPipe
-) { }
+    public staffMemberPipe: StaffShortDisplayPipe,
+    private errorOutputService: ErrorOutputService
+  ) { }
 
   ngOnInit(): void {
     this.initCar();
@@ -119,7 +121,7 @@ export class FleetViewComponent implements OnInit {
     this.carService.updateCar(this.car).subscribe(() => {
       this.matDialogRef.close(true);
       },
-      error => console.log(error) // TODO handle error
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_update', 'Update failed.')
     );
   }
 
@@ -135,7 +137,8 @@ export class FleetViewComponent implements OnInit {
           this.hasModifications = true;
         }
       },
-      error => console.log(error)); // TODO handle error
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_update', 'Updating the staff member failed.')
+    );
   }
 
   private getLeasingCompany() {

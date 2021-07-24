@@ -113,14 +113,16 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
         this.dataSource.data = fillups;
         fillups.forEach(fillup => {
           this.carService.getCar(fillup.plateNumber).subscribe(car => {
-            this.staffMemberService.getStaffMember(666).subscribe( //car.staffMemberId
+            this.staffMemberService.getStaffMember(car.staffMemberId).subscribe(
               sm => fillup.staffMember = sm,
-              () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members, please try again or contact the administrator if the error still occurs.')
+              () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members.')
             );
-          });
+          },
+            () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars')
+          );
         });
       },
-      error => console.log(error)
+      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve fuel fillups.')
     );
   }
 
