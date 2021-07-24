@@ -11,6 +11,8 @@ import {MatSort} from '@angular/material/sort';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {CarService} from '../../../core/http-services/car.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 
 @Component({
   selector: 'app-fillups',
@@ -37,7 +39,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     private filtersListsService: FiltersListsService,
     private staffMemberService: StaffMemberService,
     private carService: CarService,
-    private paginationUtil: PaginationListCreatorUtil
+    private paginationUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService
   ) { }
 
   ngOnInit() {
@@ -110,8 +113,9 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
         this.dataSource.data = fillups;
         fillups.forEach(fillup => {
           this.carService.getCar(fillup.plateNumber).subscribe(car => {
-            this.staffMemberService.getStaffMember(car.staffMemberId).subscribe(
-              sm => fillup.staffMember = sm
+            this.staffMemberService.getStaffMember(666).subscribe( //car.staffMemberId
+              sm => fillup.staffMember = sm,
+              () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members, please try again or contact the administrator if the error still occurs.')
             );
           });
         });
