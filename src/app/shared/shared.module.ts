@@ -104,6 +104,7 @@ import { LinkCarStaffDialogComponent } from './utils/link-car-staff-dialog/link-
     MatSortModule,
     MatCheckboxModule,
     ClipboardModule,
+    MatSnackBarModule,
     // ---- PIPES
     CarShortDisplayPipe,
     DiscrepancyToDisplayNamePipe,
