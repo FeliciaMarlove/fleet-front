@@ -13,16 +13,51 @@ export class PhoneMaskDirective {
     this.onInputChange(event, true);
   }
 
+  /**
+   * On clicking
+   * @param event
+   */
   @HostListener('click', ['$event'])
   click(event) {
     this.onInputChange(event.target.value, false);
   }
 
+  /**
+   * On pressing backspace
+   * @param event
+   */
   @HostListener('keydown.backspace', ['$event'])
   keydownBackspace(event) {
     this.onInputChange(event.target.value, true);
   }
 
+  /**
+   * On pressing tabulation, entering the field
+   * @param event
+   */
+  @HostListener('keyup.tab', ['$event'])
+  tabIn(event) {
+    this.onInputChange(event.target.value, false);
+  }
+
+  /**
+   * On pressing tabulation, leaving the field
+   * @param event
+   */
+  @HostListener('keydown.tab', ['$event'])
+  tabOut(event) {
+    // if field contains just "0", field was entered but not filled in, we clean it
+    if (event.target.value === '0') {
+      this.onInputChange('', true);
+    }
+  }
+
+  /**
+   * Format content according to input
+   * Clean field when appropriate
+   * @param event
+   * @param backspace
+   */
   onInputChange(event, backspace) {
     let newVal = event.replace(/\D/g, '');
     if (newVal.length === 0) {
