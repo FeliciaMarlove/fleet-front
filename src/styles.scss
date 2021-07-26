@@ -90,6 +90,12 @@ table {
   color: antiquewhite !important;
 }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
 .warning-snackbar {
   background-color: #FFB300 !important;
   color: black !important;

@@ -34,6 +34,7 @@ import {ClipboardModule} from '@angular/cdk/clipboard';
 import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
 import { YesNoDialogComponent } from './utils/dirty-form-onleave-dialog/yes-no-dialog.component';
 import { LinkCarStaffDialogComponent } from './utils/link-car-staff-dialog/link-car-staff-dialog.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { LinkCarStaffDialogComponent } from './utils/link-car-staff-dialog/link-
     MatCheckboxModule,
     ClipboardModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule,
     // ---- PIPES
     CarShortDisplayPipe,
     DiscrepancyToDisplayNamePipe,
