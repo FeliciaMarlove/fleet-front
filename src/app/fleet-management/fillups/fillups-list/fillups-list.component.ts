@@ -32,6 +32,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   public option: any = null;
   private defaultFilter: string;
   public readonly iAm = 'fillup';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private tankFillingService: TankFillingService,
@@ -41,7 +43,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     private carService: CarService,
     private paginationUtil: PaginationListCreatorUtil,
     private errorOutputService: ErrorOutputService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.initAvailableFiltersList();
@@ -96,6 +99,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.option = filter.option;
         this.initFillups();
@@ -109,18 +114,25 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   private initFillups() {
     this.tankFillingService.getFillUps(this.filter, this.option).subscribe(
       fillups => {
-        this.paginationChoices = this.paginationUtil.setPaginationList(fillups.length);
-        this.dataSource.data = fillups;
-        fillups.forEach(fillup => {
-          this.carService.getCar(fillup.plateNumber).subscribe(car => {
-            this.staffMemberService.getStaffMember(car.staffMemberId).subscribe(
-              sm => fillup.staffMember = sm,
-              () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members.')
+        if (fillups) {
+          this.paginationChoices = this.paginationUtil.setPaginationList(fillups.length);
+          this.dataSource.data = fillups;
+          fillups.forEach(fillup => {
+            this.carService.getCar(fillup.plateNumber).subscribe(car => {
+                this.staffMemberService.getStaffMember(car.staffMemberId).subscribe(
+                  sm => fillup.staffMember = sm,
+                  () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members.')
+                );
+              },
+              () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars')
             );
-          },
-            () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars')
-          );
-        });
+          });
+          this.loaded = true;
+          this.loading = false;
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
       },
       () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve fuel fillups.')
     );

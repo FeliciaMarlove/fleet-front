@@ -35,6 +35,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   public option: string = null;
   private defaultFilter: string;
   public readonly iAm = 'fleet';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private carService: CarService,
@@ -92,7 +94,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: Car, filter: string) => {
       const normalizedFilter = Normalize.normalize(filter);
-      return  Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
+      return Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffLastName)?.concat(' ', Normalize.normalize(data.staffMember?.staffFirstName))?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffFirstName)?.concat(' ', Normalize.normalize(data.staffMember?.staffLastName))?.includes(normalizedFilter)
@@ -113,6 +115,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.option = filter.option;
         this.initCarsList();
@@ -124,9 +128,16 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * Initiate the list of cars according to current filter
    */
   private initCarsList() {
-    this.carService.getCars(this.filter, this.option).subscribe(cars => this.assignCarsList(cars),
+    this.carService.getCars(this.filter, this.option).subscribe(cars => {
+        if (cars) {
+          this.assignCarsList(cars);
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
+      },
       () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car lists.')
-      );
+    );
   }
 
   /**
@@ -138,6 +149,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     this.paginationChoices = this.paginationUtil.setPaginationList(cars.length);
     this.getCarOwner(cars);
     this.dataSource.data = cars;
+    this.loaded = true;
+    this.loading = false;
   }
 
   /**
@@ -148,8 +161,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     for (const car of cars) {
       if (car.staffMemberId) {
         this.staffService.getStaffMember(car.staffMemberId).subscribe(staffMember => {
-          car.staffMember = staffMember;
-        },
+            car.staffMember = staffMember;
+          },
           () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members information.')
         );
       }
@@ -178,4 +191,5 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       }
     });
   }
+
 }

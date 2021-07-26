@@ -30,6 +30,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   private defaultFilter: string;
   public option: string = null;
   public readonly iAm = 'staff';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private staffService: StaffMemberService,
@@ -37,7 +39,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
     private filtersListsService: FiltersListsService,
     private paginationUtil: PaginationListCreatorUtil,
     private errorOutputService: ErrorOutputService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.initAvailableFiltersList();
@@ -77,9 +80,9 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: StaffMember, filter: string) => {
       const normalizedFilter = Normalize.normalize(filter);
-      return  Normalize.normalize(data.staffFirstName).includes(normalizedFilter)
+      return Normalize.normalize(data.staffFirstName).includes(normalizedFilter)
         || Normalize.normalize(data.staffLastName).includes(normalizedFilter)
-      || Normalize.normalize(data.staffFirstName).concat(' ', Normalize.normalize(data.staffLastName)).includes(normalizedFilter)
+        || Normalize.normalize(data.staffFirstName).concat(' ', Normalize.normalize(data.staffLastName)).includes(normalizedFilter)
         // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffLastName).concat(' ', Normalize.normalize(data.staffFirstName)).includes(normalizedFilter);
     };
@@ -105,6 +108,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.initStaffList();
       }
@@ -114,12 +119,17 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   /**
    * Initiate the staff list with all staff members
    */
-  private initStaffList(): void {
+  private initStaffList() {
     this.staffService.getStaff(this.filter, null).subscribe(
       staffList => {
-        this.paginationChoices = this.paginationUtil.setPaginationList(staffList.length);
-        this.getStaffCurrentCar(staffList);
-        this.dataSource.data = staffList;
+        if (staffList) {
+          this.paginationChoices = this.paginationUtil.setPaginationList(staffList.length);
+          this.getStaffCurrentCar(staffList);
+          this.dataSource.data = staffList;
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
       },
       () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve staff member list.')
     );
@@ -131,9 +141,11 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    */
   private getStaffCurrentCar(staffList: StaffMember[]) {
     for (const staff of staffList) {
-      this.staffService.getCurrentCarOfStaffMember(staff.staffMemberId).subscribe( car => {
-        staff.currentCar = car;
-      },
+      this.staffService.getCurrentCarOfStaffMember(staff.staffMemberId).subscribe(car => {
+          staff.currentCar = car;
+          this.loaded = true;
+          this.loading = false;
+        },
         () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars information.')
       );
     }

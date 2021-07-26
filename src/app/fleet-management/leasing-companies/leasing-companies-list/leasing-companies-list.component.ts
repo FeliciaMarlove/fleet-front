@@ -32,6 +32,8 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   public option: string = null;
   private defaultFilter: string;
   public readonly iAm = 'leasing';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private leasingService: LeasingCompanyService,
@@ -84,6 +86,8 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.initLeasingCompanies();
       }
@@ -108,8 +112,14 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   private initLeasingCompanies() {
     this.leasingService.getLeasingCompanies(this.filter, null).subscribe(
       leasingCompanies => {
-        this.paginationChoices = this.paginationListUtil.setPaginationList(leasingCompanies.length);
-        this.dataSource.data = leasingCompanies;
+        if (leasingCompanies) {
+          this.paginationChoices = this.paginationListUtil.setPaginationList(leasingCompanies.length);
+          this.dataSource.data = leasingCompanies;
+          this.loading = false;
+          this.loaded = true;
+        }
+        this.loading = false;
+        this.loaded = true;
       },
       () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve leasing companies list.')
     );

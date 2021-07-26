@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './core/header/header.component';
-import { SideNavComponent } from './core/side-nav/side-nav.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {HeaderComponent} from './core/header/header.component';
+import {SideNavComponent} from './core/side-nav/side-nav.component';
 import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -18,14 +18,14 @@ import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
     HeaderComponent,
     SideNavComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        NoopAnimationsModule,
-        CoreModule,
-        SharedModule,
-        MatSidenavModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    CoreModule,
+    SharedModule,
+    MatSidenavModule,
+  ],
   providers: [
     DatePipe,
     DecimalPipe,
@@ -33,4 +33,5 @@ import {BelgianPhoneNumberPipe} from './shared/pipe/belgian-phone-number.pipe';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

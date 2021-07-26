@@ -34,6 +34,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   public option: Date = null;
   private defaultFilter: string;
   public readonly iAm = 'inspection';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private inspectionService: InspectionService,
@@ -98,9 +100,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
       const normalizedFilter = Normalize.normalize(filter);
       return Normalize.normalize(data.staffMember.staffLastName).includes(normalizedFilter)
         || Normalize.normalize(data.staffMember.staffFirstName).includes(normalizedFilter)
-        // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffMember.staffLastName).concat(' ', Normalize.normalize(data.staffMember.staffFirstName)).includes(normalizedFilter)
-        // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffMember.staffFirstName).concat(' ', Normalize.normalize(data.staffMember.staffLastName)).includes(normalizedFilter)
         || Normalize.normalize(data.expertisedBy).includes(normalizedFilter)
         || Normalize.normalize(data.plateNumber).includes(normalizedFilter)
@@ -128,6 +128,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.option = filter.option;
         this.initInspectionsList();
@@ -140,7 +142,14 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    */
   private initInspectionsList() {
     this.inspectionService.getInspections(this.filter, this.option).subscribe(
-      inspections => this.assignInspectionsList(inspections),
+      inspections => {
+        if (inspections) {
+          this.assignInspectionsList(inspections);
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
+      },
       () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve inspections list.')
     );
   }
@@ -154,6 +163,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     this.assignCarAndStaffMember(inspections);
     this.paginationChoices = this.paginationUtil.setPaginationList(inspections.length);
     this.dataSource.data = inspections;
+    this.loaded = true;
+    this.loading = false;
   }
 
   public doOpenInspectionDetail(inspection: any) {
