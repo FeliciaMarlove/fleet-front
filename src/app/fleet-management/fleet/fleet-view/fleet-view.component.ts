@@ -64,7 +64,8 @@ export class FleetViewComponent implements OnInit {
     public numberPipe: DecimalPipe,
     public fuelTypePipe: FuelDisplayPipe,
     public staffMemberPipe: StaffShortDisplayPipe,
-    private errorOutputService: ErrorOutputService
+    private errorOutputService: ErrorOutputService,
+    private matSnackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -120,6 +121,9 @@ export class FleetViewComponent implements OnInit {
     this.car.freeText = this.form.controls.freeText.value;
     this.carService.updateCar(this.car).subscribe(() => {
       this.matDialogRef.close(true);
+      this.matSnackBar.open('Car was updated', 'OK', {
+          panelClass: 'info-snackbar'
+        });
       },
       () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_update', 'Update failed.')
     );
