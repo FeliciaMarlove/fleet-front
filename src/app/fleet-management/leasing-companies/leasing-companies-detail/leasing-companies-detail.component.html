@@ -9,7 +9,8 @@
       <input type="text" matInput placeholder="Contact person" formControlName="leasingCompanyContactPerson">
     </mat-form-field>
     <mat-form-field>
-      <input type="text" matInput placeholder="Phone number" formControlName="leasingCompanyPhone" appPhoneMask>
+      <input type="text" matInput placeholder="Phone number" #phone formControlName="leasingCompanyPhone" appPhoneMask>
+      <mat-hint class="warning-hint" *ngIf="phone.value && phone.value.length < 12">Phone number must contain 9 or 10 digits</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <input type="email" matInput placeholder="Email" formControlName="leasingCompanyEmail" required>
@@ -24,7 +25,7 @@
   class="dialog-button"
   mat-raised-button
   color="accent"
-  [disabled]="form.invalid"
+  [disabled]="form.invalid || (form.controls.leasingCompanyPhone.value.length > 0 && form.controls.leasingCompanyPhone.value.length < 12)"
   (click)="doClose()">
   {{title}}
 </button>
