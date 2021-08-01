@@ -30,15 +30,18 @@
     <!--    if not damaged don't let upload images (or show upload only if damaged? then mandatory)-->
     <!--    nice to have: dynamically show additional picture upload field when previous is used, up to (5?)-->
 
-    <input type="file" formControlName="picture" (change)="uploadFiles($event)">
+    <input type="file" multiple accept="image/png, image/jpeg" formControlName="picture" (change)="checkFiles($event)">
+
+    <input type="file" accept=".pdf,.doc" formControlName="report">
 
   </form>
 
+<!--      [disabled]="form.invalid"
+-->
   <button
     class="dialog-button"
     mat-raised-button
     color="accent"
-    [disabled]="form.invalid"
     (click)="doSend()">
     Send
   </button>
