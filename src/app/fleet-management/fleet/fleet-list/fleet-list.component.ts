@@ -136,7 +136,11 @@ export class FleetListComponent implements OnInit, AfterViewInit {
           this.loading = false;
         }
       },
-      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car lists.')
+      () => {
+      this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car list.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 

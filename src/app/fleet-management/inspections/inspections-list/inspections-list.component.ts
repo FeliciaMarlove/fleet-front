@@ -150,7 +150,11 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
           this.loading = false;
         }
       },
-      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve inspections list.')
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve inspections list.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 

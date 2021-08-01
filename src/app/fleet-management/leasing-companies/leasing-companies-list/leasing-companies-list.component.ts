@@ -121,7 +121,11 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
         this.loading = false;
         this.loaded = true;
       },
-      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve leasing companies list.')
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve leasing companies list.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 
