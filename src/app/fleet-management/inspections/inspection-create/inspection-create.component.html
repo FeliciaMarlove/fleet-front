@@ -30,9 +30,9 @@
     <!--    if not damaged don't let upload images (or show upload only if damaged? then mandatory)-->
     <!--    nice to have: dynamically show additional picture upload field when previous is used, up to (5?)-->
 
-    <input type="file" multiple accept="image/png, image/jpeg" formControlName="picture" (change)="checkFiles($event)">
+    <input type="file" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)">
 
-    <input type="file" accept=".pdf,.doc" formControlName="report">
+    <input type="file" accept=".pdf,.doc,.docx,.rtf" formControlName="report" (change)="checkFiles($event)">
 
   </form>
 

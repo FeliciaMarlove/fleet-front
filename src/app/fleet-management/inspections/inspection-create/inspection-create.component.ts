@@ -44,6 +44,8 @@ export class InspectionCreateComponent implements OnInit {
   public cars: Car[] = [];
   public car: Car;
   public carLabel;
+  private latestPictures: [] = [];
+  private latestReport;
   private imageUrls: string[] = [];
   private reportUrl: string;
 
@@ -98,43 +100,63 @@ export class InspectionCreateComponent implements OnInit {
 
 
   public doSend() {
+    this.uploadFiles().then( res => {
+      console.log(res);
+    });
     // TODO ajouter formcontrol sentDate avec la date du jour
     // TODO traiter les fichiers avant envoi ajouter formcontrol
   }
 
-  public async uploadFiles(event) {
+  private async uploadFiles(): Promise<string[]> {
     // TODO logique de l'upload à trigger seulement au send pour éviter écritures inutiles
     // TODO security checkdata type file.type.match('image.*') AVANT UPLOAD -> v. good practice sécu upload files ?
     // TODO check if multiple files solution?
     // TODO TEST sans laisser le blob container public
     // TODO méthode diff pour up rapport et des images
     // TODO comment catch les erreurs côté azure proprement ??
-    if (event.target.files && event.target.files.length) {
-      const files = event.target.files;
-      if (files) {
-        [...files].forEach(file => {
-          if (file.type !== 'image/jpeg' || file.tyope !== 'image/png') {
-            this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'Image file extension must be .png or .jpg, tried to load ' + file.type);
-            return;
-          }
+
+    if (this.latestPictures) {
+      const picturesFiles = this.latestPictures;
+      const reportFile = this.latestReport;
+      if (picturesFiles) {
+        [...picturesFiles].forEach(file => {
+            fileReader.readAsDataURL(file);
+            this.blogStorageService.writeAzureBlockBlob(azureBlobContainerName, BLOB_GOAL.INSPECTION_IMAGE, file).then(blobUrl => {
+              this.imageUrls.push(blobUrl);
+            }).catch(() => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File upload failed for pictures'))
+              .finally(() => {
+                fileReader.readAsDataURL(reportFile);
+                this.blogStorageService.writeAzureBlockBlob(azureBlobContainerName, BLOB_GOAL.INSPECTION_IMAGE, file).then(blobUrl => {
+                  this.reportUrl = blobUrl;
+                }).catch(() => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File upload failed for report'));
+              }).finally(() => {
+                // TODO récup les urls dans return et traiter dans form
+
+            });
         });
       }
-      // if (file) {
-      //   fileReader.readAsDataURL(file);
-      //   this.blogStorageService.writeAzureBlockBlob(azureBlobContainerName, BLOB_GOAL.INSPECTION_IMAGE, file).then(blobUrl => this.imageUrls.push(blobUrl));
-      //
-      // }
     }
+    return ['st1', 'st2'];
   }
 
   /**
-   * Make security checks on files
+   * Make security and validity checks on files
+   * Save value of the field in a variable if it's validated
    * @param $event the content of the file input field
    */
   public checkFiles($event) {
-    this.checkFilesNumber($event);
-    this.checkFileTypes($event);
-    this.checkFileSizes($event);
+    if (this.checkFilesNumber($event)) {
+      if (this.checkFileTypes($event)) {
+        if (this.checkFileSizes($event)) {
+          const fieldName = $event.target.getAttribute('formControlName');
+          switch (fieldName) {
+            case 'picture': this.latestPictures = $event.target.files; break;
+            case 'report': this.latestReport = $event.target.files[0]; break;
+            default: this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File uploaded from unregistered field');
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -143,12 +165,14 @@ export class InspectionCreateComponent implements OnInit {
    * @param $event
    * @private
    */
-  private checkFilesNumber($event) {
+  private checkFilesNumber($event): boolean {
     const numberOfFiles = $event.target.files.length;
     if (numberOfFiles > 5) {
       this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'You cannot upload more than 5 files');
       $event.target.value = null;
+      return false;
     }
+    return true;
   }
 
   /**
@@ -157,23 +181,25 @@ export class InspectionCreateComponent implements OnInit {
    * @param $event
    * @private
    */
-  private checkFileTypes($event) {
+  private checkFileTypes($event): boolean {
     // get "accept" property from file input field as a string
     const acceptedTypes = $event.target.accept;
     const receivedFiles = $event.target.files;
     // files is a HTMLCollection -> to use iterable protocol use spread operator ...
     [...receivedFiles].forEach(file => {
+      const ext = '.'.concat(file.type.substr(file.type.indexOf('/') + 1));
       if (!file.type) {
         this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File extension must be ' + acceptedTypes + ', tried to load unrecognized file type (file name: ' + file.name + ')');
         $event.target.value = null;
-        return;
+        return false;
       }
-      if (!acceptedTypes.includes(file.type)) {
+      if (!acceptedTypes.includes(ext)) {
         this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File extension must be ' + acceptedTypes + ', tried to load ' + file.type + ' (file name: ' + file.name + ')');
         $event.target.value = null;
-        return;
+        return false;
       }
     });
+    return true;
   }
 
   /**
@@ -182,7 +208,7 @@ export class InspectionCreateComponent implements OnInit {
    * @param $event
    * @private
    */
-  private checkFileSizes($event: any) {
+  private checkFileSizes($event): boolean {
     const receivedFiles = $event.target.files;
     const maxSizeInOctets = 1_048_576; // 1 Mo
     // files is a HTMLCollection -> to use iterable protocoal use spread operator ...
@@ -190,9 +216,10 @@ export class InspectionCreateComponent implements OnInit {
       if (file.size > maxSizeInOctets) {
         this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File size cannot be higher than 1 Mo, tried to load ' + this.getFileSizeInMo(file.size) + ' (file name: ' + file.name + ')');
         $event.target.value = null;
-        return;
+        return false;
       }
     });
+    return true;
   }
 
   /**
