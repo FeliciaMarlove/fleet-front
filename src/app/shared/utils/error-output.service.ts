@@ -5,6 +5,9 @@ import {BlobStorageService} from '../../core/azure-services/blob-storage.service
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for displaying error messages that writes logs to Azure blob log file
+ */
 export class ErrorOutputService {
   private snackBarRef;
 

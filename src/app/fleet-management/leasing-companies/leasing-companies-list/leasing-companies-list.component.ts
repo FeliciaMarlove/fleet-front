@@ -94,6 +94,10 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Open dialog for creating or updating a leasing company
+   * @param leasingCompany (opt) Company to update
+   */
   doOpenLeasingUpdOrCreate(leasingCompany: LeasingCompany) {
     this.dialog.open(LeasingCompaniesDetailComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,

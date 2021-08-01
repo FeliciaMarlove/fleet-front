@@ -1,12 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {StaffMemberService} from '../../../core/http-services/staff-member.service';
-import {CarService} from '../../../core/http-services/car.service';
-import {StaffMember} from '../../models/staff-member.model';
-import {Car} from '../../models/car.model';
+import {StaffMemberService} from '../../core/http-services/staff-member.service';
+import {CarService} from '../../core/http-services/car.service';
+import {StaffMember} from '../../shared/models/staff-member.model';
+import {Car} from '../../shared/models/car.model';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {YesNoDialogComponent} from '../dirty-form-onleave-dialog/yes-no-dialog.component';
-import {UiDimensionValues} from '../ui-dimension-values';
+import {YesNoDialogComponent} from '../../shared/utils/yes-no-dialog/yes-no-dialog.component';
+import {UiDimensionValues} from '../../shared/utils/ui-dimension-values';
 
 @Component({
   selector: 'app-link-car-staff-dialog',
@@ -46,6 +46,9 @@ export class LinkCarStaffDialogComponent implements OnInit {
     });
   }
 
+  /**
+   * Link a car with a staff member
+   */
   public doLink() {
     const carId = this.data.car.plateNumber;
     const staffMember = this.form.get('staffMember').value;

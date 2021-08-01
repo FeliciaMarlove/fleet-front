@@ -12,7 +12,7 @@ import {MatSelectChange} from '@angular/material/select';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {StaffMember} from '../../../shared/models/staff-member.model';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
-import {YesNoDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/yes-no-dialog.component';
+import {YesNoDialogComponent} from '../../../shared/utils/yes-no-dialog/yes-no-dialog.component';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
@@ -84,6 +84,10 @@ export class FleetCreateComponent implements OnInit {
     });
   }
 
+  /**
+   * Hide or display average consumption field based on fuel type selection
+   * @param $event Value of the select box
+   */
   public checkFuelChange($event: MatSelectChange) {
     const consumpField = this.form.get('averageConsumption');
     if ($event.value !== 'FULL_ELECTRIC') {
@@ -121,6 +125,9 @@ export class FleetCreateComponent implements OnInit {
     );
   }
 
+  /**
+   * Check that end date is > to start date
+   */
   public checkEndAfterStart() {
     if (this.form.controls.endDate.value && this.form.controls.startDate.value) {
       const end = this.form.controls.endDate.value;
@@ -137,6 +144,12 @@ export class FleetCreateComponent implements OnInit {
     }
   }
 
+  /**
+   * Calculate the duration of the leasing contract
+   * @param start
+   * @param end
+   * @private
+   */
   private calculateDuration(start, end) {
     // const days = Math.ceil((end - start) / (1000 * 3600 * 24));
     const e = new Date(end);
@@ -146,6 +159,10 @@ export class FleetCreateComponent implements OnInit {
     this.durationInformation = `The leasing contract duration is ${numberCalendarMonths} months.`;
   }
 
+  /**
+   * Initialize the list of leasing companies
+   * @private
+   */
   private initLeasingCompanies() {
     this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe(leasCompanies => {
         this.leasingCompanies = leasCompanies;
@@ -154,6 +171,10 @@ export class FleetCreateComponent implements OnInit {
     );
   }
 
+  /**
+   * Initialize the list of staff members
+   * @private
+   */
   private initStaff() {
     this.staffMemberService.getStaff('ALL', null).subscribe(staff => {
         this.staff = staff;
@@ -162,7 +183,10 @@ export class FleetCreateComponent implements OnInit {
     );
   }
 
-  public doClose() {
+  /**
+   * Save car and close dialog
+   */
+  public saveCar() {
     this.carService.createCar(this.form.value).subscribe(() => {
       this.matDialogRef.close(true);
       this.matSnackBar.open('Car was created', 'OK', {
@@ -173,6 +197,10 @@ export class FleetCreateComponent implements OnInit {
     );
   }
 
+  /**
+   * Validate plate number format
+   * @param plate
+   */
   public checkPlate(plate: HTMLInputElement) {
     if (!plate.value.match(this.platePattern)) {
       this.plateInvalid = true;

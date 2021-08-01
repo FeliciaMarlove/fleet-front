@@ -20,4 +20,5 @@ export interface Car {
   staffMember: StaffMember;
   staffMemberId: number;
   inspection: Inspection;
+  carInspectionId: number;
 }

@@ -19,6 +19,9 @@ const connectionString = 'DefaultEndpointsProtocol=https;AccountName=tfefleetsto
   providedIn: 'root'
 })
 
+/**
+ * Expose methods to handle blob objects on Azure storage
+ */
 export class BlobStorageService {
 
   constructor() { }
@@ -40,6 +43,11 @@ export class BlobStorageService {
       return URL + containerName + '/' + folderName + '/' + blobName;
   }
 
+  /**
+   * Write append blob to Azure storage log file
+   * Makes one retry in case of failure
+   * @param log The message to log
+   */
   public async writeAzureLogBlob(log: string) {
     log = '\nCLIENT SIDE:::' + new Date().toISOString() + ':::' + log;
     let attempt = 1;

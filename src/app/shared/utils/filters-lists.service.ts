@@ -17,6 +17,11 @@ export class FiltersListsService {
     return this.serveLists(whoIsAsking);
   }
 
+  /**
+   * Get the list of filters based on a keyword
+   * @param whoIsAsking
+   * @private
+   */
   private serveLists(whoIsAsking: string) {
     switch (whoIsAsking) {
       case 'fillup': return fillup;

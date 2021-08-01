@@ -129,6 +129,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    */
   private initCarsList() {
     this.carService.getCars(this.filter, this.option).subscribe(cars => {
+        console.log(cars);
         if (cars) {
           this.assignCarsList(cars);
         } else {
@@ -137,7 +138,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
         }
       },
       () => {
-      this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car list.');
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car list.');
         this.loaded = true;
         this.loading = false;
       }
@@ -173,6 +174,10 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Open dialog with car details
+   * @param car The selected car
+   */
   public doOpenCarDetail(car: Car) {
     this.dialog.open(FleetViewComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,
@@ -185,6 +190,9 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Open dialog to create a car
+   */
   public doOpenCarCreate() {
     this.dialog.open(FleetCreateComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,

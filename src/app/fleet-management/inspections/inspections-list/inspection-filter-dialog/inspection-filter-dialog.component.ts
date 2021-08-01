@@ -47,8 +47,11 @@ export class InspectionFilterDialogComponent implements OnInit {
     });
   }
 
+  /**
+   * Reset selection for 'From date' option if main selection is changed
+   * @param $event The value of the select box
+   */
   public updateSelection($event: MatSelectChange) {
-    // reset selection for 'From date' option if main selection is changed
     this.form.controls.option.setValue(null);
     if ($event.value !== 'DATE_ABOVE') {
       this.formIsValid = true;
@@ -57,6 +60,9 @@ export class InspectionFilterDialogComponent implements OnInit {
     }
   }
 
+  /**
+   * Pass filter to parent and close dialog
+   */
   public doFilter() {
       this.matDialogRef.close(this.form.value);
   }

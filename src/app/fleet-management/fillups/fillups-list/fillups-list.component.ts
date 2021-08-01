@@ -142,6 +142,10 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     );
   }
 
+  /**
+   * Open view
+   * @param fillup
+   */
   public doOpenWarning(fillup: TankFilling) {
     // TODO
     console.log(fillup);
