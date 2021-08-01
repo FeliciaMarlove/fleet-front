@@ -134,7 +134,11 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
           this.loading = false;
         }
       },
-      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve fuel fillups.')
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve fuel fillups.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 

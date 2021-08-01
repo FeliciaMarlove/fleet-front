@@ -131,7 +131,11 @@ export class StaffListComponent implements OnInit, AfterViewInit {
           this.loading = false;
         }
       },
-      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve staff member list.')
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve staff member list.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 

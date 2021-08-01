@@ -111,13 +111,17 @@ export class InspectionCreateComponent implements OnInit {
     this.form.removeControl('picture');
     this.form.removeControl('report');
     this.form.addControl('sentDate', new FormControl(new Date()));
-    this.inspectionService.createInspection(this.form.value).subscribe( () => {
-      this.matSnackBar.open('Inspection was saved', 'OK', {
-        panelClass: 'info-snackbar'
-      });
-      this.matDialogRef.close(true);
-    },
-      () => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'Creation failed'),
+    this.inspectionService.createInspection(this.form.value).subscribe(() => {
+        this.matSnackBar.open('Inspection was saved', 'OK', {
+          panelClass: 'info-snackbar'
+        });
+        this.matDialogRef.close(true);
+      },
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'Creation failed');
+        this.loading = false;
+        this.loaded = true;
+      },
       () => {
         this.loading = false;
         this.loaded = true;
@@ -159,9 +163,14 @@ export class InspectionCreateComponent implements OnInit {
         if (this.checkFileSizes($event)) {
           const fieldName = $event.target.getAttribute('formControlName');
           switch (fieldName) {
-            case 'picture': this.latestPictures = $event.target.files; break;
-            case 'report': this.latestReport = $event.target.files[0]; break;
-            default: this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File uploaded from unregistered field');
+            case 'picture':
+              this.latestPictures = $event.target.files;
+              break;
+            case 'report':
+              this.latestReport = $event.target.files[0];
+              break;
+            default:
+              this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File uploaded from unregistered field');
           }
         }
       }
