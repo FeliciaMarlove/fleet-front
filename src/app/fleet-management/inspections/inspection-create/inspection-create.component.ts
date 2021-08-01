@@ -48,6 +48,8 @@ export class InspectionCreateComponent implements OnInit {
   private latestReport;
   private imageUrls: string[] = [];
   private reportUrl: string;
+  public loading = false;
+  public loaded = true;
 
   constructor(
     public matDialogRef: MatDialogRef<InspectionCreateComponent>,
@@ -97,6 +99,8 @@ export class InspectionCreateComponent implements OnInit {
   }
 
   public async doSend() {
+    this.loading = true;
+    this.loaded = false;
     await this.uploadPictures();
     await this.uploadReport();
     // set values for files urls
@@ -111,7 +115,11 @@ export class InspectionCreateComponent implements OnInit {
         panelClass: 'info-snackbar'
       });
     },
-      () => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'Creation failed')
+      () => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'Creation failed'),
+      () => {
+        this.loading = false;
+        this.loaded = true;
+      }
     );
   }
 
