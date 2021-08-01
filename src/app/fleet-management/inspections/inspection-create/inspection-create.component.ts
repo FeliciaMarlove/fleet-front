@@ -74,12 +74,20 @@ export class InspectionCreateComponent implements OnInit {
     this.initForm();
   }
 
+  /**
+   * Get car list to choose from
+   * @private
+   */
   private initCars() {
     this.carService.getCars('INSPECTABLE', null).subscribe(cars => {
       this.cars = cars;
     });
   }
 
+  /**
+   * Retrieve information of selected car in case the dialog is opened from car view
+   * @private
+   */
   private initCar() {
     this.carService.getCar(this.plateNumber).subscribe(car => {
       this.car = car;
@@ -99,7 +107,10 @@ export class InspectionCreateComponent implements OnInit {
     });
   }
 
-  public async doSend() {
+  /**
+   * Create inspection
+   */
+  public async createInspection() {
     this.loading = true;
     this.loaded = false;
     await this.uploadPictures();
@@ -129,6 +140,10 @@ export class InspectionCreateComponent implements OnInit {
     );
   }
 
+  /**
+   * Upload pictures to Azure blob storage
+   * @private
+   */
   private async uploadPictures() {
     if (this.latestPictures) {
       const picturesFiles = this.latestPictures;
@@ -143,6 +158,10 @@ export class InspectionCreateComponent implements OnInit {
     }
   }
 
+  /**
+   * Upload report to Azure blob storage
+   * @private
+   */
   private async uploadReport() {
     if (this.latestReport) {
       fileReader.readAsDataURL(this.latestReport);

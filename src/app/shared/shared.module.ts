@@ -32,9 +32,13 @@ import { PlateNumberDirective } from './utils/plate-number.directive';
 import { StaffTooltipPipe } from './pipe/staff-tooltip.pipe';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
-import { YesNoDialogComponent } from './utils/dirty-form-onleave-dialog/yes-no-dialog.component';
-import { LinkCarStaffDialogComponent } from './utils/link-car-staff-dialog/link-car-staff-dialog.component';
+import { YesNoDialogComponent } from './utils/yes-no-dialog/yes-no-dialog.component';
+import { LinkCarStaffDialogComponent } from '../fleet-management/link-car-staff-dialog/link-car-staff-dialog.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+/**
+ * Shared module exposes common services, utilities and components and can be loaded from any module
+ */
 
 @NgModule({
   declarations: [

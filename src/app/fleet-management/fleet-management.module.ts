@@ -18,7 +18,9 @@ import {CarShortDisplayPipe} from '../shared/pipe/car-short-display.pipe';
 import {StaffShortDisplayPipe} from '../shared/pipe/staff-short-display.pipe';
 import { InspectionCreateComponent } from './inspections/inspection-create/inspection-create.component';
 
-
+/**
+ * Fleet management module contains the component for the fleet management app
+ */
 
 @NgModule({
   declarations: [

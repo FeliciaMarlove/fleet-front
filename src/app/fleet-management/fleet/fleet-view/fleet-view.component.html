@@ -95,14 +95,14 @@
     color="primary"
     (click)="doOpenInspection()"
   >
-    {{car.inspection ? 'See inspection report' : 'Create inspection report'}}
+    {{car.carInspectionId ? 'See inspection report' : 'Create inspection report'}}
   </button>
 
   <button
     class="dialog-button"
     mat-raised-button
     color="warn"
-    (click)="doAddStaffMember()"
+    (click)="doChangeStaffMember()"
   >
     {{'Change staff member'}}
   </button>

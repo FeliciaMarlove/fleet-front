@@ -171,6 +171,10 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     this.loading = false;
   }
 
+  /**
+   * Open inspection view
+   * @param inspection The selected inspection
+   */
   public doOpenInspectionDetail(inspection: any) {
     console.log(inspection); // TODO
   }
@@ -194,6 +198,9 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /**
+   * Open dialog for inspection creation
+   */
   public doOpenInspectionCreate() {
     this.dialog.open(InspectionCreateComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,
