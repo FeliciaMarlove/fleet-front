@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {InspectionService} from '../../../core/http-services/inspection.service';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
@@ -8,8 +8,8 @@ import {Car} from '../../../shared/models/car.model';
 import {CarService} from '../../../core/http-services/car.service';
 import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {BLOB_GOAL, BlobStorageService} from '../../../core/azure-services/blob-storage.service';
-import {throwError} from 'rxjs';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const DateFormat = {
   parse: {
@@ -57,6 +57,7 @@ export class InspectionCreateComponent implements OnInit {
     private carPipe: CarShortDisplayPipe,
     private blobStorageService: BlobStorageService,
     private errorOutputService: ErrorOutputService,
+    public matSnackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: { plateNumber }
   ) {
   }
@@ -86,36 +87,35 @@ export class InspectionCreateComponent implements OnInit {
 
   private initForm() {
     this.form = this.formBuilder.group({
-      inspectionDate: [''],
-      expertisedBy: [''],
+      inspectionDate: ['', Validators.required],
+      expertisedBy: ['', Validators.required],
       damaged: [''],
-      plateNumber: [!!this.plateNumber ? this.plateNumber : ''],
+      car: [!!this.plateNumber ? this.plateNumber : '', Validators.required],
       picture: [''],
       report: ['']
     });
   }
 
-  // const file = event.target.files[0]; pour récup 1 fichier (report)
-
-
-
   public async doSend() {
-    await this.uploadFiles();
+    await this.uploadPictures();
     await this.uploadReport();
-    console.log(this.imageUrls, this.reportUrl);
-
-    // TODO ajouter formcontrol sentDate avec la date du jour
-    // TODO traiter les fichiers avant envoi ajouter formcontrol
+    // set values for files urls
+    this.form.addControl('picturesFiles', new FormControl(this.imageUrls.toString()));
+    this.form.addControl('inspectionReportFile', new FormControl(this.reportUrl));
+    // remove plain files from form
+    this.form.removeControl('picture');
+    this.form.removeControl('report');
+    this.form.addControl('sentDate', new FormControl(new Date()));
+    this.inspectionService.createInspection(this.form.value).subscribe( () => {
+      this.matSnackBar.open('Inspection was saved', 'OK', {
+        panelClass: 'info-snackbar'
+      });
+    },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'Creation failed')
+    );
   }
 
-  private async uploadFiles() {
-    // TODO logique de l'upload à trigger seulement au send pour éviter écritures inutiles
-    // TODO security checkdata type file.type.match('image.*') AVANT UPLOAD -> v. good practice sécu upload files ?
-    // TODO check if multiple files solution?
-    // TODO TEST sans laisser le blob container public
-    // TODO méthode diff pour up rapport et des images
-    // TODO comment catch les erreurs côté azure proprement ??
-
+  private async uploadPictures() {
     if (this.latestPictures) {
       const picturesFiles = this.latestPictures;
       if (picturesFiles) {
