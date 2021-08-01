@@ -55,7 +55,7 @@ export class InspectionCreateComponent implements OnInit {
     private inspectionService: InspectionService,
     private carService: CarService,
     private carPipe: CarShortDisplayPipe,
-    private blogStorageService: BlobStorageService,
+    private blobStorageService: BlobStorageService,
     private errorOutputService: ErrorOutputService,
     @Inject(MAT_DIALOG_DATA) public data: { plateNumber }
   ) {
@@ -99,15 +99,16 @@ export class InspectionCreateComponent implements OnInit {
 
 
 
-  public doSend() {
-    this.uploadFiles().then( res => {
-      console.log(res);
-    });
+  public async doSend() {
+    await this.uploadFiles();
+    await this.uploadReport();
+    console.log(this.imageUrls, this.reportUrl);
+
     // TODO ajouter formcontrol sentDate avec la date du jour
     // TODO traiter les fichiers avant envoi ajouter formcontrol
   }
 
-  private async uploadFiles(): Promise<string[]> {
+  private async uploadFiles() {
     // TODO logique de l'upload à trigger seulement au send pour éviter écritures inutiles
     // TODO security checkdata type file.type.match('image.*') AVANT UPLOAD -> v. good practice sécu upload files ?
     // TODO check if multiple files solution?
@@ -117,26 +118,24 @@ export class InspectionCreateComponent implements OnInit {
 
     if (this.latestPictures) {
       const picturesFiles = this.latestPictures;
-      const reportFile = this.latestReport;
       if (picturesFiles) {
-        [...picturesFiles].forEach(file => {
-            fileReader.readAsDataURL(file);
-            this.blogStorageService.writeAzureBlockBlob(azureBlobContainerName, BLOB_GOAL.INSPECTION_IMAGE, file).then(blobUrl => {
-              this.imageUrls.push(blobUrl);
-            }).catch(() => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File upload failed for pictures'))
-              .finally(() => {
-                fileReader.readAsDataURL(reportFile);
-                this.blogStorageService.writeAzureBlockBlob(azureBlobContainerName, BLOB_GOAL.INSPECTION_IMAGE, file).then(blobUrl => {
-                  this.reportUrl = blobUrl;
-                }).catch(() => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File upload failed for report'));
-              }).finally(() => {
-                // TODO récup les urls dans return et traiter dans form
-
-            });
-        });
+        for (const file of picturesFiles) {
+          fileReader.readAsDataURL(file);
+          await this.blobStorageService.writeAzureBlockBlob(azureBlobContainerName, BLOB_GOAL.INSPECTION_IMAGE, file).then(blobUrl => {
+            this.imageUrls.push(blobUrl);
+          });
+        }
       }
     }
-    return ['st1', 'st2'];
+  }
+
+  private async uploadReport() {
+    if (this.latestReport) {
+      fileReader.readAsDataURL(this.latestReport);
+      await this.blobStorageService.writeAzureBlockBlob(azureBlobContainerName, BLOB_GOAL.INSPECTION_REPORT, this.latestReport).then(blobUrl => {
+        this.reportUrl = blobUrl;
+      });
+    }
   }
 
   /**
