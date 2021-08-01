@@ -50,6 +50,7 @@ export class InspectionCreateComponent implements OnInit {
   private reportUrl: string;
   public loading = false;
   public loaded = true;
+  public isDamaged = false;
 
   constructor(
     public matDialogRef: MatDialogRef<InspectionCreateComponent>,
@@ -114,6 +115,7 @@ export class InspectionCreateComponent implements OnInit {
       this.matSnackBar.open('Inspection was saved', 'OK', {
         panelClass: 'info-snackbar'
       });
+      this.matDialogRef.close(true);
     },
       () => this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'Creation failed'),
       () => {

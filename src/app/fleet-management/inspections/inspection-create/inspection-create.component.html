@@ -19,29 +19,29 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Expertised by</mat-label>
-        <input matInput type="text" formControlName="expertisedBy">
+        <input matInput type="text" formControlName="expertisedBy" required>
       </mat-form-field>
     </div>
-    <mat-divider></mat-divider>
-    <mat-checkbox formControlName="damaged">
+    <mat-checkbox style="padding-top: 10px" formControlName="damaged" #damaged (change)="isDamaged = damaged.checked">
       DAMAGED
     </mat-checkbox>
 
-    <!--    if not damaged don't let upload images (or show upload only if damaged? then mandatory)-->
-    <!--    nice to have: dynamically show additional picture upload field when previous is used, up to (5?)-->
-
-    <input type="file" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)">
-
-    <input type="file" accept=".pdf,.doc" formControlName="report" (change)="checkFiles($event)">
+    <div style="padding-top: 25px" *ngIf="isDamaged">
+      <input type="file" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)" required>
+    </div>
+    <div style="padding-bottom: 25px" *ngIf="isDamaged">
+      <input type="file" accept=".pdf,.doc" formControlName="report" (change)="checkFiles($event)" required>
+    </div>
 
   </form>
 
-<!--      [disabled]="form.invalid"
--->
+
   <button
+    style="margin-top: 35px"
     class="dialog-button"
     mat-raised-button
     color="accent"
+    [disabled]="form.invalid"
     (click)="doSend()">
     Send
   </button>
@@ -50,7 +50,7 @@
     class="dialog-button"
     mat-raised-button
     (click)="matDialogRef.close()">
-    Cancel
+    Close
   </button>
 </mat-dialog-content>
 
