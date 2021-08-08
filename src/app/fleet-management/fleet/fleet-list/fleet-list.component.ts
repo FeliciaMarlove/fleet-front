@@ -131,7 +131,6 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    */
   private initCarsList() {
     this.carService.getCars(this.filter, this.option).subscribe(cars => {
-        console.log(cars);
         if (cars) {
           this.assignCarsList(cars);
         } else {
