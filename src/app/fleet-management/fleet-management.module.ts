@@ -17,6 +17,7 @@ import {FuelDisplayPipe} from '../shared/pipe/fuel-display.pipe';
 import {CarShortDisplayPipe} from '../shared/pipe/car-short-display.pipe';
 import {StaffShortDisplayPipe} from '../shared/pipe/staff-short-display.pipe';
 import { InspectionCreateComponent } from './inspections/inspection-create/inspection-create.component';
+import { StaffCarHistoryComponent } from './staff-list/staff-car-history-dialog/staff-car-history.component';
 
 /**
  * Fleet management module contains the component for the fleet management app
@@ -36,6 +37,7 @@ import { InspectionCreateComponent } from './inspections/inspection-create/inspe
     FleetCreateComponent,
     FleetViewComponent,
     InspectionCreateComponent,
+    StaffCarHistoryComponent,
   ],
     imports: [
         CommonModule,

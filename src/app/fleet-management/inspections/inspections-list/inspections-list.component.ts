@@ -15,6 +15,7 @@ import {Normalize} from '../../../shared/utils/normalize.util';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionCreateComponent} from '../inspection-create/inspection-create.component';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
 
 @Component({
   selector: 'app-inspections-list',
@@ -44,7 +45,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
     private paginationUtil: PaginationListCreatorUtil,
-    private errorOutputService: ErrorOutputService
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService
   ) {
   }
 
@@ -211,5 +213,9 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
         this.initInspectionsList();
       }
     });
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
   }
 }

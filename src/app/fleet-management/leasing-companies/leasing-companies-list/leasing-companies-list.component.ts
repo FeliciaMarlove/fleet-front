@@ -12,6 +12,7 @@ import {Normalize} from '../../../shared/utils/normalize.util';
 import {LeasingCompaniesDetailComponent} from '../leasing-companies-detail/leasing-companies-detail.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
 
 @Component({
   selector: 'app-leasing-companies-list',
@@ -40,7 +41,8 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
     private paginationListUtil: PaginationListCreatorUtil,
-    private errorOutputService: ErrorOutputService
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService
   ) { }
 
   ngOnInit() {
@@ -152,5 +154,9 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
    */
   public searchFilter(input: any) {
     this.dataSource.filter = input.target.value;
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
   }
 }

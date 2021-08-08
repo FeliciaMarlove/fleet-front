@@ -13,6 +13,7 @@ import {StaffMemberService} from '../../../core/http-services/staff-member.servi
 import {CarService} from '../../../core/http-services/car.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
 
 @Component({
   selector: 'app-fillups',
@@ -42,7 +43,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     private staffMemberService: StaffMemberService,
     private carService: CarService,
     private paginationUtil: PaginationListCreatorUtil,
-    private errorOutputService: ErrorOutputService
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService
   ) {
   }
 
@@ -149,5 +151,9 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   public doOpenWarning(fillup: TankFilling) {
     // TODO
     console.log(fillup);
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
   }
 }
