@@ -149,6 +149,11 @@ table {
   border: none !important;
 }
 
+.mat-paginator {
+  display: flex !important;
+  justify-content: center !important;
+}
+
 .mat-divider {
   margin: 20px !important;
 }
