@@ -15,6 +15,7 @@ import {FleetCreateComponent} from '../fleet-create/fleet-create.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {FleetViewComponent} from '../fleet-view/fleet-view.component';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
 
 @Component({
   selector: 'app-fleet-list',
@@ -44,7 +45,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
     private paginationUtil: PaginationListCreatorUtil,
-    private errorOutputService: ErrorOutputService
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService
   ) {
   }
 
@@ -204,4 +206,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
+  }
 }
