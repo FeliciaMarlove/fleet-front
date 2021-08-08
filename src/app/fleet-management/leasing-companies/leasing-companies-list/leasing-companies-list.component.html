@@ -93,3 +93,13 @@
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
 <mat-paginator [pageSizeOptions]="paginationChoices" showFirstLastButtons></mat-paginator>
+<button
+  *ngIf="loaded"
+  class="list-button excel-button"
+  color="primary"
+  mat-raised-button
+  (click)="doExportCurrentSelectToExcel()"
+  [disabled]="dataSource.data.length === 0">
+  <mat-icon>file_download</mat-icon>
+  Export to Excel
+</button>
