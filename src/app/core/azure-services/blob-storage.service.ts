@@ -7,7 +7,7 @@ export enum BLOB_GOAL {
   LOG
 }
 
-// TODO use an external variables file
+// TODO use an external variable file
 const account = 'tfefleetstorage';
 const inspectionSAS = 'sp=racwl&st=2021-06-29T16:40:28Z&se=2021-12-31T01:40:28Z&sv=2020-02-10&sr=c&sig=G6uhwfORW%2BanRC1szwArLSg5SZf%2BD5IWT%2BNDpybQHaI%3D';
 const URL = 'https://tfefleetstorage.blob.core.windows.net/';

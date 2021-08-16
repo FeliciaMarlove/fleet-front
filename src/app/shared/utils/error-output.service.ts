@@ -32,7 +32,7 @@ export class ErrorOutputService {
   }
 
   /**
-   * Show a snackbar for blocking error
+   * Show a snackbar for block error
    * Write a log in Azure logs
    * @param componentName the name of the component where error was raised
    * @param message error message to output
