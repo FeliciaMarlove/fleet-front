@@ -16,6 +16,7 @@ import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {FleetViewComponent} from '../fleet-view/fleet-view.component';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 import {ExcelService} from '../../../shared/utils/excel.service';
+import {AuthService} from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-fleet-list',
@@ -46,15 +47,22 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     private filtersListsService: FiltersListsService,
     private paginationUtil: PaginationListCreatorUtil,
     private errorOutputService: ErrorOutputService,
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    public auth0Service: AuthService
   ) {
   }
 
   ngOnInit() {
-    this.initAvailableFiltersList();
-    this.initDefaultFilter();
-    this.initCarsList();
-    this.initSearchPredicate();
+    this.auth0Service.isAuthenticated$.subscribe(isAuth => {
+      if (isAuth) {
+        this.initAvailableFiltersList();
+        this.initDefaultFilter();
+        this.initCarsList();
+        this.initSearchPredicate();
+      } else {
+        this.auth0Service.loginWithRedirect();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
