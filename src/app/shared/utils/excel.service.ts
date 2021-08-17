@@ -13,7 +13,6 @@ export class ExcelService {
   constructor() { }
 
   public exportToExcel(inputData: any[], fileName: string): void {
-    console.log(inputData);
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(inputData);
     const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
     const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });

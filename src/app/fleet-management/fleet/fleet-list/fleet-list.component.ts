@@ -66,7 +66,6 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       }
       sessionStorage.setItem('logged', user.nickname); // this code is reached in both cases, when user is already logged and when new user login succeeds
       this.azureBlobService.writeAzureLogBlob('User connection ' + user.nickname);
-      console.log(user);
     }, error => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Error with connection service'));
   }
 
