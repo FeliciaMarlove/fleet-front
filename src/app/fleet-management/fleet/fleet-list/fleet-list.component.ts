@@ -17,6 +17,7 @@ import {FleetViewComponent} from '../fleet-view/fleet-view.component';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 import {ExcelService} from '../../../shared/utils/excel.service';
 import {AuthService} from '@auth0/auth0-angular';
+import {BlobStorageService} from '../../../core/azure-services/blob-storage.service';
 
 @Component({
   selector: 'app-fleet-list',
@@ -48,13 +49,14 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     private paginationUtil: PaginationListCreatorUtil,
     private errorOutputService: ErrorOutputService,
     private excelService: ExcelService,
-    public auth0Service: AuthService
+    private auth0Service: AuthService,
+    private azureBlobService: BlobStorageService
   ) {
   }
 
   ngOnInit() {
-    this.auth0Service.isAuthenticated$.subscribe(isAuth => {
-      if (isAuth) {
+    this.auth0Service.user$.subscribe(user => {
+      if (user) {
         this.initAvailableFiltersList();
         this.initDefaultFilter();
         this.initCarsList();
@@ -62,7 +64,10 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       } else {
         this.auth0Service.loginWithRedirect();
       }
-    });
+      sessionStorage.setItem('logged', user.nickname); // this code is reached in both cases, when user is already logged and when new user login succeeds
+      this.azureBlobService.writeAzureLogBlob('User connection ' + user.nickname);
+      console.log(user);
+    }, error => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Error with connection service'));
   }
 
   ngAfterViewInit(): void {
