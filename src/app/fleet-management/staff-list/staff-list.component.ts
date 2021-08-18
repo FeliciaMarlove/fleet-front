@@ -10,6 +10,11 @@ import {FiltersListsService} from '../../shared/utils/filters-lists.service';
 import {MatSort} from '@angular/material/sort';
 import {Normalize} from '../../shared/utils/normalize.util';
 import {UiDimensionValues} from '../../shared/utils/ui-dimension-values';
+import {ErrorOutputService} from '../../shared/utils/error-output.service';
+import {ExcelService} from '../../shared/utils/excel.service';
+import {StaffCarHistoryComponent} from './staff-car-history-dialog/staff-car-history.component';
+import {Car} from '../../shared/models/car.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-staff-list',
@@ -17,8 +22,8 @@ import {UiDimensionValues} from '../../shared/utils/ui-dimension-values';
   styleUrls: ['./staff-list.component.scss']
 })
 export class StaffListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['staffFirstName', 'staffLastName', 'corporateEmail', 'communicationLanguage', 'hasCar', 'car_plate', 'car'];
-  public colNames: string[] = ['unused', 'First name', 'Last name', 'Email', 'Language', 'Car?', 'Car plate', 'Car model'];
+  public displayedColumns: string[] = ['staffFirstName', 'staffLastName', 'corporateEmail', 'communicationLanguage', 'hasCar', 'car_plate', 'car', 'history'];
+  public colNames: string[] = ['unused', 'First name', 'Last name', 'Email', 'Language', 'Car?', 'Car plate', 'Car model', 'Cars history'];
   public dataSource = new MatTableDataSource<StaffMember>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -29,13 +34,20 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   private defaultFilter: string;
   public option: string = null;
   public readonly iAm = 'staff';
+  public loading = true;
+  public loaded = false;
+  public carsHistory: Car[] = [];
 
   constructor(
     private staffService: StaffMemberService,
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
-    private paginationUtil: PaginationListCreatorUtil
-  ) { }
+    private paginationUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService,
+    public matSnackBar: MatSnackBar
+  ) {
+  }
 
   ngOnInit() {
     this.initAvailableFiltersList();
@@ -75,9 +87,9 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: StaffMember, filter: string) => {
       const normalizedFilter = Normalize.normalize(filter);
-      return  Normalize.normalize(data.staffFirstName).includes(normalizedFilter)
+      return Normalize.normalize(data.staffFirstName).includes(normalizedFilter)
         || Normalize.normalize(data.staffLastName).includes(normalizedFilter)
-      || Normalize.normalize(data.staffFirstName).concat(' ', Normalize.normalize(data.staffLastName)).includes(normalizedFilter)
+        || Normalize.normalize(data.staffFirstName).concat(' ', Normalize.normalize(data.staffLastName)).includes(normalizedFilter)
         // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffLastName).concat(' ', Normalize.normalize(data.staffFirstName)).includes(normalizedFilter);
     };
@@ -103,6 +115,8 @@ export class StaffListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.initStaffList();
       }
@@ -112,14 +126,23 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   /**
    * Initiate the staff list with all staff members
    */
-  private initStaffList(): void {
+  private initStaffList() {
     this.staffService.getStaff(this.filter, null).subscribe(
       staffList => {
-        this.paginationChoices = this.paginationUtil.setPaginationList(staffList.length);
-        this.getStaffCurrentCar(staffList);
-        this.dataSource.data = staffList;
+        if (staffList) {
+          this.paginationChoices = this.paginationUtil.setPaginationList(staffList.length);
+          this.getStaffCurrentCar(staffList);
+          this.dataSource.data = staffList;
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
       },
-      error => console.log(error)
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve staff member list.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 
@@ -129,9 +152,35 @@ export class StaffListComponent implements OnInit, AfterViewInit {
    */
   private getStaffCurrentCar(staffList: StaffMember[]) {
     for (const staff of staffList) {
-      this.staffService.getCurrentCarOfStaffMember(staff.staffMemberId).subscribe( car => {
-        staff.currentCar = car;
-      });
+      this.staffService.getCurrentCarOfStaffMember(staff.staffMemberId).subscribe(car => {
+          staff.currentCar = car;
+          this.loaded = true;
+          this.loading = false;
+        },
+        () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars information.')
+      );
     }
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
+  }
+
+  public doOpenCarHistory(staffMember: StaffMember) {
+    this.staffService.getCarsOfStaffMember(staffMember.staffMemberId).subscribe(cars => {
+      if (cars.length === 0) {
+        this.matSnackBar.open('This staff member doesn\'t have a car history', 'OK', {
+          panelClass: 'info-snackbar'
+        });
+      } else {
+        this.dialog.open(StaffCarHistoryComponent, {
+          width: UiDimensionValues.detailsDialogPercentageWidth,
+          height: UiDimensionValues.detailsDialogPercentageHeight,
+          data: {cars, staffName: staffMember.staffFirstName + ' ' + staffMember.staffLastName}
+        });
+      }
+
+    },
+      () => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Unable to retrieve car history'));
   }
 }

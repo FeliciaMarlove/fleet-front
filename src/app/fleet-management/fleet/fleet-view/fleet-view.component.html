@@ -57,6 +57,7 @@
         <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd> </mat-datepicker>
+        <mat-hint *ngIf="endBeforeStart" class="warning-hint">Invalid input: end date must be after start date!</mat-hint>
       </mat-form-field>
     </div>
     <div *ngIf="durationInformation" class="align-mat-icon-with-text-div-container"><mat-icon matPrefix>information</mat-icon><p> {{ durationInformation }}</p></div>
@@ -83,7 +84,7 @@
     class="dialog-button"
     mat-raised-button
     color="accent"
-    [disabled]="form.untouched || form.pristine || form.invalid"
+    [disabled]="form.untouched || form.pristine || form.invalid || endBeforeStart"
     (click)="doUpdate()">
      Update
   </button>
@@ -94,14 +95,14 @@
     color="primary"
     (click)="doOpenInspection()"
   >
-    {{car.inspection ? 'See inspection report' : 'Create inspection report'}}
+    {{car.carInspectionId ? 'See inspection report' : 'Create inspection report'}}
   </button>
 
   <button
     class="dialog-button"
     mat-raised-button
     color="warn"
-    (click)="doAddStaffMember()"
+    (click)="doChangeStaffMember()"
   >
     {{'Change staff member'}}
   </button>

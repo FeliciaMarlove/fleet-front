@@ -18,7 +18,7 @@ export class AppComponent {
       this.darkModeUI = true;
     }
     this.renderPageBodyColor();
-    this.applyThemeToOverlyContainers();
+    this.applyThemeToOverlayContainers();
   }
 
   /**
@@ -43,7 +43,7 @@ export class AppComponent {
       localStorage.removeItem('theme');
     }
     this.renderPageBodyColor();
-    this.applyThemeToOverlyContainers();
+    this.applyThemeToOverlayContainers();
   }
 
   /**
@@ -66,7 +66,7 @@ export class AppComponent {
    * Current theme classes must be explicitly removed before assigning another one
    * @private
    */
-  private applyThemeToOverlyContainers() {
+  private applyThemeToOverlayContainers() {
     const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
     const classesToRemove = Array.from(overlayContainerClasses).filter(item => item.includes('-theme'));
     overlayContainerClasses.remove(...classesToRemove);

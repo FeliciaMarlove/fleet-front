@@ -4,7 +4,7 @@
   <form [formGroup]="form" class="flex-form-column">
     <mat-form-field>
       <mat-label [style.color]="plateNumber ? 'black' : ''">{{plateNumber ? carLabel : 'Car'}}</mat-label>
-      <mat-select formControlName="plateNumber" required [disabled]="plateNumber">
+      <mat-select formControlName="car" required [disabled]="plateNumber">
         <mat-option *ngFor="let car of cars" [value]="car.plateNumber">{{car.plateNumber}}
           - {{car |carShortDisplay}}</mat-option>
       </mat-select>
@@ -19,27 +19,35 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Expertised by</mat-label>
-        <input matInput type="text" formControlName="expertisedBy">
+        <input matInput type="text" formControlName="expertisedBy" required>
       </mat-form-field>
     </div>
-    <mat-divider></mat-divider>
-    <mat-checkbox formControlName="damaged">
+    <mat-checkbox style="padding-top: 10px" formControlName="damaged" #damaged (change)="isDamaged = damaged.checked">
       DAMAGED
     </mat-checkbox>
 
-    <!--    if not damaged don't let upload images (or show upload only if damaged? then mandatory)-->
-    <!--    nice to have: dynamically show additional picture upload field when previous is used, up to (5?)-->
 
-    <input type="file" formControlName="picture" (change)="uploadFiles($event)">
+    <div *ngIf="isDamaged">
+      <div style="padding-top: 10px; color: orangered" *ngIf="isDamaged && form.invalid">Report and
+        pictures are mandatory for damaged cars!
+      </div>
+      <div style="padding-top: 25px">
+        <input type="file" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)" required>
+      </div>
+      <div style="padding-bottom: 25px">
+        <input type="file" accept=".pdf,.doc" formControlName="report" (change)="checkFiles($event)" required>
+      </div>
+    </div>
 
   </form>
 
   <button
+    style="margin-top: 35px"
     class="dialog-button"
     mat-raised-button
     color="accent"
     [disabled]="form.invalid"
-    (click)="doSend()">
+    (click)="createInspection()">
     Send
   </button>
 
@@ -47,6 +55,10 @@
     class="dialog-button"
     mat-raised-button
     (click)="matDialogRef.close()">
-    Cancel
+    Close
   </button>
 </mat-dialog-content>
+
+<div class="spinner-container">
+  <mat-spinner aria-label="Content is loading" *ngIf="loading"></mat-spinner>
+</div>

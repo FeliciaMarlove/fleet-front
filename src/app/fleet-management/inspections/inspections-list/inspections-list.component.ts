@@ -14,6 +14,8 @@ import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionCreateComponent} from '../inspection-create/inspection-create.component';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
 
 @Component({
   selector: 'app-inspections-list',
@@ -22,7 +24,7 @@ import {InspectionCreateComponent} from '../inspection-create/inspection-create.
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['view', 'inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged', 'sentDate'];
-  public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?', 'Sent?'];
+  public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?', 'Sent'];
   public dataSource = new MatTableDataSource<Inspection>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,6 +35,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   public option: Date = null;
   private defaultFilter: string;
   public readonly iAm = 'inspection';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private inspectionService: InspectionService,
@@ -40,8 +44,11 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     private carService: CarService,
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
-    private paginationUtil: PaginationListCreatorUtil
-  ) { }
+    private paginationUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService
+  ) {
+  }
 
   ngOnInit() {
     this.initAvailableFiltersList();
@@ -93,14 +100,12 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: Inspection, filter: string) => {
       const normalizedFilter = Normalize.normalize(filter);
-      return  Normalize.normalize(data.staffMember.staffLastName).includes(normalizedFilter)
+      return Normalize.normalize(data.staffMember.staffLastName).includes(normalizedFilter)
         || Normalize.normalize(data.staffMember.staffFirstName).includes(normalizedFilter)
-        // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffMember.staffLastName).concat(' ', Normalize.normalize(data.staffMember.staffFirstName)).includes(normalizedFilter)
-        // tslint:disable-next-line:max-line-length
         || Normalize.normalize(data.staffMember.staffFirstName).concat(' ', Normalize.normalize(data.staffMember.staffLastName)).includes(normalizedFilter)
-      || Normalize.normalize(data.expertisedBy).includes(normalizedFilter)
-      || Normalize.normalize(data.plateNumber).includes(normalizedFilter)
+        || Normalize.normalize(data.expertisedBy).includes(normalizedFilter)
+        || Normalize.normalize(data.plateNumber).includes(normalizedFilter)
         || Normalize.normalize(CarShortDisplayPipe.prototype.transform(data.car)).includes(normalizedFilter);
     };
   }
@@ -125,6 +130,8 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.option = filter.option;
         this.initInspectionsList();
@@ -137,7 +144,19 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
    */
   private initInspectionsList() {
     this.inspectionService.getInspections(this.filter, this.option).subscribe(
-      inspections => this.assignInspectionsList(inspections)
+      inspections => {
+        if (inspections) {
+          this.assignInspectionsList(inspections);
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
+      },
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve inspections list.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 
@@ -150,10 +169,16 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     this.assignCarAndStaffMember(inspections);
     this.paginationChoices = this.paginationUtil.setPaginationList(inspections.length);
     this.dataSource.data = inspections;
+    this.loaded = true;
+    this.loading = false;
   }
 
+  /**
+   * Open inspection view
+   * @param inspection The selected inspection
+   */
   public doOpenInspectionDetail(inspection: any) {
-    console.log(inspection);
+    console.log(inspection); // TODO
   }
 
   /**
@@ -163,14 +188,21 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   private assignCarAndStaffMember(inspections: Inspection[]) {
     for (const insp of inspections) {
       this.staffService.getStaffMember(insp.staffMemberId).subscribe(staffMember => {
-        insp.staffMember = staffMember;
-      });
+          insp.staffMember = staffMember;
+        },
+        () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members information.')
+      );
       this.carService.getCar(insp.plateNumber).subscribe(car => {
-        insp.car = car;
-      });
+          insp.car = car;
+        },
+        () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars information.')
+      );
     }
   }
 
+  /**
+   * Open dialog for inspection creation
+   */
   public doOpenInspectionCreate() {
     this.dialog.open(InspectionCreateComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,
@@ -181,5 +213,9 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
         this.initInspectionsList();
       }
     });
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
   }
 }

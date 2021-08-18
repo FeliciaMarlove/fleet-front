@@ -4,7 +4,8 @@
   <form [formGroup]="form" class="flex-form-column">
     <div class="form-2cols-container">
       <mat-form-field>
-        <input type="text" matInput placeholder="Plate number" formControlName="plateNumber" appPlateNumber required>
+        <input type="text" matInput placeholder="Plate number" #plate formControlName="plateNumber" appPlateNumber required (input)="checkPlate(plate)">
+        <mat-hint class="warning-hint" *ngIf="plateInvalid">Enter a plate number in the format 1-AAA-000</mat-hint>
       </mat-form-field>
       <mat-form-field appearance="fill">
         <mat-label>Staff member</mat-label>
@@ -47,7 +48,7 @@
     <div class="form-2cols-container">
       <mat-form-field>
         <mat-label>Contract start date</mat-label>
-        <input matInput [matDatepicker]="pickerStart" formControlName="startDate" (dateChange)="checkEndAfterStart()" required>
+        <input matInput [matDatepicker]="pickerStart" formControlName="startDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()" required>
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart> </mat-datepicker>
       </mat-form-field>
@@ -56,6 +57,7 @@
         <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd> </mat-datepicker>
+        <mat-hint *ngIf="endBeforeStart" class="warning-hint">Invalid input: end date must be after start date!</mat-hint>
       </mat-form-field>
     </div>
     <div *ngIf="durationInformation" class="align-mat-icon-with-text-div-container"><mat-icon matPrefix>information</mat-icon><p> {{ durationInformation }}</p></div>
@@ -77,7 +79,7 @@
     mat-raised-button
     color="accent"
     [disabled]="form.invalid || endBeforeStart"
-    (click)="doClose()">
+    (click)="saveCar()">
     {{title}}
   </button>
 

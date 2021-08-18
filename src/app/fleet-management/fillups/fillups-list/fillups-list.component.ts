@@ -11,6 +11,9 @@ import {MatSort} from '@angular/material/sort';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {CarService} from '../../../core/http-services/car.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
 
 @Component({
   selector: 'app-fillups',
@@ -30,6 +33,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   public option: any = null;
   private defaultFilter: string;
   public readonly iAm = 'fillup';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private tankFillingService: TankFillingService,
@@ -37,8 +42,11 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     private filtersListsService: FiltersListsService,
     private staffMemberService: StaffMemberService,
     private carService: CarService,
-    private paginationUtil: PaginationListCreatorUtil
-  ) { }
+    private paginationUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService
+  ) {
+  }
 
   ngOnInit() {
     this.initAvailableFiltersList();
@@ -93,6 +101,8 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.option = filter.option;
         this.initFillups();
@@ -106,22 +116,44 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   private initFillups() {
     this.tankFillingService.getFillUps(this.filter, this.option).subscribe(
       fillups => {
-        this.paginationChoices = this.paginationUtil.setPaginationList(fillups.length);
-        this.dataSource.data = fillups;
-        fillups.forEach(fillup => {
-          this.carService.getCar(fillup.plateNumber).subscribe(car => {
-            this.staffMemberService.getStaffMember(car.staffMemberId).subscribe(
-              sm => fillup.staffMember = sm
+        if (fillups) {
+          this.paginationChoices = this.paginationUtil.setPaginationList(fillups.length);
+          this.dataSource.data = fillups;
+          fillups.forEach(fillup => {
+            this.carService.getCar(fillup.plateNumber).subscribe(car => {
+                this.staffMemberService.getStaffMember(car.staffMemberId).subscribe(
+                  sm => fillup.staffMember = sm,
+                  () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members.')
+                );
+              },
+              () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all cars')
             );
           });
-        });
+          this.loaded = true;
+          this.loading = false;
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
       },
-      error => console.log(error)
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve fuel fillups.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 
+  /**
+   * Open view
+   * @param fillup
+   */
   public doOpenWarning(fillup: TankFilling) {
     // TODO
     console.log(fillup);
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
   }
 }

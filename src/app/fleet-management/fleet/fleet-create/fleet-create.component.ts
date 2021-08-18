@@ -12,7 +12,9 @@ import {MatSelectChange} from '@angular/material/select';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {StaffMember} from '../../../shared/models/staff-member.model';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
-import {YesNoDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/yes-no-dialog.component';
+import {YesNoDialogComponent} from '../../../shared/utils/yes-no-dialog/yes-no-dialog.component';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const DateFormat = {
   parse: {
@@ -31,8 +33,8 @@ export const DateFormat = {
   templateUrl: './fleet-create.component.html',
   styleUrls: ['./fleet-create.component.scss'],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: DateFormat }
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: DateFormat}
   ]
 })
 export class FleetCreateComponent implements OnInit {
@@ -46,6 +48,8 @@ export class FleetCreateComponent implements OnInit {
   public durationInformation: string;
   public isElectric = false;
   public staff: StaffMember[] = [];
+  public plateInvalid = false;
+  private readonly platePattern = '[0-9]{1}-[a-zA-Z]{3}-[0-9]{3}';
 
   constructor(
     public matDialogRef: MatDialogRef<FleetCreateComponent>,
@@ -53,8 +57,11 @@ export class FleetCreateComponent implements OnInit {
     private carService: CarService,
     private leasingCompaniesService: LeasingCompanyService,
     private staffMemberService: StaffMemberService,
-    private matDialog: MatDialog
-  ) { }
+    private matDialog: MatDialog,
+    private errorOutputService: ErrorOutputService,
+    private matSnackBar: MatSnackBar
+  ) {
+  }
 
   ngOnInit(): void {
     this.initLeasingCompanies();
@@ -64,7 +71,7 @@ export class FleetCreateComponent implements OnInit {
 
   private initForm() {
     this.form = this.formBuilder.group({
-      plateNumber: ['', Validators.compose([Validators.required, Validators.pattern('[0-9]{1}-[a-zA-Z]{3}-[0-9]{3}')])],
+      plateNumber: ['', Validators.compose([Validators.required, Validators.pattern(this.platePattern)])],
       brand: ['', Validators.required],
       model: ['', Validators.required],
       fuelType: ['', Validators.required],
@@ -77,6 +84,10 @@ export class FleetCreateComponent implements OnInit {
     });
   }
 
+  /**
+   * Hide or display average consumption field based on fuel type selection
+   * @param $event Value of the select box
+   */
   public checkFuelChange($event: MatSelectChange) {
     const consumpField = this.form.get('averageConsumption');
     if ($event.value !== 'FULL_ELECTRIC') {
@@ -91,23 +102,32 @@ export class FleetCreateComponent implements OnInit {
     consumpField.updateValueAndValidity();
   }
 
+  /**
+   * Check if staff member already has an ongoing car ownership
+   * @param $event method is called when the event of type "selection change" is done in the vue
+   */
   public checkStaffLinked($event: MatSelectChange) {
     this.staffMemberService.getCurrentCarOfStaffMember($event.value).subscribe(res => {
-      if (res) {
-        this.matDialog.open(YesNoDialogComponent, {
-          width: UiDimensionValues.yesNoDialogPixelWidth,
-          height: UiDimensionValues.yesNoDialogPixelHeight,
-          data: {helperText: 'This staff member already has a car, stop current ownership and change car?'}
-        })
-          .afterClosed().subscribe(doProceed => {
+        if (res) {
+          this.matDialog.open(YesNoDialogComponent, {
+            width: UiDimensionValues.yesNoDialogPixelWidth,
+            height: UiDimensionValues.yesNoDialogPixelHeight,
+            data: {helperText: 'This staff member already has a car, stop current ownership and change car?'}
+          })
+            .afterClosed().subscribe(doProceed => {
             if (!doProceed) {
               this.form.controls.staffMemberId.reset();
             }
-        });
-      }
-    });
+          });
+        }
+      },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Could not check if car already has an owner. This action could overwrite existing data! Please do not proceed.')
+    );
   }
 
+  /**
+   * Check that end date is > to start date
+   */
   public checkEndAfterStart() {
     if (this.form.controls.endDate.value && this.form.controls.startDate.value) {
       const end = this.form.controls.endDate.value;
@@ -124,6 +144,12 @@ export class FleetCreateComponent implements OnInit {
     }
   }
 
+  /**
+   * Calculate the duration of the leasing contract
+   * @param start
+   * @param end
+   * @private
+   */
   private calculateDuration(start, end) {
     // const days = Math.ceil((end - start) / (1000 * 3600 * 24));
     const e = new Date(end);
@@ -133,22 +159,53 @@ export class FleetCreateComponent implements OnInit {
     this.durationInformation = `The leasing contract duration is ${numberCalendarMonths} months.`;
   }
 
+  /**
+   * Initialize the list of leasing companies
+   * @private
+   */
   private initLeasingCompanies() {
-    this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe( leasCompanies => {
-      this.leasingCompanies = leasCompanies;
-    });
+    this.leasingCompaniesService.getLeasingCompanies('ALL', null).subscribe(leasCompanies => {
+        this.leasingCompanies = leasCompanies;
+      },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Leasing companies could not be loaded.')
+    );
   }
 
+  /**
+   * Initialize the list of staff members
+   * @private
+   */
   private initStaff() {
     this.staffMemberService.getStaff('ALL', null).subscribe(staff => {
-      this.staff = staff;
-    });
+        this.staff = staff;
+      },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Staff members could not be loaded.')
+    );
   }
 
-  public doClose() {
-    this.carService.createCar(this.form.value).subscribe( () => {
+  /**
+   * Save car and close dialog
+   */
+  public saveCar() {
+    this.carService.createCar(this.form.value).subscribe(() => {
       this.matDialogRef.close(true);
-    });
+      this.matSnackBar.open('Car was created', 'OK', {
+        panelClass: 'info-snackbar'
+      });
+    },
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Creating car failed')
+    );
   }
 
+  /**
+   * Validate plate number format
+   * @param plate
+   */
+  public checkPlate(plate: HTMLInputElement) {
+    if (!plate.value.match(this.platePattern)) {
+      this.plateInvalid = true;
+    } else {
+      this.plateInvalid = false;
+    }
+  }
 }

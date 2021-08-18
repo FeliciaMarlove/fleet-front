@@ -11,12 +11,12 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {LeasingCompany} from '../../../shared/models/leasing-company.model';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {FuelDisplayPipe} from '../../../shared/pipe/fuel-display.pipe';
-import {YesNoDialogComponent} from '../../../shared/utils/dirty-form-onleave-dialog/yes-no-dialog.component';
+import {YesNoDialogComponent} from '../../../shared/utils/yes-no-dialog/yes-no-dialog.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {InspectionService} from '../../../core/http-services/inspection.service';
-import {LinkCarStaffDialogComponent} from '../../../shared/utils/link-car-staff-dialog/link-car-staff-dialog.component';
+import {LinkCarStaffDialogComponent} from '../../link-car-staff-dialog/link-car-staff-dialog.component';
 import {StaffShortDisplayPipe} from '../../../shared/pipe/staff-short-display.pipe';
-import {BlobStorageService} from '../../../core/azure-services/blob-storage.service';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 
 export const DateFormat = {
   parse: {
@@ -63,8 +63,10 @@ export class FleetViewComponent implements OnInit {
     private inspectionService: InspectionService,
     public numberPipe: DecimalPipe,
     public fuelTypePipe: FuelDisplayPipe,
-    public staffMemberPipe: StaffShortDisplayPipe
-) { }
+    public staffMemberPipe: StaffShortDisplayPipe,
+    private errorOutputService: ErrorOutputService,
+    private matSnackBar: MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.initCar();
@@ -93,6 +95,9 @@ export class FleetViewComponent implements OnInit {
     });
   }
 
+  /**
+   * Open inspection linked to the car
+   */
   public doOpenInspection() {
     if (this.form.dirty) {
       this.dialog.open(YesNoDialogComponent, {
@@ -114,17 +119,26 @@ export class FleetViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Update car
+   */
   public doUpdate() {
     this.car.endDate = this.form.controls.endDate.value;
     this.car.freeText = this.form.controls.freeText.value;
     this.carService.updateCar(this.car).subscribe(() => {
       this.matDialogRef.close(true);
+      this.matSnackBar.open('Car was updated', 'OK', {
+          panelClass: 'info-snackbar'
+        });
       },
-      error => console.log(error) // TODO handle error
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_update', 'Update failed.')
     );
   }
 
-  public doAddStaffMember() {
+  /**
+   * Change staff member owner of the car
+   */
+  public doChangeStaffMember() {
     this.dialog.open(LinkCarStaffDialogComponent, {
       width: UiDimensionValues.linkStaffCarDialogPixelWidth,
       height: UiDimensionValues.linkStaffCarDialogPixelHeight,
@@ -136,9 +150,14 @@ export class FleetViewComponent implements OnInit {
           this.hasModifications = true;
         }
       },
-      error => console.log(error)); // TODO handle error
+      () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_update', 'Updating the staff member failed.')
+    );
   }
 
+  /**
+   * Retrieve leasing company of the car based on id
+   * @private
+   */
   private getLeasingCompany() {
     if (!this.car.leasingCompany) {
       this.leasingService.getLeasingCompany(this.car.leasingCompanyId).subscribe(leasComp => {
@@ -148,10 +167,16 @@ export class FleetViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Confirm copy
+   */
   public informCopied() {
     this.snackBar.open('Email address copied');
   }
 
+  /**
+   * Change icon on hover
+   */
   public changeIconStaff() {
     if (this.changeableIconStaff === 'info') {
       this.changeableIconStaff = 'content_copy';
@@ -160,6 +185,9 @@ export class FleetViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Change icon on hover
+   */
   public changeIconLeasing() {
     if (this.changeableIconLeasing === 'info') {
       this.changeableIconLeasing = 'content_copy';
@@ -168,6 +196,9 @@ export class FleetViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Check that end date > start date
+   */
   public checkEndAfterStart() {
     if (this.form.controls.endDate.value) {
       const end = this.form.controls.endDate.value;
@@ -184,6 +215,12 @@ export class FleetViewComponent implements OnInit {
     }
   }
 
+  /**
+   * Calculate contract duration in months
+   * @param start
+   * @param end
+   * @private
+   */
   private calculateDuration(start, end) {
     // const days = Math.ceil((end - start) / (1000 * 3600 * 24));
     const e = new Date(end);

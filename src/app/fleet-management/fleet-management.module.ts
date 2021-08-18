@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {SharedModule} from '../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { StaffListComponent } from './staff-list/staff-list.component';
 import { FleetListComponent } from './fleet/fleet-list/fleet-list.component';
-import {FleetManagementRouting} from './fleet-management-routing.module';
+import { FleetManagementRouting } from './fleet-management-routing.module';
 import { FillupsListComponent } from './fillups/fillups-list/fillups-list.component';
 import { LeasingCompaniesListComponent } from './leasing-companies/leasing-companies-list/leasing-companies-list.component';
 import { InspectionsListComponent } from './inspections/inspections-list/inspections-list.component';
@@ -13,12 +13,15 @@ import { FillupFilterDialogComponent } from './fillups/fillups-list/fillup-filte
 import { LeasingCompaniesDetailComponent } from './leasing-companies/leasing-companies-detail/leasing-companies-detail.component';
 import { FleetCreateComponent } from './fleet/fleet-create/fleet-create.component';
 import { FleetViewComponent } from './fleet/fleet-view/fleet-view.component';
-import {FuelDisplayPipe} from '../shared/pipe/fuel-display.pipe';
-import {CarShortDisplayPipe} from '../shared/pipe/car-short-display.pipe';
-import {StaffShortDisplayPipe} from '../shared/pipe/staff-short-display.pipe';
+import { FuelDisplayPipe } from '../shared/pipe/fuel-display.pipe';
+import { CarShortDisplayPipe } from '../shared/pipe/car-short-display.pipe';
+import { StaffShortDisplayPipe } from '../shared/pipe/staff-short-display.pipe';
 import { InspectionCreateComponent } from './inspections/inspection-create/inspection-create.component';
+import { StaffCarHistoryComponent } from './staff-list/staff-car-history-dialog/staff-car-history.component';
 
-
+/**
+ * Fleet management module contains the component for the fleet management app
+ */
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import { InspectionCreateComponent } from './inspections/inspection-create/inspe
     FleetCreateComponent,
     FleetViewComponent,
     InspectionCreateComponent,
+    StaffCarHistoryComponent,
   ],
     imports: [
         CommonModule,

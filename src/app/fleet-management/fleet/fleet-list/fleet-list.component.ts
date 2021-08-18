@@ -14,6 +14,10 @@ import {Normalize} from '../../../shared/utils/normalize.util';
 import {FleetCreateComponent} from '../fleet-create/fleet-create.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {FleetViewComponent} from '../fleet-view/fleet-view.component';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
+import {AuthService} from '@auth0/auth0-angular';
+import {BlobStorageService} from '../../../core/azure-services/blob-storage.service';
 
 @Component({
   selector: 'app-fleet-list',
@@ -34,21 +38,35 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   public option: string = null;
   private defaultFilter: string;
   public readonly iAm = 'fleet';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private carService: CarService,
     private staffService: StaffMemberService,
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
-    private paginationUtil: PaginationListCreatorUtil
+    private paginationUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService,
+    private auth0Service: AuthService,
+    private azureBlobService: BlobStorageService
   ) {
   }
 
   ngOnInit() {
-    this.initAvailableFiltersList();
-    this.initDefaultFilter();
-    this.initCarsList();
-    this.initSearchPredicate();
+    this.auth0Service.user$.subscribe(user => {
+      if (user) {
+        this.initAvailableFiltersList();
+        this.initDefaultFilter();
+        this.initCarsList();
+        this.initSearchPredicate();
+      } else {
+        this.auth0Service.loginWithRedirect();
+      }
+      sessionStorage.setItem('logged', user.nickname); // this code is reached in both cases, when user is already logged and when new user login succeeds
+      this.azureBlobService.writeAzureLogBlob('User connection ' + user.nickname);
+    }, error => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Error with connection service'));
   }
 
   ngAfterViewInit(): void {
@@ -90,7 +108,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   private initSearchPredicate() {
     this.dataSource.filterPredicate = (data: Car, filter: string) => {
       const normalizedFilter = Normalize.normalize(filter);
-      return  Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
+      return Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffLastName)?.concat(' ', Normalize.normalize(data.staffMember?.staffFirstName))?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffFirstName)?.concat(' ', Normalize.normalize(data.staffMember?.staffLastName))?.includes(normalizedFilter)
@@ -111,6 +129,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.option = filter.option;
         this.initCarsList();
@@ -122,7 +142,20 @@ export class FleetListComponent implements OnInit, AfterViewInit {
    * Initiate the list of cars according to current filter
    */
   private initCarsList() {
-    this.carService.getCars(this.filter, this.option).subscribe(cars => this.assignCarsList(cars));
+    this.carService.getCars(this.filter, this.option).subscribe(cars => {
+        if (cars) {
+          this.assignCarsList(cars);
+        } else {
+          this.loaded = true;
+          this.loading = false;
+        }
+      },
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car list.');
+        this.loaded = true;
+        this.loading = false;
+      }
+    );
   }
 
   /**
@@ -134,6 +167,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     this.paginationChoices = this.paginationUtil.setPaginationList(cars.length);
     this.getCarOwner(cars);
     this.dataSource.data = cars;
+    this.loaded = true;
+    this.loading = false;
   }
 
   /**
@@ -144,12 +179,18 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     for (const car of cars) {
       if (car.staffMemberId) {
         this.staffService.getStaffMember(car.staffMemberId).subscribe(staffMember => {
-          car.staffMember = staffMember;
-        });
+            car.staffMember = staffMember;
+          },
+          () => this.errorOutputService.outputWarningInSnackbar(this.iAm, 'Could not retrieve all staff members information.')
+        );
       }
     }
   }
 
+  /**
+   * Open dialog with car details
+   * @param car The selected car
+   */
   public doOpenCarDetail(car: Car) {
     this.dialog.open(FleetViewComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,
@@ -162,6 +203,9 @@ export class FleetListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  /**
+   * Open dialog to create a car
+   */
   public doOpenCarCreate() {
     this.dialog.open(FleetCreateComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,
@@ -171,5 +215,9 @@ export class FleetListComponent implements OnInit, AfterViewInit {
         this.initCarsList();
       }
     });
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
   }
 }

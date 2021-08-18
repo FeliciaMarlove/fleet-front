@@ -11,6 +11,8 @@ import {MatSort} from '@angular/material/sort';
 import {Normalize} from '../../../shared/utils/normalize.util';
 import {LeasingCompaniesDetailComponent} from '../leasing-companies-detail/leasing-companies-detail.component';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
+import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {ExcelService} from '../../../shared/utils/excel.service';
 
 @Component({
   selector: 'app-leasing-companies-list',
@@ -31,12 +33,16 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   public option: string = null;
   private defaultFilter: string;
   public readonly iAm = 'leasing';
+  public loading = true;
+  public loaded = false;
 
   constructor(
     private leasingService: LeasingCompanyService,
     private dialog: MatDialog,
     private filtersListsService: FiltersListsService,
-    private paginationListUtil: PaginationListCreatorUtil
+    private paginationListUtil: PaginationListCreatorUtil,
+    private errorOutputService: ErrorOutputService,
+    private excelService: ExcelService
   ) { }
 
   ngOnInit() {
@@ -82,12 +88,18 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
       }
     ).afterClosed().subscribe(filter => {
       if (filter) {
+        this.loading = true;
+        this.loaded = false;
         this.filter = filter.filter;
         this.initLeasingCompanies();
       }
     });
   }
 
+  /**
+   * Open dialog for creating or updating a leasing company
+   * @param leasingCompany (opt) Company to update
+   */
   doOpenLeasingUpdOrCreate(leasingCompany: LeasingCompany) {
     this.dialog.open(LeasingCompaniesDetailComponent, {
       width: UiDimensionValues.detailsDialogPercentageWidth,
@@ -106,10 +118,20 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   private initLeasingCompanies() {
     this.leasingService.getLeasingCompanies(this.filter, null).subscribe(
       leasingCompanies => {
-        this.paginationChoices = this.paginationListUtil.setPaginationList(leasingCompanies.length);
-        this.dataSource.data = leasingCompanies;
+        if (leasingCompanies) {
+          this.paginationChoices = this.paginationListUtil.setPaginationList(leasingCompanies.length);
+          this.dataSource.data = leasingCompanies;
+          this.loading = false;
+          this.loaded = true;
+        }
+        this.loading = false;
+        this.loaded = true;
       },
-      error => console.log(error)
+      () => {
+        this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve leasing companies list.');
+        this.loaded = true;
+        this.loading = false;
+      }
     );
   }
 
@@ -132,5 +154,9 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
    */
   public searchFilter(input: any) {
     this.dataSource.filter = input.target.value;
+  }
+
+  public doExportCurrentSelectToExcel() {
+    this.excelService.exportToExcel(this.dataSource.data, 'cars_export_');
   }
 }

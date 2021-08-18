@@ -47,6 +47,9 @@ export class NoOptionFilterDialogComponent implements OnInit {
     });
   }
 
+  /**
+   * Pass the filter to parent and close
+   */
   public doFilter() {
     this.matDialogRef.close(this.form.value);
   }
