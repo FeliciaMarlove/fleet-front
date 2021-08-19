@@ -53,7 +53,7 @@
   <ng-container matColumnDef="inspectionDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[1]}}</th>
     <td mat-cell *matCellDef="let inspection">
-      {{inspection.inspectionDate | date}}
+      {{inspection.inspectionDate | date: 'yyyy/MM/dd'}}
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[1]}}</td>
   </ng-container>
@@ -96,14 +96,6 @@
       <mat-icon>{{inspection.damaged ? 'broken_image' : ''}}</mat-icon>
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[6]}}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="sentDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[7]}}</th>
-    <td mat-cell *matCellDef="let inspection">
-      {{inspection.sentDate | date: 'yyyy/MM/dd'}}
-    </td>
-    <td mat-footer-cell *matFooterCellDef>{{colNames[7]}}</td>
   </ng-container>
 
   <!--  Columns configuration  -->
