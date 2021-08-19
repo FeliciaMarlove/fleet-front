@@ -2,11 +2,29 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {MatSelectChange} from '@angular/material/select';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+
+export const DateFormat = {
+  parse: {
+    dateInput: 'input',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  }
+};
 
 @Component({
   selector: 'app-inspection-filter-dialog',
   templateUrl: './inspection-filter-dialog.component.html',
-  styleUrls: ['./inspection-filter-dialog.component.scss']
+  styleUrls: ['./inspection-filter-dialog.component.scss'],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: DateFormat}
+  ]
 })
 export class InspectionFilterDialogComponent implements OnInit {
   public form: FormGroup;
