@@ -22,7 +22,7 @@ import {ExcelService} from '../../../shared/utils/excel.service';
 })
 export class FillupsListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['warning-icon', 'dateTimeFilling', 'discrepancyType', 'plateNumber', 'staffMember', 'numberDiscrepancies'];
-  public colNames = ['', 'Date', 'Discrepancy', 'Plate number', 'Staff member', 'Total'];
+  public colNames = ['', 'Date', 'Discrepancy', 'Plate number', 'Staff member', 'Total disc.'];
   public dataSource = new MatTableDataSource<TankFilling>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

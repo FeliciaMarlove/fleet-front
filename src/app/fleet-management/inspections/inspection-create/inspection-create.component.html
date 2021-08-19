@@ -27,15 +27,18 @@
     </mat-checkbox>
 
 
-    <div *ngIf="isDamaged">
-      <div style="padding-top: 10px; color: orangered" *ngIf="isDamaged && form.invalid">Report and
+    <div [hidden]="!isDamaged">
+      <div style="padding-top: 10px; color: orangered" *ngIf="isDamaged">Report and
         pictures are mandatory for damaged cars!
       </div>
+
       <div style="padding-top: 25px">
-        <input type="file" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)" required>
+        <label for="pictures" class="btn">Upload report</label> <br>
+        <input type="file" id="pictures" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)">
       </div>
       <div style="padding-bottom: 25px">
-        <input type="file" accept=".pdf,.doc" formControlName="report" (change)="checkFiles($event)" required>
+        <label for="report" class="btn">Upload pictures</label> <br>
+        <input type="file" id="report" accept=".pdf,.doc" formControlName="report" (change)="checkFiles($event)">
       </div>
     </div>
 
