@@ -51,6 +51,7 @@ export class FleetViewComponent implements OnInit {
   public durationOfContract: number;
   public durationInformation: string;
   public hasModifications = false;
+  public carWasInspected = false;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetViewComponent>,
@@ -114,7 +115,7 @@ export class FleetViewComponent implements OnInit {
     }
     this.dialog.open(InspectionCreateComponent, {
       data: {plateNumber: this.data.car.plateNumber}
-    });
+    }).afterClosed().subscribe(wasInspected => this.carWasInspected = wasInspected);
   }
 
   /**
