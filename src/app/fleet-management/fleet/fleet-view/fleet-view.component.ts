@@ -52,6 +52,7 @@ export class FleetViewComponent implements OnInit {
   public durationInformation: string;
   public hasModifications = false;
   public carWasInspected = false;
+  public endDateWasSelected = false;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetViewComponent>,
@@ -208,6 +209,7 @@ export class FleetViewComponent implements OnInit {
       } else {
         this.durationInformation = '';
       }
+      this.endDateWasSelected = true;
     }
     if (this.form.controls.startDate.value && !this.form.controls.endDate.value) {
       this.endBeforeStart = false;
