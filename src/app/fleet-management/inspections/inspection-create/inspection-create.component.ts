@@ -110,7 +110,6 @@ export class InspectionCreateComponent implements OnInit {
    * Create inspection
    */
   public async createInspection() {
-    console.log(this.form.value);
     this.loading = true;
     this.loaded = false;
     await this.uploadPictures();

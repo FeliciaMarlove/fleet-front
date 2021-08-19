@@ -94,7 +94,7 @@
     mat-raised-button
     color="primary"
     (click)="doOpenInspection()"
-    *ngIf="!car.carInspectionId"
+    *ngIf="!car.carInspectionId && !carWasInspected"
   >
     Create inspection report
   </button>
