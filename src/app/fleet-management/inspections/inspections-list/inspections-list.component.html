@@ -37,65 +37,52 @@
 </div>
 
 <table mat-table [dataSource]="dataSource" matSort [hidden]="!loaded">
-  <ng-container matColumnDef="view">
-    <th mat-header-cell *matHeaderCellDef>{{colNames[0]}}</th>
-    <td mat-cell *matCellDef="let inspection">
-      <button
-        mat-mini-fab
-        color="accent"
-        (click)="doOpenInspectionDetail(inspection)">
-        <mat-icon>visibility</mat-icon>
-      </button>
+  <ng-container matColumnDef="inspectionDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[0]}}</th>
+    <td class="mat-cell-first-of-type-default" mat-cell *matCellDef="let inspection">
+      {{inspection.inspectionDate | date: 'yyyy/MM/dd'}}
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[0]}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="inspectionDate">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[1]}}</th>
+  <ng-container matColumnDef="expertisedBy">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[1]}}</th>
     <td mat-cell *matCellDef="let inspection">
-      {{inspection.inspectionDate | date: 'yyyy/MM/dd'}}
+      {{inspection.expertisedBy}}
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[1]}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="expertisedBy">
+  <ng-container matColumnDef="plateNumber">
     <th mat-header-cell *matHeaderCellDef>{{colNames[2]}}</th>
     <td mat-cell *matCellDef="let inspection">
-      {{inspection.expertisedBy}}
+      {{inspection.plateNumber}}
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[2]}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="plateNumber">
+  <ng-container matColumnDef="car">
     <th mat-header-cell *matHeaderCellDef>{{colNames[3]}}</th>
     <td mat-cell *matCellDef="let inspection">
-      {{inspection.plateNumber}}
+      {{inspection.car | carShortDisplay}}
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[3]}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="car">
+  <ng-container matColumnDef="staffMember">
     <th mat-header-cell *matHeaderCellDef>{{colNames[4]}}</th>
     <td mat-cell *matCellDef="let inspection">
-      {{inspection.car | carShortDisplay}}
+      {{inspection.staffMember | staffShortDisplay}}
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[4]}}</td>
   </ng-container>
 
-  <ng-container matColumnDef="staffMember">
-    <th mat-header-cell *matHeaderCellDef>{{colNames[5]}}</th>
-    <td mat-cell *matCellDef="let inspection">
-      {{inspection.staffMember | staffShortDisplay}}
-    </td>
-    <td mat-footer-cell *matFooterCellDef>{{colNames[5]}}</td>
-  </ng-container>
-
   <ng-container matColumnDef="damaged">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[6]}}</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[5]}}</th>
     <td mat-cell *matCellDef="let inspection">
       <mat-icon>{{inspection.damaged ? 'broken_image' : ''}}</mat-icon>
     </td>
-    <td mat-footer-cell *matFooterCellDef>{{colNames[6]}}</td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[5]}}</td>
   </ng-container>
 
   <!--  Columns configuration  -->

@@ -38,7 +38,6 @@ const fileReader = new FileReader();
 export class InspectionCreateComponent implements OnInit {
   public form: FormGroup;
   public title = 'Create';
-  public plateNumber: string = this.data?.plateNumber;
   public maxDate = new Date();
   public minDate = new Date(new Date().setMonth(new Date().getMonth() - 6));
   public cars: Car[] = [];
@@ -66,7 +65,7 @@ export class InspectionCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (!this.plateNumber) {
+    if (!this.data) {
       this.initCars();
     } else {
       this.initCar();
@@ -89,10 +88,10 @@ export class InspectionCreateComponent implements OnInit {
    * @private
    */
   private initCar() {
-    this.carService.getCar(this.plateNumber).subscribe(car => {
+    this.carService.getCar(this.data.plateNumber).subscribe(car => {
       this.car = car;
       this.form.get('plateNumber').setValue(this.car.plateNumber);
-      this.carLabel = this.plateNumber + ' - ' + this.carPipe.transform(this.car);
+      this.carLabel = this.data.plateNumber + ' - ' + this.carPipe.transform(this.car);
     });
   }
 
@@ -101,7 +100,7 @@ export class InspectionCreateComponent implements OnInit {
       inspectionDate: ['', Validators.required],
       expertisedBy: ['', Validators.required],
       damaged: [''],
-      car: [!!this.plateNumber ? this.plateNumber : '', Validators.required],
+      plateNumber: [this.data ? this.data.plateNumber : '', Validators.required],
       picture: [''],
       report: ['']
     });
@@ -111,6 +110,7 @@ export class InspectionCreateComponent implements OnInit {
    * Create inspection
    */
   public async createInspection() {
+    console.log(this.form.value);
     this.loading = true;
     this.loaded = false;
     await this.uploadPictures();
