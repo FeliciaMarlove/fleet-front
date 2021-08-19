@@ -3,10 +3,10 @@
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form" class="flex-form-column">
     <mat-form-field>
-      <mat-label [style.color]="plateNumber ? 'black' : ''">{{plateNumber ? carLabel : 'Car'}}</mat-label>
-      <mat-select formControlName="car" required [disabled]="plateNumber">
+      <mat-label [style.color]="data?.plateNumber ? 'black' : ''">{{data?.plateNumber ? carLabel : 'Car'}}</mat-label>
+      <mat-select formControlName="plateNumber" required [disabled]="data?.plateNumber">
         <mat-option *ngFor="let car of cars" [value]="car.plateNumber">{{car.plateNumber}}
-          - {{car |carShortDisplay}}</mat-option>
+          - {{car | carShortDisplay}}</mat-option>
       </mat-select>
     </mat-form-field>
     <div class="form-2cols-container">
