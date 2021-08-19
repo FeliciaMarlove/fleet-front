@@ -55,10 +55,10 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.initAvailableFiltersList();
+    this.initDefaultFilter();
     this.auth0Service.user$.subscribe(user => { // récupération de l'utilisateur connecté avec auth0
       if (user) { // s'il y a un utilisateur connecté, on peut continuer l'affichage de la page
-        this.initAvailableFiltersList();
-        this.initDefaultFilter();
         this.initCarsList();
         this.initSearchPredicate();
       } else {
