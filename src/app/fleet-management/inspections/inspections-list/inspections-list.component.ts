@@ -24,7 +24,7 @@ import {ExcelService} from '../../../shared/utils/excel.service';
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged'];
-  public colNames: string[] = ['Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?'];
+  public colNames: string[] = ['Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damaged?'];
   public dataSource = new MatTableDataSource<Inspection>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
