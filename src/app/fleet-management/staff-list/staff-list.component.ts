@@ -23,7 +23,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class StaffListComponent implements OnInit, AfterViewInit {
   public displayedColumns: string[] = ['staffFirstName', 'staffLastName', 'corporateEmail', 'communicationLanguage', 'hasCar', 'car_plate', 'car', 'history'];
-  public colNames: string[] = ['unused', 'First name', 'Last name', 'Email', 'Language', 'Car?', 'Car plate', 'Car model', 'Cars history'];
+  public colNames: string[] = ['unused', 'First name', 'Last name', 'Email', 'Language', 'Car plan?', 'Car plate', 'Car model', 'Cars history'];
   public dataSource = new MatTableDataSource<StaffMember>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
