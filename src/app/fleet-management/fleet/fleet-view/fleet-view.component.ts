@@ -17,6 +17,7 @@ import {InspectionService} from '../../../core/http-services/inspection.service'
 import {LinkCarStaffDialogComponent} from '../../link-car-staff-dialog/link-car-staff-dialog.component';
 import {StaffShortDisplayPipe} from '../../../shared/pipe/staff-short-display.pipe';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
+import {InspectionCreateComponent} from '../../inspections/inspection-create/inspection-create.component';
 
 export const DateFormat = {
   parse: {
@@ -50,6 +51,8 @@ export class FleetViewComponent implements OnInit {
   public durationOfContract: number;
   public durationInformation: string;
   public hasModifications = false;
+  public carWasInspected = false;
+  public endDateWasSelected = false;
 
   constructor(
     public matDialogRef: MatDialogRef<FleetViewComponent>,
@@ -111,12 +114,9 @@ export class FleetViewComponent implements OnInit {
           }
       });
     }
-    // TODO both when the dialog exists in inspection package
-    if (this.car.inspection) {
-      console.log('open existing inspection');
-    } else {
-      console.log('open screen to create new inspection');
-    }
+    this.dialog.open(InspectionCreateComponent, {
+      data: {plateNumber: this.data.car.plateNumber}
+    }).afterClosed().subscribe(wasInspected => this.carWasInspected = wasInspected);
   }
 
   /**
@@ -209,6 +209,7 @@ export class FleetViewComponent implements OnInit {
       } else {
         this.durationInformation = '';
       }
+      this.endDateWasSelected = true;
     }
     if (this.form.controls.startDate.value && !this.form.controls.endDate.value) {
       this.endBeforeStart = false;

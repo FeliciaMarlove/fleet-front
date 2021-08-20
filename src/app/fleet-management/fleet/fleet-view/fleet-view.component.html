@@ -94,8 +94,9 @@
     mat-raised-button
     color="primary"
     (click)="doOpenInspection()"
+    *ngIf="!car.carInspectionId && !carWasInspected && (car.endDate || endDateWasSelected)"
   >
-    {{car.carInspectionId ? 'See inspection report' : 'Create inspection report'}}
+    Create inspection report
   </button>
 
   <button

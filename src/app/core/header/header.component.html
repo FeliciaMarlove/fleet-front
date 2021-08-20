@@ -4,7 +4,9 @@
     <button
       *ngIf="!sidenavHandle.opened"
       (click)="sidenavHandle.toggle()"
-      class="show-sidenav-menu">
+      class="show-sidenav-menu"
+      aria-label="Expand side navigation"
+      >
       <mat-icon>list</mat-icon>
     </button>
   </div>
@@ -15,7 +17,8 @@
     <mat-slide-toggle
       #lightDarkToggle
       class="toggle-light-dark-theme"
-      (click)="doToggleLightDark(lightDarkToggle)">
+      (click)="doToggleLightDark(lightDarkToggle)"
+      aria-label="Toggle to switch light to dark mode">
       <mat-icon>{{lightDarkToggleIcon}}</mat-icon>
     </mat-slide-toggle>
   </div>

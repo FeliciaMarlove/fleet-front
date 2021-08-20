@@ -23,8 +23,8 @@ import {ExcelService} from '../../../shared/utils/excel.service';
   styleUrls: ['./inspections-list.component.scss']
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['view', 'inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged', 'sentDate'];
-  public colNames: string[] = ['', 'Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damage?', 'Sent'];
+  public displayedColumns: string[] = ['inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged'];
+  public colNames: string[] = ['Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damaged?'];
   public dataSource = new MatTableDataSource<Inspection>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -171,14 +171,6 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
     this.dataSource.data = inspections;
     this.loaded = true;
     this.loading = false;
-  }
-
-  /**
-   * Open inspection view
-   * @param inspection The selected inspection
-   */
-  public doOpenInspectionDetail(inspection: any) {
-    console.log(inspection); // TODO
   }
 
   /**
