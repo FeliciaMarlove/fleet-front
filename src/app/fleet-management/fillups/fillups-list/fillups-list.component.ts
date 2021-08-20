@@ -149,7 +149,6 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
    */
   public doOpenWarning(fillup: TankFilling) {
     // TODO
-    console.log(fillup);
   }
 
   public doExportCurrentSelectToExcel() {
