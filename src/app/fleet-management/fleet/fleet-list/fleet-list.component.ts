@@ -57,16 +57,16 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.initAvailableFiltersList();
     this.initDefaultFilter();
-    // this.auth0Service.user$.subscribe(user => { // récupération de l'utilisateur connecté avec auth0
-    //   if (user) { // s'il y a un utilisateur connecté, on peut continuer l'affichage de la page
+    this.auth0Service.user$.subscribe(user => { // récupération de l'utilisateur connecté avec auth0
+      if (user) { // s'il y a un utilisateur connecté, on peut continuer l'affichage de la page
         this.initCarsList();
         this.initSearchPredicate();
-      // } else {
-      //   this.auth0Service.loginWithRedirect(); // sinon, on fait appel au service auth0 pour la connexion
-      // }
-    //   sessionStorage.setItem('logged', user.nickname); // en cas de succès, on enregistre dans la session qu'un utilisateur est connecté
-    //   this.azureBlobService.writeAzureLogBlob('User connection ' + user.nickname); // on écrit un log de la connexion
-    // }, error => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Error with connection service'));
+      } else {
+        this.auth0Service.loginWithRedirect(); // sinon, on fait appel au service auth0 pour la connexion
+      }
+      sessionStorage.setItem('logged', user.nickname); // en cas de succès, on enregistre dans la session qu'un utilisateur est connecté
+      this.azureBlobService.writeAzureLogBlob('User connection ' + user.nickname); // on écrit un log de la connexion
+    }, error => this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Error with connection service'));
   }
 
   ngAfterViewInit(): void {
