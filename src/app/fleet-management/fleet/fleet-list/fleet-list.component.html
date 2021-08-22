@@ -1,36 +1,38 @@
 <h2>{{title}}</h2>
 
-<section class="list-actions-wrapper-container">
-  <section class="list-actions-buttons-container">
-    <button
-      class="list-button"
-      mat-raised-button
-      (click)="doOpenFilterDialog()"
-      [disabled]="!filterList"
-      aria-label="Button to open filter dialog">
-      <mat-icon>filter_alt</mat-icon>
-      Filter
-    </button>
-    <mat-icon aria-labelledby="Current filter" matTooltip="Current filter is: {{filter | filterDisplay: option : iAm}}">
-      info
-    </mat-icon>
-    <button
-      color="accent"
-      class="list-button new-button"
-      mat-raised-button
-      (click)="doOpenCarCreate()"
-      aria-label="Button to open car creation dialog">
-      <mat-icon>playlist_add</mat-icon>
-      New
-    </button>
-  </section>
+<section class="list-actions-buttons-container">
+  <button
+    class="list-button"
+    mat-raised-button
+    (click)="doOpenFilterDialog()"
+    [disabled]="!filterList"
+    aria-label="Button to open filter dialog">
+    <mat-icon>filter_alt</mat-icon>
+    Filter
+  </button>
+  <mat-icon aria-labelledby="Current filter" matTooltip="Current filter is: {{filter | filterDisplay: option : iAm}}">
+    info
+  </mat-icon>
   <form>
     <mat-form-field appearance="standard" class="search-field" aria-label="Search in list">
       <input matInput type="text" placeholder="Search" aria-label="Search input" (input)="searchFilter($event)">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </form>
+  <div class="new-button">
+    <button
+      color="accent"
+      class="list-button"
+      mat-raised-button
+      (click)="doOpenCarCreate()"
+      aria-label="Button to open car creation dialog">
+      <mat-icon>playlist_add</mat-icon>
+      New
+    </button>
+  </div>
+
 </section>
+
 
 <div class="spinner-container">
   <mat-spinner aria-label="Content is loading" aria-labelledby="Content is loading" *ngIf="loading"></mat-spinner>
@@ -107,7 +109,8 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
-<mat-paginator [pageSizeOptions]="paginationChoices" showFirstLastButtons role="listbox" aria-label="Paginator"></mat-paginator>
+<mat-paginator [pageSizeOptions]="paginationChoices" showFirstLastButtons role="listbox"
+               aria-label="Paginator"></mat-paginator>
 <button
   *ngIf="loaded"
   class="list-button excel-button"
