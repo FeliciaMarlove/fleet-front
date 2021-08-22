@@ -81,8 +81,8 @@ table {
 }
 
 .new-button {
-  position: absolute !important;
-  right: 10px !important;
+  flex: 1;
+  text-align: right;
 }
 
 .excel-button {
@@ -124,14 +124,9 @@ table {
 .list-actions-buttons-container {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   height: fit-content;
   align-items: center; // aligns the mat icon
-}
-
-.list-actions-wrapper-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 }
 
 .search-field {
