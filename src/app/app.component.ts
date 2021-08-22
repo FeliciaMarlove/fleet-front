@@ -1,5 +1,6 @@
-import {Component, HostBinding, HostListener, Renderer2} from '@angular/core';
+import {Component, HostBinding, HostListener, Renderer2, ViewChild} from '@angular/core';
 import {OverlayContainer} from '@angular/cdk/overlay';
+import {MatSidenav} from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import {OverlayContainer} from '@angular/cdk/overlay';
 export class AppComponent {
   public title = 'Fleet Management';
   public darkModeUI = false;
+  @ViewChild('sidenav') sidenav: MatSidenav
 
   constructor(
     private renderer: Renderer2,
@@ -19,6 +21,18 @@ export class AppComponent {
     }
     this.renderPageBodyColor();
     this.applyThemeToOverlayContainers();
+  }
+
+  /**
+   * Listen for window resizing events
+   * Close the sidenav if window is under 900 width
+   * @param event
+   */
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (event.target.innerWidth < 900) {
+      this.sidenav.close();
+    }
   }
 
   /**
