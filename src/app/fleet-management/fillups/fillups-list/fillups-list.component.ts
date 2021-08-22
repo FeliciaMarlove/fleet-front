@@ -14,6 +14,10 @@ import {CarService} from '../../../core/http-services/car.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 import {ExcelService} from '../../../shared/utils/excel.service';
+import {Car} from '../../../shared/models/car.model';
+import {Normalize} from '../../../shared/utils/normalize.util';
+import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
+import {Inspection} from '../../../shared/models/inspection.model';
 
 @Component({
   selector: 'app-fillups',
@@ -52,6 +56,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     this.initAvailableFiltersList();
     this.initDefaultFilter();
     this.initFillups();
+    this.initSearchPredicate();
   }
 
   ngAfterViewInit(): void {
@@ -87,6 +92,29 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
     const lastYear = d.getFullYear() - 1;
     d.setFullYear(lastYear);
     return d;
+  }
+
+  /**
+   * Assign input to data source filter
+   * @param input from the user in the search field
+   */
+  public searchFilter(input: any) {
+    this.dataSource.filter = input.target.value;
+  }
+
+  /**
+   * Override filter predicate used by filter function of DataSource
+   * Set filtered columns to staff name and first name (independently or together)
+   */
+  private initSearchPredicate() {
+    this.dataSource.filterPredicate = (data: TankFilling, filter: string) => {
+      const normalizedFilter = Normalize.normalize(filter);
+      return Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
+        || Normalize.normalize(data.staffMember?.staffLastName)?.includes(normalizedFilter)
+        || Normalize.normalize(data.staffMember?.staffLastName)?.concat(' ', Normalize.normalize(data.staffMember?.staffFirstName))?.includes(normalizedFilter)
+        || Normalize.normalize(data.staffMember?.staffFirstName)?.concat(' ', Normalize.normalize(data.staffMember?.staffLastName))?.includes(normalizedFilter)
+        || Normalize.normalize(data.plateNumber).includes(normalizedFilter);
+    };
   }
 
   /**
