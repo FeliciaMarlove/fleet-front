@@ -43,8 +43,8 @@ export class InspectionCreateComponent implements OnInit {
   public cars: Car[] = [];
   public car: Car;
   public carLabel;
-  private latestPictures: [] = [];
-  private latestReport;
+  public latestPictures: [] = [];
+  public latestReport;
   private imageUrls: string[] = [];
   private reportUrl: string;
   public loading = false;
