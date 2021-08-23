@@ -104,6 +104,14 @@
     <td mat-footer-cell *matFooterCellDef>{{colNames[8]}}</td>
   </ng-container>
 
+  <ng-container matColumnDef="active">
+    <th mat-header-cell *matHeaderCellDef>{{colNames[9]}}</th>
+    <td mat-cell *matCellDef="let car">
+      <mat-icon matTooltip="{{car.active}}">{{car.active ? 'done_outline' : 'inventory_2'}}</mat-icon>
+    </td>
+    <td mat-footer-cell *matFooterCellDef>{{colNames[9]}}</td>
+  </ng-container>
+
   <!--  Columns configuration  -->
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
