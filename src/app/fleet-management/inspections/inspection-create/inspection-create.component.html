@@ -28,7 +28,7 @@
 
 
     <div [hidden]="!isDamaged">
-      <div style="padding-top: 10px; color: orangered" *ngIf="isDamaged">Report and
+      <div style="padding-top: 10px; color: orangered" *ngIf="isDamaged && (latestPictures.length === 0 || !latestReport)">Report and
         pictures are mandatory for damaged cars!
       </div>
 
