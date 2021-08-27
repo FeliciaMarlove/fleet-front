@@ -22,6 +22,7 @@ export class SideNavComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.current = links[0];
   }
 
   /**
