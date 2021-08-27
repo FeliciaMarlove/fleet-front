@@ -5,7 +5,7 @@
     class="list-button"
     mat-raised-button
     (click)="doOpenFilterDialog()"
-    [disabled]="!filterList"
+    [disabled]="!filterList || dataSource.data.length == 0"
     aria-label="Button to open filter dialog">
     <mat-icon>filter_alt</mat-icon>
     Filter
@@ -15,7 +15,7 @@
   </mat-icon>
   <form>
     <mat-form-field appearance="standard" class="search-field" aria-label="Search in list">
-      <input matInput type="text" placeholder="Search" aria-label="Search input" (input)="searchFilter($event)">
+      <input matInput type="text" placeholder="Search" aria-label="Search input" (input)="searchFilter($event)" [disabled]="dataSource.data.length == 0">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </form>
