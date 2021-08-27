@@ -63,13 +63,13 @@
         <input type="text" matInput formControlName="ongoing" placeholder="Contract status">
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Contract start date</mat-label>
+        <mat-label>Start date</mat-label>
         <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker #pickerStart> </mat-datepicker>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Contract end date</mat-label>
+        <mat-label>End date</mat-label>
         <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd> </mat-datepicker>
