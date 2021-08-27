@@ -2,7 +2,7 @@
 
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form" class="flex-form-column">
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field>
         <input type="text" matInput placeholder="Plate number" #plate formControlName="plateNumber" appPlateNumber required (input)="checkPlate(plate)">
         <mat-hint class="warning-hint" *ngIf="plateInvalid">Enter a plate number in the format 1-AAA-000</mat-hint>
@@ -17,7 +17,7 @@
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field appearance="fill">
         <mat-label>Brand</mat-label>
         <mat-select formControlName="brand" placeholder="Brand" required>
@@ -31,7 +31,7 @@
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field appearance="fill">
         <mat-label>Fuel</mat-label>
         <mat-select formControlName="fuelType" placeholder="Fuel" required (selectionChange)="checkFuelChange($event)">
@@ -45,7 +45,7 @@
       </mat-form-field>
     </div>
     <mat-divider></mat-divider>
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field>
         <mat-label>Contract start date</mat-label>
         <input matInput [matDatepicker]="pickerStart" formControlName="startDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()" required>

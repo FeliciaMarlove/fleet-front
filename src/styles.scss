@@ -35,22 +35,19 @@ table {
   background-color: #FFB300 !important;
 }
 
-.form-2cols-container {
+.form-cols-container {
   display: flex;
   justify-content: space-between;
 }
 
 // select all children of
-.form-2cols-container > * {
+.form-cols-container > * {
   flex-grow: 1;
-}
-
-.form-2cols-container>:first-child {
   margin-right: 10px;
 }
 
-.form-2cols-container>:last-child {
-  margin-left: 10px;
+.form-cols-container>:last-child {
+  margin-right: 0;
 }
 
 .flex-form-column {
