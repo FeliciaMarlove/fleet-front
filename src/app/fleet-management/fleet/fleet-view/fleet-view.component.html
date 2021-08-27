@@ -2,49 +2,66 @@
 
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form" class="flex-form-column">
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field>
         <input type="text" matInput formControlName="plateNumber" placeholder="Plate number">
       </mat-form-field>
       <mat-form-field>
-        <input type="text" matInput formControlName="ongoing" placeholder="Contract status">
+        <input type="text" matInput formControlName="staffMember" placeholder="Staff member">
+        <mat-icon matSuffix
+                  *ngIf="car.staffMember"
+                  matTooltip="{{car.staffMember | staffTooltip}}"
+                  [cdkCopyToClipboard]="car.staffMember.corporateEmail"
+                  (mouseenter)="changeIconStaff()"
+                  (mouseleave)="changeIconStaff()"
+                  (click)="informCopied()"
+        >
+          {{changeableIconStaff}}
+        </mat-icon>
       </mat-form-field>
     </div>
-    <mat-form-field>
-      <input type="text" matInput formControlName="staffMember" placeholder="Staff member">
-      <mat-icon matSuffix
-                *ngIf="car.staffMember"
-                matTooltip="{{car.staffMember | staffTooltip}}"
-                [cdkCopyToClipboard]="car.staffMember.corporateEmail"
-                (mouseenter)="changeIconStaff()"
-                (mouseleave)="changeIconStaff()"
-                (click)="informCopied()"
-      >
-        {{changeableIconStaff}}
-      </mat-icon>
-    </mat-form-field>
+
     <mat-divider></mat-divider>
-    <div class="form-2cols-container">
+
+    <div class="form-cols-container">
       <mat-form-field>
         <input type="text" matInput formControlName="brand" placeholder="Brand">
       </mat-form-field>
       <mat-form-field>
         <input type="text" matInput formControlName="model" placeholder="Model">
       </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput formControlName="leasingCompany" placeholder="Leasing company">
+        <mat-icon matSuffix
+                  *ngIf="car.leasingCompany"
+                  matTooltip="{{car.leasingCompany | leasingTooltip}}"
+                  [cdkCopyToClipboard]="car.leasingCompany.leasingCompanyEmail"
+                  (mouseenter)="changeIconLeasing()"
+                  (mouseleave)="changeIconLeasing()"
+                  (click)="informCopied()"
+        >
+          {{changeableIconLeasing}}
+        </mat-icon>
+      </mat-form-field>
     </div>
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field>
         <input type="text" matInput formControlName="fuelType" placeholder="Fuel">
       </mat-form-field>
+      <mat-form-field *ngIf="car.fuelType !== 'FULL_ELECTRIC'">
+        <input type="number" matInput formControlName="averageConsumption" placeholder="Average consumption liter/100 km">
+      </mat-form-field>
       <mat-form-field>
-        <input type="number" matInput formControlName="averageConsumption" placeholder="Average consumption liter / 100 kilometer">
+        <input type="text" matInput formControlName="kilometers" placeholder="Kilometers">
       </mat-form-field>
     </div>
-    <mat-form-field>
-      <input type="text" matInput formControlName="kilometers" placeholder="Kilometers">
-    </mat-form-field>
+
     <mat-divider></mat-divider>
-    <div class="form-2cols-container">
+
+    <div class="form-cols-container">
+      <mat-form-field>
+        <input type="text" matInput formControlName="ongoing" placeholder="Contract status">
+      </mat-form-field>
       <mat-form-field>
         <mat-label>Contract start date</mat-label>
         <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
@@ -60,20 +77,9 @@
       </mat-form-field>
     </div>
     <div *ngIf="durationInformation" class="align-mat-icon-with-text-div-container"><mat-icon matPrefix>information</mat-icon><p> {{ durationInformation }}</p></div>
-    <mat-form-field>
-      <input type="text" matInput formControlName="leasingCompany" placeholder="Leasing company">
-      <mat-icon matSuffix
-                *ngIf="car.leasingCompany"
-                matTooltip="{{car.leasingCompany | leasingTooltip}}"
-                [cdkCopyToClipboard]="car.leasingCompany.leasingCompanyEmail"
-                (mouseenter)="changeIconLeasing()"
-                (mouseleave)="changeIconLeasing()"
-                (click)="informCopied()"
-      >
-        {{changeableIconLeasing}}
-      </mat-icon>
-    </mat-form-field>
+
     <mat-divider></mat-divider>
+
     <mat-form-field>
       <input type="text" matInput formControlName="freeText" placeholder="Additional information">
     </mat-form-field>
