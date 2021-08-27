@@ -10,7 +10,7 @@ import {MatSidenav} from '@angular/material/sidenav';
 export class AppComponent {
   public title = 'Fleet Management';
   public darkModeUI = false;
-  @ViewChild('sidenav') sidenav: MatSidenav
+  @ViewChild('sidenav') sidenav: MatSidenav;
 
   constructor(
     private renderer: Renderer2,
