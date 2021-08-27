@@ -17,7 +17,9 @@ table {
   border: grey 1px dotted;
 }
 
-// Custom classes
+//*****************//
+// Custom classes //
+//***************//
 
 .header-content{
   background-color: #1A237E;
@@ -54,6 +56,7 @@ table {
 .flex-form-column {
   display: flex;
   flex-direction: column;
+  margin: 0 25px 50px 25px;
 }
 
 .align-mat-icon-with-text-div-container {
@@ -62,7 +65,7 @@ table {
 }
 
 .create-update-form-container {
-  padding: 10px 50px 50px !important;
+  display: inline !important; // override default "block" display of mat-dialog-content
 }
 
 .dirty-form-onleave-dialog-container {
@@ -118,7 +121,7 @@ table {
 }
 
 .dialog-button {
-  margin-right: 15px !important;
+  margin: 0 0 15px 15px !important;
 }
 
 .list-actions-buttons-container {
@@ -140,10 +143,20 @@ table {
   padding-left: 24px !important;
 }
 
-// Material classes and handles
+//******************************//
+// Material classes and handles //
+//******************************//
+
+.mat-dialog-container {
+  margin: 1px !important; // otherwise a vertical line appears next to scroll bar in Google Chrome
+}
 
 .mat-input-element:disabled {
   color: black !important;
+}
+
+.mat-divider {
+  border-top-color: transparent !important;
 }
 
 .mat-calendar-table {
@@ -196,13 +209,11 @@ table {
 }
 
 // the "outer" content, not the inner content of the mat drawer (side nav)
-// overflow unset prevents from double-scroll-bar
 .mat-drawer-content {
   padding-left: 15px;
   padding-right: 15px;
   display: flex !important;
   flex-direction: column;
-  overflow: unset !important;
 }
 
 // content of the side nav itself
@@ -266,9 +277,11 @@ input[type="file"]::file-selector-button {
   margin: 1rem;
 }
 
-
-// Custom Theming for Angular Material
+//**************************************//
+// Custom Theming for Angular Material //
+//************************************//
 // For more information: https://material.angular.io/guide/theming
+
 @import '~@angular/material/theming';
 @include mat-core();
 // Define default light theme
