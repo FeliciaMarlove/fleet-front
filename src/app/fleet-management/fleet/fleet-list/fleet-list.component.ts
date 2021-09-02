@@ -113,7 +113,8 @@ export class FleetListComponent implements OnInit, AfterViewInit {
         || Normalize.normalize(data.staffMember?.staffLastName)?.concat(' ', Normalize.normalize(data.staffMember?.staffFirstName))?.includes(normalizedFilter)
         || Normalize.normalize(data.staffMember?.staffFirstName)?.concat(' ', Normalize.normalize(data.staffMember?.staffLastName))?.includes(normalizedFilter)
         || Normalize.normalize(data.plateNumber).includes(normalizedFilter)
-        || Normalize.normalize(CarShortDisplayPipe.prototype.transform(data)).includes(normalizedFilter);
+        || Normalize.normalize(CarShortDisplayPipe.prototype.transform(data)).includes(normalizedFilter)
+        || Normalize.normalize(data.plateNumber.replace('-', '').replace('-', '')).includes(normalizedFilter);
     };
   }
 
