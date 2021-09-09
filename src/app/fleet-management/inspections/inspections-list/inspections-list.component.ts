@@ -23,7 +23,7 @@ import {ExcelService} from '../../../shared/utils/excel.service';
   styleUrls: ['./inspections-list.component.scss']
 })
 export class InspectionsListComponent implements OnInit, AfterViewInit {
-  public displayedColumns: string[] = ['inspectionDate', 'expertisedBy', 'plateNumber', 'car', 'staffMember', 'damaged'];
+  public displayedColumns: string[] = ['inspectionDate', 'plateNumber', 'car', 'staffMember', 'damaged', 'expertisedBy'];
   public colNames: string[] = ['Date of inspection', 'Expertised by', 'Plate number', 'Car', 'Staff Member', 'Damaged?'];
   public dataSource = new MatTableDataSource<Inspection>();
   @ViewChild(MatPaginator) paginator: MatPaginator;

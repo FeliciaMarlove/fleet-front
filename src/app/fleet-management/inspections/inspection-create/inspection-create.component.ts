@@ -43,8 +43,8 @@ export class InspectionCreateComponent implements OnInit {
   public cars: Car[] = [];
   public car: Car;
   public carLabel;
-  private latestPictures: [] = [];
-  private latestReport;
+  public latestPictures: [] = [];
+  public latestReport;
   private imageUrls: string[] = [];
   private reportUrl: string;
   public loading = false;
@@ -230,7 +230,7 @@ export class InspectionCreateComponent implements OnInit {
         return false;
       }
       if (!acceptedTypes.includes(ext)) {
-        this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File extension must be ' + acceptedTypes + ', tried to load ' + file.type + ' (file name: ' + file.name + ')');
+        this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File extension must be ' + acceptedTypes + ', tried to load ' + file.type.extension + ' (file name: ' + file.name + ')');
         $event.target.value = null;
         return false;
       }

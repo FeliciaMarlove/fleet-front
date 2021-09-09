@@ -12,11 +12,10 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return true;
-    // if (sessionStorage.getItem('logged')) {
-    //   return true; // la route peut être accédée
-    // } else {
-    //   return this.router.parseUrl('fleet'); // redirection vers une page qui peut être accédée sans être authentifié
-    // }
+    if (sessionStorage.getItem('logged')) {
+      return true; // la route peut être accédée
+    } else {
+      return this.router.parseUrl('fleet'); // redirection vers une page qui peut être accédée sans être authentifié
+    }
   }
 }

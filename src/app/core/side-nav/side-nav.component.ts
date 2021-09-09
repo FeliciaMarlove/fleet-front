@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MatSidenav} from '@angular/material/sidenav';
+import {Title} from '@angular/platform-browser';
+import {NavigationEnd, Router} from '@angular/router';
 
 const links = [
   { title: 'Fleet', link: '/fleet' },
@@ -19,9 +21,21 @@ export class SideNavComponent implements OnInit {
   public current: { link: string; title: string };
   @Input() sidenavHandle: MatSidenav;
 
-  constructor() { }
+  constructor(private titleService: Title, private router: Router) { }
 
   ngOnInit() {
+    this.router.events.subscribe(
+      (event: any) => {
+        if (event instanceof NavigationEnd) {
+          this.links.forEach(link => {
+            if (link.link === this.router.url) {
+              this.current = link;
+              this.titleService.setTitle(link.title + ' | Fleet management');
+            }
+          });
+        }
+      }
+    );
   }
 
   /**
@@ -30,5 +44,6 @@ export class SideNavComponent implements OnInit {
    */
   public onClickAssignCurrent(link: { link: string; title: string }) {
     this.current = link;
+    this.titleService.setTitle(link.title + ' | Fleet management');
   }
 }

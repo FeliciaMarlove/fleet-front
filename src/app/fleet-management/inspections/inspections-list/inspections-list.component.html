@@ -1,12 +1,11 @@
 <h2>{{title}}</h2>
 
-<section class="list-actions-wrapper-container">
   <section class="list-actions-buttons-container">
     <button
       class="list-button"
       mat-raised-button
       (click)="doOpenFilterDialog()"
-      [disabled]="!filterList">
+      [disabled]="!filterList || dataSource.data.length == 0">
       <mat-icon>filter_alt</mat-icon>
       Filter
     </button>
@@ -15,21 +14,22 @@
       aria-label="Displays the current filter for displaying the list when hovered over">
       info
     </mat-icon>
-    <button
-      color="accent"
-      class="list-button new-button"
-      mat-raised-button
-      (click)="doOpenInspectionCreate()">
-      <mat-icon>playlist_add</mat-icon>
-      New
-    </button>
-  </section>
   <form>
     <mat-form-field appearance="standard" class="search-field">
-      <input matInput type="text" placeholder="Search" (input)="searchFilter($event)">
+      <input matInput type="text" placeholder="Search" (input)="searchFilter($event)" [disabled]="dataSource.data.length == 0">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </form>
+    <div class="new-button">
+      <button
+        color="accent"
+        class="list-button"
+        mat-raised-button
+        (click)="doOpenInspectionCreate()">
+        <mat-icon>playlist_add</mat-icon>
+        New
+      </button>
+    </div>
 </section>
 
 <div class="spinner-container">

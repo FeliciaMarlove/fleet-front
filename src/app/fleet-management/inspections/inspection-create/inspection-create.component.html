@@ -9,7 +9,7 @@
           - {{car | carShortDisplay}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field>
         <mat-label>Inspection date</mat-label>
         <input matInput [max]="maxDate" [min]="minDate" [matDatepicker]="pickerIns" formControlName="inspectionDate"
@@ -28,17 +28,17 @@
 
 
     <div [hidden]="!isDamaged">
-      <div style="padding-top: 10px; color: orangered" *ngIf="isDamaged">Report and
+      <div style="padding-top: 10px; color: orangered" *ngIf="isDamaged && (latestPictures.length === 0 || !latestReport)">Report and
         pictures are mandatory for damaged cars!
       </div>
 
       <div style="padding-top: 25px">
-        <label for="pictures" class="btn">Upload report</label> <br>
-        <input type="file" id="pictures" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)">
+        <label for="report" class="btn">Upload report (.pdf)</label> <br>
+        <input type="file" id="report" accept=".pdf" formControlName="report" (change)="checkFiles($event)">
       </div>
       <div style="padding-bottom: 25px">
-        <label for="report" class="btn">Upload pictures</label> <br>
-        <input type="file" id="report" accept=".pdf,.doc" formControlName="report" (change)="checkFiles($event)">
+        <label for="pictures" class="btn">Upload pictures (.png, .jpeg or .jpg) - maximum 5 pictures</label> <br>
+        <input type="file" id="pictures" multiple accept=".png,.jpeg,.jpg" formControlName="picture" (change)="checkFiles($event)">
       </div>
     </div>
 
@@ -49,7 +49,7 @@
     class="dialog-button"
     mat-raised-button
     color="accent"
-    [disabled]="form.invalid"
+    [disabled]="form.invalid || isDamaged && (latestPictures.length === 0 || !latestReport)"
     (click)="createInspection()">
     Send
   </button>

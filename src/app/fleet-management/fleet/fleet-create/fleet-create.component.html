@@ -2,23 +2,27 @@
 
 <mat-dialog-content class="create-update-form-container">
   <form [formGroup]="form" class="flex-form-column">
-    <div class="form-2cols-container">
+    <div class="form-cols-container">
       <mat-form-field>
-        <input type="text" matInput placeholder="Plate number" #plate formControlName="plateNumber" appPlateNumber required (input)="checkPlate(plate)">
-        <mat-hint class="warning-hint" *ngIf="plateInvalid">Enter a plate number in the format 1-AAA-000</mat-hint>
-      </mat-form-field>
-      <mat-form-field appearance="fill">
-        <mat-label>Staff member</mat-label>
         <mat-select formControlName="staffMemberId" placeholder="Staff member" required (selectionChange)="checkStaffLinked($event)">
           <mat-option *ngFor="let staffMember of staff" [value]="staffMember.staffMemberId">
             {{staffMember | staffShortDisplay}}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput placeholder="Plate number" #plate formControlName="plateNumber" appPlateNumber required (input)="checkPlate(plate)">
+        <mat-hint class="warning-hint" *ngIf="plateInvalid">Enter a plate number in the format 1-AAA-000</mat-hint>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" formControlName="freeText" placeholder="Additional information" maxlength="250">
+      </mat-form-field>
     </div>
+
     <mat-divider></mat-divider>
-    <div class="form-2cols-container">
-      <mat-form-field appearance="fill">
+
+    <div class="form-cols-container">
+      <mat-form-field>
         <mat-label>Brand</mat-label>
         <mat-select formControlName="brand" placeholder="Brand" required>
           <mat-option *ngFor="let brand of brandEnum | keyvalue" [value]="brand.key">
@@ -30,10 +34,8 @@
         <input type="text" matInput placeholder="Model" formControlName="model" required>
       </mat-form-field>
     </div>
-    <mat-divider></mat-divider>
-    <div class="form-2cols-container">
-      <mat-form-field appearance="fill">
-        <mat-label>Fuel</mat-label>
+    <div class="form-cols-container">
+      <mat-form-field>
         <mat-select formControlName="fuelType" placeholder="Fuel" required (selectionChange)="checkFuelChange($event)">
           <mat-option *ngFor="let fuel of fuelEnum | keyvalue" [value]="fuel.key">
             {{fuel.value}}
@@ -44,8 +46,17 @@
         <input matInput [min]="0" type="number" formControlName="averageConsumption" [placeholder]="isElectric ? 'N/A' : 'Av. consumption l/100'" [required]="!isElectric">
       </mat-form-field>
     </div>
+
     <mat-divider></mat-divider>
-    <div class="form-2cols-container">
+
+    <div class="form-cols-container">
+      <mat-form-field>
+        <mat-select formControlName="leasingCompanyId" placeholder="Leasing company" required>
+          <mat-option *ngFor="let company of leasingCompanies" [value]="company.leasingCompanyId">
+            {{company.leasingCompanyName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <mat-form-field>
         <mat-label>Contract start date</mat-label>
         <input matInput [matDatepicker]="pickerStart" formControlName="startDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()" required>
@@ -61,17 +72,6 @@
       </mat-form-field>
     </div>
     <div *ngIf="durationInformation" class="align-mat-icon-with-text-div-container"><mat-icon matPrefix>information</mat-icon><p> {{ durationInformation }}</p></div>
-    <mat-form-field appearance="fill">
-      <mat-label>Leasing company</mat-label>
-      <mat-select formControlName="leasingCompanyId" placeholder="Leasing company" required>
-        <mat-option *ngFor="let company of leasingCompanies" [value]="company.leasingCompanyId">
-          {{company.leasingCompanyName}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <input matInput type="text" formControlName="freeText" placeholder="Additional information" maxlength="250">
-    </mat-form-field>
   </form>
 
   <button
