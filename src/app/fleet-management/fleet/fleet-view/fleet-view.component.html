@@ -48,7 +48,7 @@
       <mat-form-field>
         <input type="text" matInput formControlName="fuelType" placeholder="Fuel">
       </mat-form-field>
-      <mat-form-field *ngIf="car.fuelType !== 'FULL_ELECTRIC'">
+      <mat-form-field *ngIf="car.fuelType.toString() !== 'FULL_ELECTRIC'">
         <input type="number" matInput formControlName="averageConsumption" placeholder="Average consumption liter/100 km">
       </mat-form-field>
       <mat-form-field>
