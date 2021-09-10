@@ -7,7 +7,7 @@ import {StaffMember} from '../models/staff-member.model';
 export class StaffTooltipPipe implements PipeTransform {
 
   transform(value: StaffMember, ...args: unknown[]): unknown {
-    return `${value.corporateEmail} (${value.communicationLanguage})`;
+    return `${value.corporateEmail} (${value.communicationLanguage})\n(Copy e-mail)`;
   }
 
 }
