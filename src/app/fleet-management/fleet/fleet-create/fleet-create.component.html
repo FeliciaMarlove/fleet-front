@@ -65,7 +65,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Contract end date</mat-label>
-        <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()">
+        <input matInput [matDatepicker]="pickerEnd" formControlName="endDate" (input)="pickerEnd.open()" (keydown)="pickerEnd.open()" (keyup)="pickerEnd.open()" (click)="pickerEnd.open()" (input)="checkEndAfterStart()" (dateChange)="checkEndAfterStart()">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd> </mat-datepicker>
         <mat-hint *ngIf="endBeforeStart" class="warning-hint">Invalid input: end date must be after start date!</mat-hint>
