@@ -125,6 +125,7 @@ export class FleetViewComponent implements OnInit {
   public doUpdate() {
     this.car.endDate = this.form.controls.endDate.value;
     this.car.freeText = this.form.controls.freeText.value;
+    this.car.staffMemberId = this.form.controls.staffMember.value.staffMemberId;
     this.carService.updateCar(this.car).subscribe(() => {
       this.matDialogRef.close(true);
       this.matSnackBar.open('Car was updated', 'OK', {

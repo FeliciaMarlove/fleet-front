@@ -89,7 +89,7 @@
     class="dialog-button"
     mat-raised-button
     color="accent"
-    [disabled]="form.untouched || form.pristine || form.invalid || endBeforeStart"
+    [disabled]="(!hasModifications && form.pristine) || form.invalid || endBeforeStart"
     (click)="doUpdate()">
      Update
   </button>
