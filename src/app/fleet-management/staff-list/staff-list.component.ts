@@ -59,6 +59,13 @@ export class StaffListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    // don't make different sort for last names starting with lower or upper case:
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'staffLastName': return item.staffLastName.toLowerCase();
+        default: return item[property];
+      }
+    };
   }
 
   /**

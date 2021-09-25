@@ -60,6 +60,13 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    // apply specific sort to Staff member column because piped values cannot be sorted:
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'staffMember': return item.staffMember.staffFirstName;
+        default: return item[property];
+      }
+    };
   }
 
   /**
