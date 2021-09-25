@@ -6,7 +6,7 @@ import {StaffMember} from '../models/staff-member.model';
 })
 export class StaffShortDisplayPipe implements PipeTransform {
 
-  transform(value: StaffMember, ...args: any[]): any {
+  transform(value: StaffMember, ...args: any[]): string {
     return value ?
       value.staffFirstName + ' ' + value.staffLastName.toUpperCase()
       : null;

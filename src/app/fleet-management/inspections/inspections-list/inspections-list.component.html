@@ -40,7 +40,7 @@
   <ng-container matColumnDef="inspectionDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{colNames[0]}}</th>
     <td class="mat-cell-first-of-type-default" mat-cell *matCellDef="let inspection">
-      {{inspection.inspectionDate | date: 'yyyy/MM/dd'}}
+      {{inspection.inspectionDate | date: 'dd-MM-yyyy'}}
     </td>
     <td mat-footer-cell *matFooterCellDef>{{colNames[0]}}</td>
   </ng-container>
