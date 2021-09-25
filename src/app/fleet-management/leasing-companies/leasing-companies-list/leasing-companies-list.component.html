@@ -4,7 +4,7 @@
   <button
     role="button"
     aria-label="Open filter dialog"
-    [attr.aria-disabled]="!filterList || dataSource.data.length == 0"
+    [attr.aria-disabled]="!filterList || failedToLoad"
     class="list-button"
     mat-raised-button
     (click)="doOpenFilterDialog()"

@@ -20,7 +20,6 @@ import {ExcelService} from '../../../shared/utils/excel.service';
   styleUrls: ['./leasing-companies-list.component.scss']
 })
 export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
-  // tslint:disable-next-line:max-line-length
   public displayedColumns: string[] = ['edit', 'leasingCompanyName', 'leasingCompanyContactPerson', 'leasingCompanyPhone', 'leasingCompanyEmail', 'active'];
   public colNames: string[] = ['', 'Name', 'Contact person', 'Phone', 'Email', 'Active'];
   public dataSource = new MatTableDataSource<LeasingCompany>();
@@ -35,6 +34,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
   public readonly iAm = 'leasing';
   public loading = true;
   public loaded = false;
+  public failedToLoad = false;
 
   constructor(
     private leasingService: LeasingCompanyService,
@@ -131,6 +131,7 @@ export class LeasingCompaniesListComponent implements OnInit, AfterViewInit {
         this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve leasing companies list.');
         this.loaded = true;
         this.loading = false;
+        this.failedToLoad = true;
       }
     );
   }

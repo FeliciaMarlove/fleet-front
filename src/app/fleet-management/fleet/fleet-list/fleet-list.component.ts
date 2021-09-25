@@ -40,6 +40,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
   public readonly iAm = 'fleet';
   public loading = true;
   public loaded = false;
+  public failedToLoad = false;
 
   constructor(
     private carService: CarService,
@@ -162,6 +163,7 @@ export class FleetListComponent implements OnInit, AfterViewInit {
         this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve car list.');
         this.loaded = true;
         this.loading = false;
+        this.failedToLoad = true;
       }
     );
   }

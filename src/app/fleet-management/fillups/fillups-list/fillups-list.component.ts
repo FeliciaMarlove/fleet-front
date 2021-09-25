@@ -11,13 +11,9 @@ import {MatSort} from '@angular/material/sort';
 import {UiDimensionValues} from '../../../shared/utils/ui-dimension-values';
 import {StaffMemberService} from '../../../core/http-services/staff-member.service';
 import {CarService} from '../../../core/http-services/car.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
 import {ErrorOutputService} from '../../../shared/utils/error-output.service';
 import {ExcelService} from '../../../shared/utils/excel.service';
-import {Car} from '../../../shared/models/car.model';
 import {Normalize} from '../../../shared/utils/normalize.util';
-import {CarShortDisplayPipe} from '../../../shared/pipe/car-short-display.pipe';
-import {Inspection} from '../../../shared/models/inspection.model';
 
 @Component({
   selector: 'app-fillups',
@@ -39,6 +35,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
   public readonly iAm = 'fillup';
   public loading = true;
   public loaded = false;
+  public failedToLoad = false;
 
   constructor(
     private tankFillingService: TankFillingService,
@@ -175,6 +172,7 @@ export class FillupsListComponent implements OnInit, AfterViewInit {
         this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve fuel fillups.');
         this.loaded = true;
         this.loading = false;
+        this.failedToLoad = true;
       }
     );
   }

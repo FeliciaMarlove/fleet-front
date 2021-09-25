@@ -37,6 +37,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
   public readonly iAm = 'inspection';
   public loading = true;
   public loaded = false;
+  public failedToLoad = false;
 
   constructor(
     private inspectionService: InspectionService,
@@ -163,6 +164,7 @@ export class InspectionsListComponent implements OnInit, AfterViewInit {
         this.errorOutputService.outputFatalErrorInSnackBar(this.iAm, 'Could not retrieve inspections list.');
         this.loaded = true;
         this.loading = false;
+        this.failedToLoad = true;
       }
     );
   }
