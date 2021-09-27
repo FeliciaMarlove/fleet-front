@@ -250,7 +250,8 @@ export class InspectionCreateComponent implements OnInit {
     // files is a HTMLCollection -> to use iterable protocoal use spread operator ...
     [...receivedFiles].forEach(file => {
       if (file.size > maxSizeInOctets) {
-        this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File size cannot be higher than 1 Mo, tried to load ' + this.getFileSizeInMo(file.size) + ' (file name: ' + file.name + ')');
+        this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File size cannot be higher than 1 Mo, tried to load '
+          + this.getFileSizeInMo(file.size) + ' (file name: ' + file.name + ')');
         $event.target.value = null;
         return false;
       }
