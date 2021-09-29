@@ -247,7 +247,7 @@ export class InspectionCreateComponent implements OnInit {
   private checkFileSizes($event): boolean {
     const receivedFiles = $event.target.files;
     const maxSizeInOctets = 1_048_576; // 1 Mo
-    // files is a HTMLCollection -> to use iterable protocoal use spread operator ...
+    // files is a HTMLCollection -> to use iterable protocol use spread operator ...
     [...receivedFiles].forEach(file => {
       if (file.size > maxSizeInOctets) {
         this.errorOutputService.outputFatalErrorInSnackBar('inspection_create', 'File size cannot be higher than 1 Mo, tried to load '
