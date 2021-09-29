@@ -1,6 +1,6 @@
 <h3>{{title}}</h3>
 
-<div style="color: orangered"><mat-icon matPrefix>warning</mat-icon> Modifying this information will crush previous entry </div>
+<div style="color: orangered"><mat-icon matPrefix>warning</mat-icon> Modifying this information may crush previous entry </div>
 <br>
 
 <mat-dialog-content class="create-update-form-container">
@@ -11,7 +11,7 @@
     </mat-form-field>
 
 
-    <mat-form-field>
+    <mat-form-field style="padding-left: 15px">
       <mat-label>Staff member</mat-label>
       <mat-select formControlName="staffMember">
         <mat-option *ngFor="let staffMember of staff" [value]="staffMember">
