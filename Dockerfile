@@ -15,8 +15,7 @@ RUN npm update --legacy-peer-deps
 
 # Generate the build of the application
 # RUN npm run ng build -- --configuration=production
-RUN npm run build-prod
-
+RUN npm run build-$(env)
 # Stage 2: Serve app with nginx server
 
 # Use official nginx image as the base image
