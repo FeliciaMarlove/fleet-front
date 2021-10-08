@@ -11,6 +11,7 @@ COPY ./ /usr/local/app/
 
 # Install all the dependencies
 RUN npm install
+RUN npm update --legacy-peer-deps
 
 # Generate the build of the application
 # RUN npm run ng build -- --configuration=production
