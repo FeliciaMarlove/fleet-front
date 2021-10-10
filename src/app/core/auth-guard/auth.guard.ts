@@ -9,6 +9,9 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) {
   }
 
+  /**
+   * Return true (allow to activate the route) if a user is logged, otherwise redirect to bootstrap url
+   */
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
