@@ -30,6 +30,7 @@ export class SideNavComponent implements OnInit {
           this.links.forEach(link => {
             if (link.link === this.router.url) {
               this.current = link;
+              // change the title of the page for accessibility
               this.titleService.setTitle(link.title + ' | Fleet management');
             }
           });

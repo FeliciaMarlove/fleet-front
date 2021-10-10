@@ -1,5 +1,8 @@
 import { BelgianPhoneNumberPipe } from './belgian-phone-number.pipe';
 
+/**
+ * Unit test for phone number transformation
+ */
 describe('Test', () => {
   const pipe = new BelgianPhoneNumberPipe();
   it('should create an instance', () => {
