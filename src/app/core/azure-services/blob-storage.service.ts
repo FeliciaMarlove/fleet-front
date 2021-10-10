@@ -3,8 +3,7 @@ import {BlobServiceClient} from '@azure/storage-blob';
 
 export enum BLOB_GOAL {
   INSPECTION_IMAGE,
-  INSPECTION_REPORT,
-  LOG
+  INSPECTION_REPORT
 }
 
 // TODO use an external variables file
@@ -12,8 +11,6 @@ const account = 'tfefleetstorage';
 const inspectionSAS = 'sp=racwl&st=2021-06-29T16:40:28Z&se=2021-12-31T01:40:28Z&sv=2020-02-10&sr=c&sig=G6uhwfORW%2BanRC1szwArLSg5SZf%2BD5IWT%2BNDpybQHaI%3D';
 const URL = 'https://tfefleetstorage.blob.core.windows.net/';
 const logSAS = 'sp=racwl&st=2021-07-05T14:03:44Z&se=2021-11-30T23:03:44Z&sv=2020-02-10&sr=c&sig=kPCvWMaR4VAeIwHlFmbg9rVPFYG59vpD5T3r%2BESNzNg%3D';
-const accountSAS = 'WxW7nXPlyPLNgkLbHvmqrTVDyhqZc4qZmcikoG6rHfvWBcN5F9eP95bIY46FimZuwVWpbzBdI+/0aCVJw1wsEw==';
-const connectionString = 'DefaultEndpointsProtocol=https;AccountName=tfefleetstorage;AccountKey=WxW7nXPlyPLNgkLbHvmqrTVDyhqZc4qZmcikoG6rHfvWBcN5F9eP95bIY46FimZuwVWpbzBdI+/0aCVJw1wsEw==;EndpointSuffix=core.windows.net';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +46,7 @@ export class BlobStorageService {
    * @param log The message to log
    */
   public async writeAzureLogBlob(log: string) {
-    log = '\nCLIENT SIDE:::' + new Date().toISOString() + ':::' + log;
+    log = '\nCLIENT SIDE:::' + new Date().toISOString() + '::: (client local time ' + new Date().toLocaleTimeString() + ') ' + log;
     let attempt = 1;
     const containerName = 'logs';
     const blobName = 'logs.txt';

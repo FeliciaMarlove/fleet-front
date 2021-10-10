@@ -26,7 +26,7 @@ export class ErrorOutputService {
     this.snackBarRef = this.matSnackBar.open(message, 'OK', {
       panelClass: 'warning-snackbar'
     });
-    this.snackBarRef.onAction().subscribe(() => {
+    this.snackBarRef.afterOpened().subscribe(() => {
       this.azureBlobService.writeAzureLogBlob('WARNING ' + componentName + ' ' + message);
     });
   }
@@ -41,7 +41,7 @@ export class ErrorOutputService {
     this.snackBarRef = this.matSnackBar.open('FATAL ERROR! ' + message, 'OK', {
       panelClass: 'fatal-snackbar'
     });
-    this.snackBarRef.onAction().subscribe(() => {
+    this.snackBarRef.afterOpened().subscribe(() => {
       this.azureBlobService.writeAzureLogBlob('FATAL ' + componentName + ' ' + message);
     });
   }
