@@ -177,7 +177,7 @@ export class FleetCreateComponent implements OnInit {
    */
   private initStaff() {
     this.staffMemberService.getStaff('ALL', null).subscribe(staff => {
-        this.staff = staff;
+        this.staff = staff.sort((a,b) => a.staffLastName.localeCompare(b.staffLastName));
       },
       () => this.errorOutputService.outputFatalErrorInSnackBar('fleet_create', 'Staff members could not be loaded.')
     );
