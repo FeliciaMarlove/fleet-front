@@ -43,7 +43,7 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <input matInput [min]="0" type="number" formControlName="averageConsumption" [placeholder]="isElectric ? 'N/A' : 'Av. consumption l/100'" [required]="!isElectric">
+        <input matInput [min]="0" type="number" formControlName="averageConsumption" [placeholder]="isElectric ? 'N/A' : 'Av. consumption l/100'" [required]="!isElectric" appPositiveNumbers>
       </mat-form-field>
     </div>
 

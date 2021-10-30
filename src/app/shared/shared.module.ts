@@ -35,6 +35,7 @@ import { LeasingTooltipPipe } from './pipe/leasing-tooltip.pipe';
 import { YesNoDialogComponent } from './utils/yes-no-dialog/yes-no-dialog.component';
 import { LinkCarStaffDialogComponent } from '../fleet-management/link-car-staff-dialog/link-car-staff-dialog.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { PositiveNumbersDirective } from './utils/positive-numbers.directive';
 
 /**
  * Shared module exposes common services, utilities and components and can be loaded from any module
@@ -55,6 +56,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     LeasingTooltipPipe,
     YesNoDialogComponent,
     LinkCarStaffDialogComponent,
+    PositiveNumbersDirective,
   ],
   imports: [
     CommonModule,
@@ -83,49 +85,50 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatCheckboxModule,
     ClipboardModule
   ],
-  exports: [
-    RouterModule,
-    // ---- SHARED MATERIAL MODULES
-    MatButtonModule,
-    MatIconModule,
-    MatListModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    FormsModule,
-    MatButtonToggleModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatOptionModule,
-    MatInputModule,
-    MatSliderModule,
-    MatTableModule,
-    MatListModule,
-    MatPaginatorModule,
-    MatDatepickerModule,
-    MatSlideToggleModule,
-    MatNativeDateModule,
-    MatTooltipModule,
-    MatSortModule,
-    MatCheckboxModule,
-    ClipboardModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    // ---- PIPES
-    CarShortDisplayPipe,
-    DiscrepancyToDisplayNamePipe,
-    BelgianPhoneNumberPipe,
-    StaffShortDisplayPipe,
-    FuelDisplayPipe,
-    FilterDisplayPipe,
-    StaffTooltipPipe,
-    LeasingTooltipPipe,
-    // ---- SHARED COMPONENTS
-    NoOptionFilterDialogComponent,
-    // ---- DIRECTIVES
-    PhoneMaskDirective,
-    PlateNumberDirective,
-  ]
+    exports: [
+        RouterModule,
+        // ---- SHARED MATERIAL MODULES
+        MatButtonModule,
+        MatIconModule,
+        MatListModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        FormsModule,
+        MatButtonToggleModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatOptionModule,
+        MatInputModule,
+        MatSliderModule,
+        MatTableModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatDatepickerModule,
+        MatSlideToggleModule,
+        MatNativeDateModule,
+        MatTooltipModule,
+        MatSortModule,
+        MatCheckboxModule,
+        ClipboardModule,
+        MatSnackBarModule,
+        MatProgressSpinnerModule,
+        // ---- PIPES
+        CarShortDisplayPipe,
+        DiscrepancyToDisplayNamePipe,
+        BelgianPhoneNumberPipe,
+        StaffShortDisplayPipe,
+        FuelDisplayPipe,
+        FilterDisplayPipe,
+        StaffTooltipPipe,
+        LeasingTooltipPipe,
+        // ---- SHARED COMPONENTS
+        NoOptionFilterDialogComponent,
+        // ---- DIRECTIVES
+        PhoneMaskDirective,
+        PlateNumberDirective,
+        PositiveNumbersDirective,
+    ]
 })
 export class SharedModule {
 }
