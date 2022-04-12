@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/8e04b899-4eee-4f10-b69d-0d1149a40f83/resourceGroups/shewrites/providers/Microsoft.Web/sites/shewrites-front",
+    "appService.deploySubpath": "."
+}
