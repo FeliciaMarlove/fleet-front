@@ -7,7 +7,6 @@
     "build": "ng build",
     "build-prod": "ng build --configuration=production",
     "build-playground": "ng build --configuration=playground",
-    "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
